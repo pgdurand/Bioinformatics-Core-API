@@ -1,0 +1,398 @@
+<!-- NCBI_BlastOutput.dtd
+  This file is built from a series of basic modules.
+  The actual ELEMENT and ENTITY declarations are in the modules.
+  This file is used to put them together.
+-->
+
+<!ELEMENT BlastOutput ( 
+               BlastOutput_program ,
+               BlastOutput_version ,
+               BlastOutput_reference ,
+               BlastOutput_db ,
+               BlastOutput_query-ID ,
+               BlastOutput_query-def ,
+               BlastOutput_query-len ,
+               BlastOutput_query-seq? ,
+               BlastOutput_param ,
+               BlastOutput_iterations,
+               BlastOutput_mbstat )>
+ 
+ 
+<!-- 
+ BLAST program: blastp, tblastx etc.
+ -->
+<!ELEMENT BlastOutput_program ( #PCDATA )>
+ 
+<!-- 
+ Program version 
+ -->
+<!ELEMENT BlastOutput_version ( #PCDATA )>
+ 
+<!-- 
+ Steven, David, Tom and others
+ -->
+<!ELEMENT BlastOutput_reference ( #PCDATA )>
+ 
+<!-- 
+ BLAST Database name
+ -->
+<!ELEMENT BlastOutput_db ( #PCDATA )>
+ 
+<!-- 
+ SeqId of query
+ -->
+<!ELEMENT BlastOutput_query-ID ( #PCDATA )>
+ 
+<!-- 
+ Definition line of query
+ -->
+<!ELEMENT BlastOutput_query-def ( #PCDATA )>
+ 
+<!-- 
+ length of query sequence
+ -->
+<!ELEMENT BlastOutput_query-len ( #PCDATA )>
+ 
+<!-- 
+ query sequence itself
+ -->
+<!ELEMENT BlastOutput_query-seq ( #PCDATA )>
+ 
+<!-- 
+ search parameters
+ -->
+<!ELEMENT BlastOutput_param ( Parameters )>
+<!ELEMENT BlastOutput_iterations ( Iteration+ )>
+
+<!-- 
+ support for mageblast
+ -->
+<!ELEMENT  BlastOutput_mbstat ( Statistics )>
+ 
+ 
+ 
+ 
+<!-- Definition of Iteration -->
+ 
+<!ELEMENT Iteration ( 
+               Iteration_iter-num ,
+               Iteration_query-ID?, 
+               Iteration_query-def?, 
+               Iteration_query-len?, 
+               Iteration_hits? ,
+               Iteration_stat? ,
+               Iteration_message? )>
+ 
+ 
+<!-- 
+ iteration number
+ -->
+<!ELEMENT Iteration_iter-num ( #PCDATA )>
+
+<!-- 
+ query info
+ -->
+<!ELEMENT Iteration_query-ID ( #PCDATA )>
+<!ELEMENT Iteration_query-def ( #PCDATA )>
+<!ELEMENT Iteration_query-len ( #PCDATA )>
+ 
+<!-- 
+ Hits one for every db sequence
+ -->
+<!ELEMENT Iteration_hits ( Hit* )>
+ 
+<!-- 
+ search statistics            
+ -->
+<!ELEMENT Iteration_stat ( Statistics )>
+ 
+<!-- 
+ Some (error?) information
+ -->
+<!ELEMENT Iteration_message ( #PCDATA )>
+ 
+ 
+ 
+ 
+<!-- Definition of Parameters -->
+ 
+<!ELEMENT Parameters ( 
+               Parameters_matrix? ,
+               Parameters_expect ,
+               Parameters_include? ,
+               Parameters_sc-match? ,
+               Parameters_sc-mismatch? ,
+               Parameters_gap-open ,
+               Parameters_gap-extend ,
+               Parameters_filter? ,
+               Parameters_pattern? ,
+               Parameters_entrez-query? )>
+ 
+ 
+<!-- 
+ Matrix used (-M)
+ -->
+<!ELEMENT Parameters_matrix ( #PCDATA )>
+ 
+<!-- 
+ Expectation threshold (-e)
+ -->
+<!ELEMENT Parameters_expect ( #PCDATA )>
+ 
+<!-- 
+ Inclusion threshold (-h)
+ -->
+<!ELEMENT Parameters_include ( #PCDATA )>
+ 
+<!-- 
+ match score for NT (-r)
+ -->
+<!ELEMENT Parameters_sc-match ( #PCDATA )>
+ 
+<!-- 
+ mismatch score for NT (-q)
+ -->
+<!ELEMENT Parameters_sc-mismatch ( #PCDATA )>
+ 
+<!-- 
+ Gap opening cost (-G)
+ -->
+<!ELEMENT Parameters_gap-open ( #PCDATA )>
+ 
+<!-- 
+ Gap extension cost (-E)
+ -->
+<!ELEMENT Parameters_gap-extend ( #PCDATA )>
+ 
+<!-- 
+ Filtering options (-F)
+ -->
+<!ELEMENT Parameters_filter ( #PCDATA )>
+ 
+<!-- 
+ PHI-BLAST pattern
+ -->
+<!ELEMENT Parameters_pattern ( #PCDATA )>
+ 
+<!-- 
+ Limit of request to Entrez query
+ -->
+<!ELEMENT Parameters_entrez-query ( #PCDATA )>
+ 
+ 
+<!-- Definition of Statistics -->
+ 
+<!ELEMENT Statistics ( 
+               Statistics_db-num ,
+               Statistics_db-len ,
+               Statistics_hsp-len ,
+               Statistics_eff-space ,
+               Statistics_kappa ,
+               Statistics_lambda ,
+               Statistics_entropy )>
+ 
+ 
+<!-- 
+ Number of sequences in BLAST db
+ -->
+<!ELEMENT Statistics_db-num ( #PCDATA )>
+ 
+<!-- 
+ Length of BLAST db
+ -->
+<!ELEMENT Statistics_db-len ( #PCDATA )>
+ 
+<!-- 
+ Effective HSP length
+ -->
+<!ELEMENT Statistics_hsp-len ( #PCDATA )>
+ 
+<!-- 
+ Effective search space
+ -->
+<!ELEMENT Statistics_eff-space ( #PCDATA )>
+ 
+<!-- 
+ Karlin-Altschul parameter K
+ -->
+<!ELEMENT Statistics_kappa ( #PCDATA )>
+ 
+<!-- 
+ Karlin-Altschul parameter Lambda
+ -->
+<!ELEMENT Statistics_lambda ( #PCDATA )>
+ 
+<!-- 
+ Karlin-Altschul parameter H
+ -->
+<!ELEMENT Statistics_entropy ( #PCDATA )>
+ 
+ 
+<!-- Definition of Hit -->
+ 
+<!ELEMENT Hit ( 
+               Hit_num ,
+               Hit_id ,
+               Hit_def ,
+               Hit_accession ,
+               Hit_len ,
+               Hit_hsps? )>
+ 
+ 
+<!-- 
+ hit number
+ -->
+<!ELEMENT Hit_num ( #PCDATA )>
+ 
+<!-- 
+ SeqId of subject
+ -->
+<!ELEMENT Hit_id ( #PCDATA )>
+ 
+<!-- 
+ definition line of subject
+ -->
+<!ELEMENT Hit_def ( #PCDATA )>
+ 
+<!-- 
+ accession
+ -->
+<!ELEMENT Hit_accession ( #PCDATA )>
+ 
+<!-- 
+ length of subject
+ -->
+<!ELEMENT Hit_len ( #PCDATA )>
+ 
+<!-- 
+ all HSP regions for the given subject
+ -->
+<!ELEMENT Hit_hsps ( Hsp* )>
+ 
+ 
+ 
+<!-- Definition of Hsp -->
+ 
+<!ELEMENT Hsp ( 
+               Hsp_num ,
+               Hsp_bit-score ,
+               Hsp_score ,
+               Hsp_evalue ,
+               Hsp_query-from ,
+               Hsp_query-to ,
+               Hsp_hit-from ,
+               Hsp_hit-to ,
+               Hsp_pattern-from? ,
+               Hsp_pattern-to? ,
+               Hsp_query-frame? ,
+               Hsp_hit-frame? ,
+               Hsp_identity? ,
+               Hsp_positive? ,
+               Hsp_gaps? ,
+               Hsp_align-len? ,
+               Hsp_density? ,
+               Hsp_qseq ,
+               Hsp_hseq ,
+               Hsp_midline? )>
+ 
+ 
+<!-- 
+ HSP number
+ -->
+<!ELEMENT Hsp_num ( #PCDATA )>
+ 
+<!-- 
+ score (in bits) of HSP
+ -->
+<!ELEMENT Hsp_bit-score ( #PCDATA )>
+ 
+<!-- 
+ score of HSP
+ -->
+<!ELEMENT Hsp_score ( #PCDATA )>
+ 
+<!-- 
+ e-value of HSP
+ -->
+<!ELEMENT Hsp_evalue ( #PCDATA )>
+ 
+<!-- 
+ start of HSP in query
+ -->
+<!ELEMENT Hsp_query-from ( #PCDATA )>
+ 
+<!-- 
+ end of HSP
+ -->
+<!ELEMENT Hsp_query-to ( #PCDATA )>
+ 
+<!-- 
+ start of HSP in subject
+ -->
+<!ELEMENT Hsp_hit-from ( #PCDATA )>
+ 
+<!-- 
+ end of HSP in subject
+ -->
+<!ELEMENT Hsp_hit-to ( #PCDATA )>
+ 
+<!-- 
+ start of PHI-BLAST pattern
+ -->
+<!ELEMENT Hsp_pattern-from ( #PCDATA )>
+ 
+<!-- 
+ end of PHI-BLAST pattern
+ -->
+<!ELEMENT Hsp_pattern-to ( #PCDATA )>
+ 
+<!-- 
+ translation frame of query
+ -->
+<!ELEMENT Hsp_query-frame ( #PCDATA )>
+ 
+<!-- 
+ translation frame of subject
+ -->
+<!ELEMENT Hsp_hit-frame ( #PCDATA )>
+ 
+<!-- 
+ number of identities in HSP
+ -->
+<!ELEMENT Hsp_identity ( #PCDATA )>
+ 
+<!-- 
+ number of positives in HSP
+ -->
+<!ELEMENT Hsp_positive ( #PCDATA )>
+ 
+<!-- 
+ number of gaps in HSP
+ -->
+<!ELEMENT Hsp_gaps ( #PCDATA )>
+ 
+<!-- 
+ length of the alignment used
+ -->
+<!ELEMENT Hsp_align-len ( #PCDATA )>
+ 
+<!-- 
+ score density
+ -->
+<!ELEMENT Hsp_density ( #PCDATA )>
+ 
+<!-- 
+ alignment string for the query (with gaps)
+ -->
+<!ELEMENT Hsp_qseq ( #PCDATA )>
+ 
+<!-- 
+ alignment string for subject (with gaps)
+ -->
+<!ELEMENT Hsp_hseq ( #PCDATA )>
+ 
+<!-- 
+ formating middle line
+ -->
+<!ELEMENT Hsp_midline ( #PCDATA )>
+ 

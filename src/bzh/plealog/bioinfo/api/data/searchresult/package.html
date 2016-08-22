@@ -1,0 +1,25 @@
+<HTML>
+    <BODY>
+<p>This package contains the components used to model a Rich Search Result.</p> 
+
+<p>The basic components used to model a Search Result closely follows the way NCBI and 
+EBI have represented a Blast Search Result. </p>
+
+<p>Such a result contains some iterations, that contains some hit,s that contains some 
+HSPs. These elements of the data model are represented using the following components: 
+SROutput, SRIteration, SRHit and SRHsp. </p>
+
+<p>To enable rich Search Result representation, the SROutput model is capable of handling
+Sequence Information and Features. The former are associated to SRHit components whereas
+the latter are associated to SRHsp components.</p>
+
+<p>Each search result is usually associated with some parameters and request information. 
+These are represented in the data model with SRParameters and SRRequestInfo, respectively.
+To enable an extensible model, these interface represent the set of available parameters
+using tables of key and value pairs. </p>
+
+<p>Each iteration is usually associated with some statistical values that are produced by
+the search system (e.g. Blast). This is represented using a SRStatistics component.</p>
+    </BODY>
+</HTML>
+
