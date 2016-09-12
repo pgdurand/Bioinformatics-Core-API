@@ -8,7 +8,7 @@ This package is a core library of APIs for the [BLAST Filter Tool](https://githu
 
 * to model Rich Search Results objects (e.g. annotated [NCBI BLAST](http://blast.ncbi.nlm.nih.gov/Blast.cgi) results) 
 * to provide readers/writers for these objects
-* to provide data models for the Bioinformatics Core UI components
+* to provide data models for the [Bioinformatics Core UI components](https://github.com/pgdurand/Bioinformatics-UI-API)
 
 ##Requirements
 
@@ -22,6 +22,7 @@ Since this package is a library, its primary purpose targets a use within other 
 
 * "test" package in this project: it contains sample sources codes; "TestSerialSystem.java" is of particular interest
 * [Blast Filter Tool](https://github.com/pgdurand/BLAST-Filter-Tool) source code: a full example of a running application relying on this library
+* [Bioinformatics Core UI components](https://github.com/pgdurand/Bioinformatics-UI-API): a set of viewers of sequence/feature/etc objects
 
 ##License and dependencies
 
