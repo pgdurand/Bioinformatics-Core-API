@@ -16,11 +16,9 @@
  */
 package bzh.plealog.bioinfo.api.data.feature.utils;
 
-import org.apache.log4j.Logger;
-
 public class FeatureSystem {
 	private static FeatureTableFactory _factory;
-	public static final Logger LOGGER = Logger.getLogger("kb."+"FeatureSystem");
+
 	public static void setFeatureTableFactory(FeatureTableFactory f){
 		_factory = f;
 	}
