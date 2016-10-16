@@ -4,14 +4,13 @@
 <project name="Plealog-bionfo-core" default="help" basedir=".">
 
 <property name="pbc.libName"    value="pb-core" />
-<property name="pbc.LibVersion" value="5.0.0" />
+<property name="pbc.LibVersion" value="5.0.1" />
 
 <property name="compile.optimize" value="on" />
 <property name="compile.debug"    value="off" />
 
 <property name="src"     value="${basedir}/src" />
 <property name="jar"     value="${basedir}/jar" />
-
 <property name="distrib"  value="${basedir}/distrib" />
 <property name="Dlib"     value="${distrib}/lib" />
 <property name="Dsrc"     value="${distrib}/src" />
