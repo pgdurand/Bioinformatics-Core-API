@@ -20,7 +20,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import com.plealog.genericapp.api.log.EZLogger;
 
 import bzh.plealog.bioinfo.api.data.sequence.DAlphabet;
 import bzh.plealog.bioinfo.api.data.sequence.DLocation;
@@ -33,7 +33,6 @@ import bzh.plealog.bioinfo.api.data.sequence.DSequenceFactory;
  * @author Patrick G. Durand
  */
 public class DSequenceFactoryImplem implements DSequenceFactory {
-	static final Logger _logger = Logger.getLogger("kb."+"DSequenceFactory");
     public DSequence getSequence(Reader reader, DAlphabet alphabet){
         DSequenceImplem dSeq;
         StringBuffer    szBuf;
@@ -44,7 +43,7 @@ public class DSequenceFactoryImplem implements DSequenceFactory {
             while((ch = reader.read())!=-1){
                 ch = Character.toUpperCase(ch);
             	if (alphabet.getSymbol(ch)==null){
-            		_logger.warn("Symbol unknown for: "+ch+". Continuing...");
+            		EZLogger.warn("Symbol unknown for: "+ch+". Continuing...");
                     continue;
                 }
                 szBuf.append((char) ch);
@@ -52,7 +51,7 @@ public class DSequenceFactoryImplem implements DSequenceFactory {
             dSeq = new DSequenceImplem(szBuf.toString(), alphabet);
         }
         catch (IOException ioex){
-        	_logger.warn("Unable to read sequence data: "+ ioex.toString());
+        	EZLogger.warn("Unable to read sequence data: "+ ioex.toString());
             dSeq = null;
         }
         return dSeq;
@@ -72,7 +71,7 @@ public class DSequenceFactoryImplem implements DSequenceFactory {
     		ch = buf.charAt(i);
             ch = Character.toUpperCase(ch);
         	if (alphabet.getSymbol(ch)==null){
-        		_logger.warn("Symbol unknown for: "+ch+". Continuing...");
+        		EZLogger.warn("Symbol unknown for: "+ch+". Continuing...");
                 continue;
             }
         	buf.setCharAt(i, (char) ch);

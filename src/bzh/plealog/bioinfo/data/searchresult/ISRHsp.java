@@ -16,8 +16,9 @@
  */
 package bzh.plealog.bioinfo.data.searchresult;
 
+import com.plealog.genericapp.api.log.EZLogger;
+
 import bzh.plealog.bioinfo.api.data.feature.FeatureTable;
-import bzh.plealog.bioinfo.api.data.feature.utils.FeatureSystem;
 import bzh.plealog.bioinfo.api.data.searchresult.SRHsp;
 import bzh.plealog.bioinfo.api.data.searchresult.SRHspPattern;
 import bzh.plealog.bioinfo.api.data.searchresult.SRHspScore;
@@ -133,7 +134,7 @@ public class ISRHsp implements SRHsp{
     	if(hitSequence!=null){
     		hitSequence.setFeatures(ft);
     		if (ft!=null && hitSequence.getFeatures()==null){//check if FeatureTable was invalid
-        		FeatureSystem.LOGGER.warn("FeatureTable discarded on HSP "+hspNum);
+    		  EZLogger.warn("FeatureTable discarded on HSP "+hspNum);
     		}
     	}
     }

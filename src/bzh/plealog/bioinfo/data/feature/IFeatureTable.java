@@ -21,6 +21,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Enumeration;
 
+import com.plealog.genericapp.api.log.EZLogger;
+
 import bzh.plealog.bioinfo.api.data.feature.Feature;
 import bzh.plealog.bioinfo.api.data.feature.FeatureTable;
 import bzh.plealog.bioinfo.api.data.feature.utils.FeatureSystem;
@@ -199,7 +201,7 @@ public class IFeatureTable implements FeatureTable {
     	size = this.features();
     	for(i=0;i<size;i++){
     		if (!((Feature)this.getFeatures().get(i)).isValid(hitFrom, hitTo)){
-    			FeatureSystem.LOGGER.debug("Feature ["+(i+1)+"] is invalid");
+    			EZLogger.debug("Feature ["+(i+1)+"] is invalid");
     			return false;
     		}
     	}

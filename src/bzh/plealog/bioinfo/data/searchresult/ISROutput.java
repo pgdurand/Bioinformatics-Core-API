@@ -22,6 +22,8 @@ import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
 
+import com.plealog.genericapp.api.log.EZLogger;
+
 import bzh.plealog.bioinfo.api.data.feature.FeatureTable;
 import bzh.plealog.bioinfo.api.data.feature.utils.FeatureSystem;
 import bzh.plealog.bioinfo.api.data.searchresult.SRHit;
@@ -265,7 +267,7 @@ public class ISROutput implements SROutput{
 		            from = hsp.getHit().getFrom();
 		            to = hsp.getHit().getTo();
 		            if (ft!=null && !ft.isValid(Math.min(from, to), Math.max(from, to))){
-		            	FeatureSystem.LOGGER.warn("Iter["+(i+1)+"].Hit["+(j+1)+"].Hsp["+(k+1)+": FeatureTable discarded.");
+		            	EZLogger.warn("Iter["+(i+1)+"].Hit["+(j+1)+"].Hsp["+(k+1)+": FeatureTable discarded.");
 		            	hsp.setFeatures(null);
 		            }
 		        }
@@ -307,7 +309,7 @@ public class ISROutput implements SROutput{
 		            from = hsp.getHit().getFrom();
 		            to = hsp.getHit().getTo();
 		            if (ft!=null && !ft.isValid(Math.min(from, to), Math.max(from, to))){
-		            	FeatureSystem.LOGGER.warn("Iter["+(i+1)+"].Hit["+(j+1)+"].Hsp["+(k+1)+": FeatureTable discarded.");
+		            	EZLogger.warn("Iter["+(i+1)+"].Hit["+(j+1)+"].Hsp["+(k+1)+": FeatureTable discarded.");
 		            	bRet = false;
 		            }
 		        }

@@ -20,11 +20,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
 
+import com.plealog.genericapp.api.log.EZLogger;
+
 import bzh.plealog.bioinfo.api.data.feature.FRange;
 import bzh.plealog.bioinfo.api.data.feature.Feature;
 import bzh.plealog.bioinfo.api.data.feature.FeatureLocation;
 import bzh.plealog.bioinfo.api.data.feature.Qualifier;
-import bzh.plealog.bioinfo.api.data.feature.utils.FeatureSystem;
 
 /**
  * This class is a default implementation of a feature. 
@@ -271,20 +272,20 @@ public class IFeature implements Feature{
     	
     	//check the key name
     	if (key==null){
-    		FeatureSystem.LOGGER.debug("Feature key not defined");
+    		EZLogger.debug("Feature key not defined");
     		return false;
     	}
     	//check the location
     	if (from==0 || to==0){
-    		FeatureSystem.LOGGER.debug("Feature: from and/or to is not defined");
+    		EZLogger.debug("Feature: from and/or to is not defined");
     		return false;
     	}
     	if (from>to){
-    		FeatureSystem.LOGGER.debug("Feature: from > to");
+    		EZLogger.debug("Feature: from > to");
     		return false;
     	}
     	if (!(from>=hitFrom && to<=hitTo)){
-    		FeatureSystem.LOGGER.debug("Feature location out of Hsp location");
+    		EZLogger.debug("Feature location out of Hsp location");
     		return false;
     	}
     	size = this.qualifiers();
@@ -292,7 +293,7 @@ public class IFeature implements Feature{
     	for (i=0;i<size;i++){
     		qual = this.getQualifier(i);
     		if (qual.getName()==null || qual.getValue()==null){
-        		FeatureSystem.LOGGER.debug("Qualifier ["+(i+1)+"] is invalid");
+        		EZLogger.debug("Qualifier ["+(i+1)+"] is invalid");
         		return false;
         	}
     	}
@@ -300,7 +301,7 @@ public class IFeature implements Feature{
     	loc = this.getFeatureLocation();
     	if (loc!=null){
     		if (loc.getStart()>loc.getEnd()){
-        		FeatureSystem.LOGGER.debug("FeatureLocation: start>end");
+        		EZLogger.debug("FeatureLocation: start>end");
         		return false;
         	}
     		size = loc.elements();
@@ -309,15 +310,15 @@ public class IFeature implements Feature{
     			a = r.getFrom().getStart();
     			b = r.getTo().getEnd();
     	    	if (a==0 || b==0){
-    	    		FeatureSystem.LOGGER.debug("FRange["+(i+1)+"]: start and/or end is not defined");
+    	    		EZLogger.debug("FRange["+(i+1)+"]: start and/or end is not defined");
     	    		return false;
     	    	}
     	    	if (a>b){
-    	    		FeatureSystem.LOGGER.debug("FRange["+(i+1)+"]: start>end");
+    	    		EZLogger.debug("FRange["+(i+1)+"]: start>end");
     	    		return false;
     	    	}
     	    	if (a<hitFrom || b>hitTo){
-    	    		FeatureSystem.LOGGER.debug("FRange["+(i+1)+"]: out of Hsp location");
+    	    		EZLogger.debug("FRange["+(i+1)+"]: out of Hsp location");
     	    		return false;
     	    	}
     		}
