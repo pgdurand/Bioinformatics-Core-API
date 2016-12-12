@@ -48,7 +48,6 @@ import bzh.plealog.bioinfo.api.data.searchresult.io.SRLoader;
 import bzh.plealog.bioinfo.api.data.searchresult.io.SRLoaderException;
 import bzh.plealog.bioinfo.api.data.searchresult.io.SRWriter;
 import bzh.plealog.bioinfo.api.data.searchresult.io.SRWriterException;
-import bzh.plealog.bioinfo.api.data.sequence.DViewerSystem;
 import bzh.plealog.bioinfo.data.blast.loader.ncbi.BlastOutput;
 import bzh.plealog.bioinfo.data.blast.loader.ncbi.BlastOutput_iterations;
 import bzh.plealog.bioinfo.data.blast.loader.ncbi.BlastOutput_param;
@@ -71,6 +70,7 @@ import bzh.plealog.bioinfo.data.searchresult.ISRParameters;
 import bzh.plealog.bioinfo.data.searchresult.ISRRequestInfo;
 import bzh.plealog.bioinfo.data.searchresult.ISRStatistics;
 import bzh.plealog.bioinfo.util.CoreUtil;
+import bzh.plealog.bioinfo.util.DAlphabetUtils;
 import bzh.plealog.bioinfo.util.ZipUtil;
 
 /**
@@ -553,7 +553,7 @@ public class BlastLoader implements SRLoader, SRWriter {
         //added to take into account a case when tblastx reports empty HSP!
         if(seq!=null && seq.equals("-")==false){
         	if (doRCalignment)
-        		query.setSequence(DViewerSystem.inverseComplement(seq.toUpperCase()));
+        		query.setSequence(DAlphabetUtils.reverseComplement(seq.toUpperCase()));
        		else
            		query.setSequence(seq.toUpperCase());
         }
@@ -574,7 +574,7 @@ public class BlastLoader implements SRLoader, SRWriter {
         //added to take into account a case when tblastx reports empty HSP!
         if(seq!=null && seq.equals("-")==false){
         	if (doRCalignment)
-        		hit.setSequence(DViewerSystem.inverseComplement(seq.toUpperCase()));
+        		hit.setSequence(DAlphabetUtils.reverseComplement(seq.toUpperCase()));
        		else
            		hit.setSequence(seq.toUpperCase());
         }
@@ -584,7 +584,7 @@ public class BlastLoader implements SRLoader, SRWriter {
         //added to take into account a case when tblastx reports empty HSP!
         if (seq!=null){
         	if(doRCalignment)
-        		midline.setSequence(DViewerSystem.inverse(seq.toUpperCase()));
+        		midline.setSequence(DAlphabetUtils.reverse(seq.toUpperCase()));
         	else
         		midline.setSequence(seq.toUpperCase());
         }

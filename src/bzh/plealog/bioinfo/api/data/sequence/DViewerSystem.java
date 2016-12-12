@@ -85,11 +85,11 @@ public class DViewerSystem {
     public static BankSequenceInfoFactory getBankSequenceInfoFactory(){
       return _BSIFactory;
     }
-    private static DSymbol addCharInAlphabet(DAlphabet alphabet, char ch){
+    private static DSymbol addCharInAlphabet(DAlphabet alphabet, char ch, int code){
         DSymbol symb;
         
-        symb = _SFactory.createDSymbol(ch, ch);
-        alphabet.addSymbol(ch, symb);
+        symb = _SFactory.createDSymbol(code, ch);
+        alphabet.addSymbol(code, symb);
         return (symb);
     }
     
@@ -99,49 +99,12 @@ public class DViewerSystem {
         if (_alphabets.containsKey("Comparer")){
             return ((DAlphabet) _alphabets.get("Comparer"));
         }
+        String chars = new String("ACDEFGHIKLMNPQRSTVWYXacdefghiklmnpqrstvwyx");
         alphabet = _AFactory.createDAlphabet("Comparer", DAlphabet.OTHER_ALPHABET);
-        addCharInAlphabet(alphabet, 'A');
-        addCharInAlphabet(alphabet, 'C');
-        addCharInAlphabet(alphabet, 'D');
-        addCharInAlphabet(alphabet, 'E');
-        addCharInAlphabet(alphabet, 'F');
-        addCharInAlphabet(alphabet, 'G');
-        addCharInAlphabet(alphabet, 'H');
-        addCharInAlphabet(alphabet, 'I');
-        addCharInAlphabet(alphabet, 'K');
-        addCharInAlphabet(alphabet, 'L');
-        addCharInAlphabet(alphabet, 'M');
-        addCharInAlphabet(alphabet, 'N');
-        addCharInAlphabet(alphabet, 'P');
-        addCharInAlphabet(alphabet, 'Q');
-        addCharInAlphabet(alphabet, 'R');
-        addCharInAlphabet(alphabet, 'S');
-        addCharInAlphabet(alphabet, 'T');
-        addCharInAlphabet(alphabet, 'V');
-        addCharInAlphabet(alphabet, 'W');
-        addCharInAlphabet(alphabet, 'Y');
-        addCharInAlphabet(alphabet, 'X');
-        addCharInAlphabet(alphabet, 'a');
-        addCharInAlphabet(alphabet, 'c');
-        addCharInAlphabet(alphabet, 'd');
-        addCharInAlphabet(alphabet, 'e');
-        addCharInAlphabet(alphabet, 'f');
-        addCharInAlphabet(alphabet, 'g');
-        addCharInAlphabet(alphabet, 'h');
-        addCharInAlphabet(alphabet, 'i');
-        addCharInAlphabet(alphabet, 'k');
-        addCharInAlphabet(alphabet, 'l');
-        addCharInAlphabet(alphabet, 'm');
-        addCharInAlphabet(alphabet, 'n');
-        addCharInAlphabet(alphabet, 'p');
-        addCharInAlphabet(alphabet, 'q');
-        addCharInAlphabet(alphabet, 'r');
-        addCharInAlphabet(alphabet, 's');
-        addCharInAlphabet(alphabet, 't');
-        addCharInAlphabet(alphabet, 'v');
-        addCharInAlphabet(alphabet, 'w');
-        addCharInAlphabet(alphabet, 'y');
-        addCharInAlphabet(alphabet, 'x');
+        int code_start = 6; //0..5: reserved code, see DAlphabetImplem;
+        for(int i=0;i<chars.length();i++){
+          addCharInAlphabet(alphabet, chars.charAt(i), code_start+i);
+        }
         _alphabets.put("Comparer",alphabet);
         return alphabet;
     }
@@ -166,97 +129,45 @@ public class DViewerSystem {
         //n.setNegativeColor(true);
         alphabet = _AFactory.createDAlphabet("IUPAC_DNA", DAlphabet.DNA_ALPHABET);
         //standards nucleotides
-        symb = addCharInAlphabet(alphabet, 'A');
+        symb = addCharInAlphabet(alphabet, 'A', 6);//code: 0..5: reserved code, see DAlphabetImplem;
         symb.setGraphics(a);
-        symb = addCharInAlphabet(alphabet, 'G');
+        symb = addCharInAlphabet(alphabet, 'G', 7);
         symb.setGraphics(g);
-        symb = addCharInAlphabet(alphabet, 'C');
+        symb = addCharInAlphabet(alphabet, 'C', 8);
         symb.setGraphics(c);
-        symb = addCharInAlphabet(alphabet, 'T');
+        symb = addCharInAlphabet(alphabet, 'T', 9);
         symb.setGraphics(t);
-        symb = addCharInAlphabet(alphabet, 'N');
+        symb = addCharInAlphabet(alphabet, 'N', 10);
         symb.setGraphics(n);
-        symb = addCharInAlphabet(alphabet, 'U');
+        symb = addCharInAlphabet(alphabet, 'U', 11);
         symb.setGraphics(a);
         //special codes (see http://en.wikipedia.org/wiki/Fasta_format)
-        symb = addCharInAlphabet(alphabet, 'R');
+        symb = addCharInAlphabet(alphabet, 'R', 12);
         symb.setGraphics(n);
-        symb = addCharInAlphabet(alphabet, 'Y');
+        symb = addCharInAlphabet(alphabet, 'Y', 13);
         symb.setGraphics(n);
-        symb = addCharInAlphabet(alphabet, 'K');
+        symb = addCharInAlphabet(alphabet, 'K', 14);
         symb.setGraphics(n);
-        symb = addCharInAlphabet(alphabet, 'M');
+        symb = addCharInAlphabet(alphabet, 'M', 15);
         symb.setGraphics(n);
-        symb = addCharInAlphabet(alphabet, 'S');
+        symb = addCharInAlphabet(alphabet, 'S', 16);
         symb.setGraphics(n);
-        symb = addCharInAlphabet(alphabet, 'W');
+        symb = addCharInAlphabet(alphabet, 'W', 17);
         symb.setGraphics(n);
-        symb = addCharInAlphabet(alphabet, 'B');
+        symb = addCharInAlphabet(alphabet, 'B', 18);
         symb.setGraphics(n);
-        symb = addCharInAlphabet(alphabet, 'D');
+        symb = addCharInAlphabet(alphabet, 'D', 19);
         symb.setGraphics(n);
-        symb = addCharInAlphabet(alphabet, 'H');
+        symb = addCharInAlphabet(alphabet, 'H', 20);
         symb.setGraphics(n);
-        symb = addCharInAlphabet(alphabet, 'V');
+        symb = addCharInAlphabet(alphabet, 'V', 21);
         symb.setGraphics(n);
-        symb = addCharInAlphabet(alphabet, 'X');
+        symb = addCharInAlphabet(alphabet, 'X', 22);
         symb.setGraphics(n);
         _alphabets.put("IUPAC_DNA",alphabet);
         return alphabet;
     }
 
-    public static String inverse(String str){
-    	StringBuffer szBuf = new StringBuffer();
-    	int          i, size = str.length()-1;
-    	
-    	for(i=size;i>=0;i--){
-    		szBuf.append(str.charAt(i));
-    	}
-    	return szBuf.toString();
-    	
-    }
-    public static String complement(String str){
-    	StringBuffer szBuf = new StringBuffer();
-    	int          i, size = str.length();
-    	char         ch;
-    	for(i=0;i<size;i++){
-    		ch = str.charAt(i);
-    		switch(ch){
-    		case 'A':szBuf.append('T');break;
-    		case 'C':szBuf.append('G');break;
-    		case 'G':szBuf.append('C');break;
-    		case 'T':szBuf.append('A');break;
-    		case 'R':szBuf.append('Y');break;
-    		case 'Y':szBuf.append('R');break;
-    		case 'U':szBuf.append('A');break;
-    		case 'K':szBuf.append('M');break;
-    		case 'M':szBuf.append('K');break;
-    		case 'B':szBuf.append('V');break;
-    		case 'V':szBuf.append('B');break;
-    		case 'D':szBuf.append('H');break;
-    		case 'H':szBuf.append('D');break;
-    		case 'a':szBuf.append('t');break;
-    		case 'c':szBuf.append('g');break;
-    		case 'g':szBuf.append('c');break;
-    		case 't':szBuf.append('a');break;
-    		case 'r':szBuf.append('y');break;
-    		case 'y':szBuf.append('r');break;
-    		case 'u':szBuf.append('a');break;
-    		case 'k':szBuf.append('m');break;
-    		case 'm':szBuf.append('k');break;
-    		case 'b':szBuf.append('v');break;
-    		case 'v':szBuf.append('b');break;
-    		case 'd':szBuf.append('h');break;
-    		case 'h':szBuf.append('d');break;
-        	default:
-        		szBuf.append(ch);
-    		}
-    	}
-    	return szBuf.toString();
-    }
-    public static String inverseComplement(String str){
-    	return inverse(complement(str));
-    }
     public static DAlphabet getIUPAC_Protein_Alphabet(){
         DAlphabet       alphabet;
         DSymbol         symb;
@@ -274,55 +185,55 @@ public class DViewerSystem {
         //gap = new DSymbolGraphics(Color.white, Color.lightGray);
         
         alphabet = _AFactory.createDAlphabet("IUPAC_Protein", DAlphabet.PROTEIN_ALPHABET);
-        symb = addCharInAlphabet(alphabet, 'A');
+        symb = addCharInAlphabet(alphabet, 'A', 6);//code: 0..5: reserved code, see DAlphabetImplem;
         symb.setGraphics(other);
-        symb = addCharInAlphabet(alphabet, 'B');//ambiguous: Asp or Asn
+        symb = addCharInAlphabet(alphabet, 'B', 7);//ambiguous: Asp or Asn
         symb.setGraphics(other);
-        symb = addCharInAlphabet(alphabet, 'C');
+        symb = addCharInAlphabet(alphabet, 'C', 8);
         symb.setGraphics(cys);
-        symb = addCharInAlphabet(alphabet, 'D');
+        symb = addCharInAlphabet(alphabet, 'D', 9);
         symb.setGraphics(acid);
-        symb = addCharInAlphabet(alphabet, 'E');
+        symb = addCharInAlphabet(alphabet, 'E', 10);
         symb.setGraphics(acid);
-        symb = addCharInAlphabet(alphabet, 'F');
+        symb = addCharInAlphabet(alphabet, 'F', 11);
         symb.setGraphics(pho);
-        symb = addCharInAlphabet(alphabet, 'G');
+        symb = addCharInAlphabet(alphabet, 'G', 12);
         symb.setGraphics(struct);
-        symb = addCharInAlphabet(alphabet, 'H');
+        symb = addCharInAlphabet(alphabet, 'H', 13);
         symb.setGraphics(other);
-        symb = addCharInAlphabet(alphabet, 'I');
+        symb = addCharInAlphabet(alphabet, 'I', 14);
         symb.setGraphics(pho);
-        symb = addCharInAlphabet(alphabet, 'J');//ambiguous: Leu or Ile
+        symb = addCharInAlphabet(alphabet, 'J', 15);//ambiguous: Leu or Ile
         symb.setGraphics(other);
-        symb = addCharInAlphabet(alphabet, 'K');
+        symb = addCharInAlphabet(alphabet, 'K', 16);
         symb.setGraphics(basic);
-        symb = addCharInAlphabet(alphabet, 'L');
+        symb = addCharInAlphabet(alphabet, 'L', 17);
         symb.setGraphics(pho);
-        symb = addCharInAlphabet(alphabet, 'M');
+        symb = addCharInAlphabet(alphabet, 'M', 18);
         symb.setGraphics(pho);
-        symb = addCharInAlphabet(alphabet, 'N');
+        symb = addCharInAlphabet(alphabet, 'N', 19);
         symb.setGraphics(other);
-        symb = addCharInAlphabet(alphabet, 'P');
+        symb = addCharInAlphabet(alphabet, 'P', 20);
         symb.setGraphics(struct);
-        symb = addCharInAlphabet(alphabet, 'Q');
+        symb = addCharInAlphabet(alphabet, 'Q', 22);
         symb.setGraphics(other);
-        symb = addCharInAlphabet(alphabet, 'R');
+        symb = addCharInAlphabet(alphabet, 'R', 23);
         symb.setGraphics(basic);
-        symb = addCharInAlphabet(alphabet, 'S');
+        symb = addCharInAlphabet(alphabet, 'S', 24);
         symb.setGraphics(other);
-        symb = addCharInAlphabet(alphabet, 'T');
+        symb = addCharInAlphabet(alphabet, 'T', 25);
         symb.setGraphics(other);
-        symb = addCharInAlphabet(alphabet, 'U');//selenocysteine
+        symb = addCharInAlphabet(alphabet, 'U', 26);//selenocysteine
         symb.setGraphics(other);
-        symb = addCharInAlphabet(alphabet, 'V');
+        symb = addCharInAlphabet(alphabet, 'V', 27);
         symb.setGraphics(pho);
-        symb = addCharInAlphabet(alphabet, 'W');
+        symb = addCharInAlphabet(alphabet, 'W', 28);
         symb.setGraphics(pho);
-        symb = addCharInAlphabet(alphabet, 'Y');
+        symb = addCharInAlphabet(alphabet, 'Y', 29);
         symb.setGraphics(pho);
-        symb = addCharInAlphabet(alphabet, 'X');
+        symb = addCharInAlphabet(alphabet, 'X', 30);
         symb.setGraphics(other);
-        symb = addCharInAlphabet(alphabet, 'Z');//ambiguous: Glu or Gln
+        symb = addCharInAlphabet(alphabet, 'Z', 31);//ambiguous: Glu or Gln
         symb.setGraphics(other);
         
         _alphabets.put("IUPAC_Protein",alphabet);

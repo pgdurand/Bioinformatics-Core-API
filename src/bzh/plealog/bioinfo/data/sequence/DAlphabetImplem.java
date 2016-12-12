@@ -30,7 +30,8 @@ import bzh.plealog.bioinfo.api.data.sequence.DSymbolGraphics;
  * @author Patrick G. Durand
  */
 public class DAlphabetImplem implements DAlphabet {
-  private DSymbol[]         _symbols;
+  private DSymbol[]         _symbols_code;
+  private DSymbol[]         _symbols_char;
   private DSymbolImplem     _unknownSymbol;
   private DSymbolImplem     _gapSymbol;
   private DSymbolImplem     _matchSymbol;
@@ -39,28 +40,28 @@ public class DAlphabetImplem implements DAlphabet {
   private DSymbolImplem     _anySymbol;
   private DSymbolImplem     _spaceSymbol;
   private DSymbolImplem     _reusableSymbol;
-  private Hashtable<DSymbolImplem,DSymbolImplem>         _specialSymbols;
-  private Hashtable<SymbolCodeElement,DSymbolImplem>         _specialSymbolCodes;
+  private Hashtable<DSymbolImplem,DSymbolImplem>     _specialSymbols;
+  private Hashtable<SymbolCodeElement,DSymbolImplem> _specialSymbolCodes;
   private SymbolCodeElement _reusableSymbolCode;
   private String            _name;
   private int               _type;
   private String            _repr;
 
-  private static final int ALPH_SIZE = 255;
 
   public DAlphabetImplem(){
     //create the table that stores the symbols of this alphabet
-    _symbols = new DSymbol[ALPH_SIZE];
+    _symbols_code = new DSymbol[255];
+    _symbols_char = new DSymbol[255];//ASCII Table at worst
 
     //creates the default symbols for special characters
-    _unknownSymbol = new DSymbolImplem('?','?');
-    _gapSymbol = new DSymbolImplem('-','-');
+    _unknownSymbol = new DSymbolImplem(0,'?');
+    _gapSymbol = new DSymbolImplem(1,'-');
     _gapSymbol.setGraphics(new DSymbolGraphics(Color.white, Color.lightGray));
-    _matchSymbol = new DSymbolImplem('|','|');
-    _misMatchSymbol = new DSymbolImplem(' ',' ');
-    _positiveSymbol = new DSymbolImplem('+','+');
-    _anySymbol = new DSymbolImplem('*','*');
-    _spaceSymbol = new DSymbolImplem(' ',' ');
+    _matchSymbol = new DSymbolImplem(2,'|');
+    _misMatchSymbol = new DSymbolImplem(3,' ');
+    _positiveSymbol = new DSymbolImplem(4,'+');
+    _anySymbol = new DSymbolImplem(5,'*');
+    _spaceSymbol = new DSymbolImplem(3,' ');
 
     //this a Map used to fastly retrieve DSymbol given the char representation
     _specialSymbols = new Hashtable<DSymbolImplem,DSymbolImplem>();
@@ -117,8 +118,8 @@ public class DAlphabetImplem implements DAlphabet {
     symbol = (DSymbol) _specialSymbolCodes.get(_reusableSymbolCode);
     if (symbol!=null)
       return symbol;
-    if ((code>=0 && code<_symbols.length) && _symbols[code]!=null)
-      return _symbols[code];
+    if ((code>=0 && code<_symbols_code.length) && _symbols_code[code]!=null)
+      return _symbols_code[code];
     else
       return _unknownSymbol;
   }
@@ -130,17 +131,18 @@ public class DAlphabetImplem implements DAlphabet {
     symbol = (DSymbol) _specialSymbols.get(_reusableSymbol);
     if (symbol!=null)
       return symbol;
-    if ((ch>=0 && ch<_symbols.length) && _symbols[ch]!=null)
-      return _symbols[ch];
+    if ((ch>=0 && ch<_symbols_char.length) && _symbols_char[ch]!=null)
+      return _symbols_char[ch];
     else
       return _unknownSymbol;
   }
 
 
   public boolean addSymbol(int code, DSymbol symbol){
-    if (code<0 || code>=_symbols.length)
+    if (code<0 || code>=_symbols_code.length)
       return false;
-    _symbols[code] = symbol;
+    _symbols_code[code] = symbol;
+    _symbols_char[symbol.getChar()] = symbol;
     _repr = null;
     return true;
   }
@@ -152,10 +154,10 @@ public class DAlphabetImplem implements DAlphabet {
   public int size(){
     int i, size, num;
 
-    size = _symbols.length;
+    size = _symbols_char.length;
     num=0;
     for (i=0;i<size;i++){
-      if (_symbols[i]!=null) num++;
+      if (_symbols_char[i]!=null) num++;
     }
     return (num);
   }
@@ -169,9 +171,9 @@ public class DAlphabetImplem implements DAlphabet {
       return null;
     symbols = new DSymbol[size];
     j=0;
-    for (i=0;i<_symbols.length;i++){
-      if (_symbols[i]!=null) {
-        symbols[j] = _symbols[i];
+    for (i=0;i<_symbols_char.length;i++){
+      if (_symbols_char[i]!=null) {
+        symbols[j] = _symbols_char[i];
         j++;
       }
     }
@@ -216,9 +218,9 @@ public class DAlphabetImplem implements DAlphabet {
       return _repr;
     StringBuffer buf = new StringBuffer();
 
-    for (int i=0;i<_symbols.length;i++){
-      if (_symbols[i]!=null)
-        buf.append(_symbols[i].getChar());
+    for (int i=0;i<_symbols_char.length;i++){
+      if (_symbols_char[i]!=null)
+        buf.append(_symbols_char[i].getChar());
     }
     _repr = buf.toString();
     return _repr;
