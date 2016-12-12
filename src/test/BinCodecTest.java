@@ -1,7 +1,24 @@
+/* Copyright (C) 2006-2016 Patrick G. Durand
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU Affero General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  You may obtain a copy of the License at
+ *
+ *     https://www.gnu.org/licenses/agpl-3.0.txt
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU Affero General Public License for more details.
+ */
 package test;
 
 import static org.junit.Assert.assertTrue;
 
+import java.io.StringReader;
 import java.util.BitSet;
 
 import org.junit.After;
@@ -15,7 +32,6 @@ import bzh.plealog.bioinfo.api.data.sequence.DAlphabet;
 import bzh.plealog.bioinfo.api.data.sequence.DSequence;
 import bzh.plealog.bioinfo.api.data.sequence.DSymbol;
 import bzh.plealog.bioinfo.api.data.sequence.DViewerSystem;
-import bzh.plealog.bioinfo.data.sequence.DSequenceImplem;
 import bzh.plealog.bioinfo.util.BinCodec;
 import bzh.plealog.bioinfo.util.DAlphabetUtils;
 
@@ -134,8 +150,9 @@ public class BinCodecTest {
   @Test
   public void testDSequenceImplem() {
     DAlphabet alphabet = DViewerSystem.getIUPAC_Protein_Alphabet();
-    DSequence seq = new DSequenceImplem(protein, alphabet);
-
+    StringReader str = new StringReader(protein);
+    DSequence seq = DViewerSystem.getSequenceFactory().getSequence(str, alphabet);
+    str.close();
     assertTrue(seq.size() == protein_size);
     assertTrue(seq.toString().equals(protein));
 
@@ -152,7 +169,9 @@ public class BinCodecTest {
   @Test
   public void testDSequenceImplem2() {
     DAlphabet alphabet = DViewerSystem.getIUPAC_Protein_Alphabet();
-    DSequence seq = new DSequenceImplem(protein, alphabet);
+    StringReader str = new StringReader(protein);
+    DSequence seq = DViewerSystem.getSequenceFactory().getSequence(str, alphabet);
+    str.close();
 
     String sub_protein = protein.substring(8, 25);
     DSequence sub_seq = seq.getSubSequence(8, 25, false);

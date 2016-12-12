@@ -1,3 +1,19 @@
+/* Copyright (C) 2006-2016 Patrick G. Durand
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU Affero General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  You may obtain a copy of the License at
+ *
+ *     https://www.gnu.org/licenses/agpl-3.0.txt
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU Affero General Public License for more details.
+ */
 package bzh.plealog.bioinfo.util;
 
 import java.util.BitSet;
@@ -13,75 +29,6 @@ import bzh.plealog.bioinfo.api.data.sequence.DSymbol;
  * @author Patrick G. Durand
  */
 public class BinCodec {
-  /**
-   * Fast method to compute an integer power.
-   * 
-   * @param base base
-   * @param exp exponent
-   * 
-   * @return base to the power of exponent
-   */
-  private static int ipow(int base, int exp) {
-    // from http://stackoverflow.com/a/101613
-    // computing 1 million pow with ipow: 9ms
-    // same with Math.pow: 13 ms
-    int result = 1;
-    while (exp != 0) {
-      if ((exp & 1) == 1)
-        result *= base;
-      exp >>= 1;
-      base *= base;
-    }
-
-    return result;
-  }
-
-  /**
-   * Compute the power of 2 which produces an number containing some particular 
-   * value.
-   * 
-   * @param v the value for which we need to find the power of 2 such that
-   * number is greater than or equal to v.
-   * 
-   * @return a number such that 2 to the power of that number contains v
-   */
-  private static int roundUpToTheNextHighestPowerOf2(int v) {
-    // from: http://graphics.stanford.edu/~seander/bithacks.html#RoundUpPowerOf2
-    v--;
-    v |= v >> 1;
-    v |= v >> 2;
-    v |= v >> 4;
-    v |= v >> 8;
-    v |= v >> 16;
-    v++;
-    return v;
-  }
-
-  /**
-   * Fast method to compute log base 2 of an integer.
-   * */
-  private static int binlog(int bits) // returns 0 for bits=0
-  {
-    // from: http://stackoverflow.com/a/3305710
-    int log = 0;
-    if ((bits & 0xffff0000) != 0) {
-      bits >>>= 16;
-      log = 16;
-    }
-    if (bits >= 256) {
-      bits >>>= 8;
-      log += 8;
-    }
-    if (bits >= 16) {
-      bits >>>= 4;
-      log += 4;
-    }
-    if (bits >= 4) {
-      bits >>>= 2;
-      log += 2;
-    }
-    return log + (bits >>> 1);
-  }
   
   /**
    * Encode an integer value into a BitSet.
@@ -114,7 +61,7 @@ public class BinCodec {
    * binary representation
    * */
   public static int getRequiredEncodingBits(DAlphabet alphabet) {
-    return binlog(roundUpToTheNextHighestPowerOf2(alphabet.size()));
+    return BinCodecUtils.binlog(BinCodecUtils.roundUpToTheNextHighestPowerOf2(alphabet.size()));
   }
 
   /**
@@ -126,7 +73,7 @@ public class BinCodec {
    * binary representation
    * */
   public static int getRequiredEncodingBits(int nb_symbols) {
-    return binlog(roundUpToTheNextHighestPowerOf2(nb_symbols));
+    return BinCodecUtils.binlog(BinCodecUtils.roundUpToTheNextHighestPowerOf2(nb_symbols));
   }
 
   /**
@@ -184,7 +131,20 @@ public class BinCodec {
    * @return the complement representation of a sequence
    * */
   public static BitSet reverseComplement(BitSet bits, DAlphabet alphabet, int seq_length){
-    return reverse(complement(bits, alphabet, seq_length), getRequiredEncodingBits(alphabet), seq_length);
+    int encoding_size = getRequiredEncodingBits(alphabet);
+    BitSet new_seq = new BitSet(seq_length * encoding_size + 1);
+    int k=0;
+    int code;
+    char ch;
+    
+    for(int i=seq_length-1;i>=0;i--){
+      code = decode(bits, encoding_size, i);
+      ch = alphabet.getSymbol(code).getChar();
+      ch = DAlphabetUtils.complement(ch);
+      code = alphabet.getSymbol(ch).getCode();
+      encode(new_seq, code, encoding_size, k++);
+    }
+    return new_seq;
   }
   
   /**
@@ -224,7 +184,7 @@ public class BinCodec {
     int k_start = seq_pos * encoding_size;
     int k_stop = k_start + encoding_size;
     for (int i = k_start; i < k_stop; i++) {
-      decimal += (bits.get(i) ? 1 : 0) * ipow(2, p);
+      decimal += (bits.get(i) ? 1 : 0) * BinCodecUtils.ipow(2, p);
       p++;
     }
     return decimal;
@@ -240,7 +200,7 @@ public class BinCodec {
    * */
   public static BitSet encode(DAlphabet alphabet, String sequence) {
     // how many bits to encode all symbols?
-    int nbits = binlog(roundUpToTheNextHighestPowerOf2(alphabet.size()));
+    int nbits = BinCodecUtils.binlog(BinCodecUtils.roundUpToTheNextHighestPowerOf2(alphabet.size()));
     // Size of the sequence to encode
     int seq_length = sequence.length();
 
