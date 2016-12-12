@@ -22,7 +22,7 @@ import bzh.plealog.bioinfo.api.data.sequence.DAlphabet;
 import bzh.plealog.bioinfo.api.data.sequence.DSymbol;
 
 /**
- * Contains utility methods to encode back and forth protein or AND sequence
+ * Contains utility methods to encode back and forth protein or DNA sequence
  * to a compact binary representation. The latter relies on a standard Java 
  * BitSet object.
  * 

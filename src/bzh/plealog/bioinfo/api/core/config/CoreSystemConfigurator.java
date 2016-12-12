@@ -17,7 +17,6 @@
 package bzh.plealog.bioinfo.api.core.config;
 
 import bzh.plealog.bioinfo.api.data.feature.utils.FeatureSystem;
-import bzh.plealog.bioinfo.api.data.feature.utils.FeatureTableFactory;
 import bzh.plealog.bioinfo.api.data.sequence.DSymbolFamilySystem;
 import bzh.plealog.bioinfo.api.data.sequence.DViewerSystem;
 import bzh.plealog.bioinfo.data.feature.IFeatureTableFactory;
