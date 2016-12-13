@@ -27,6 +27,7 @@ import bzh.plealog.bioinfo.api.data.sequence.DSequence;
 import bzh.plealog.bioinfo.api.data.sequence.DSequenceFactory;
 import bzh.plealog.bioinfo.api.data.sequence.DViewerSystem;
 import bzh.plealog.bioinfo.data.sequence.DSequenceImplem;
+import bzh.plealog.bioinfo.util.DAlphabetUtils;
 
 public class DSegmentedSequenceSample {
 
@@ -75,7 +76,7 @@ public class DSegmentedSequenceSample {
 		StringBuffer       szBuf;
 		int                i, size;
 
-		alph = DViewerSystem.getIUPAC_DNA_Alphabet();
+		alph = DAlphabetUtils.getIUPAC_DNA_Alphabet();
 		qSeq1 = new DSequenceImplem(qSeqStr1, alph);
 		hSeq1 = new DSequenceImplem(hSeqStr1, alph);
 		qSeq1.createRulerModel(5, 1);
@@ -114,7 +115,7 @@ public class DSegmentedSequenceSample {
 		StringBuffer       szBuf;
 		int                i, size;
 
-		alph = DViewerSystem.getIUPAC_DNA_Alphabet();
+		alph = DAlphabetUtils.getIUPAC_DNA_Alphabet();
 		qSeq1 = new DSequenceImplem(qSeqStr1, alph);
 		hSeq1 = new DSequenceImplem(hSeqStr1, alph);
 		qSeq1.createRulerModel(5, 1);

@@ -19,8 +19,8 @@ package sample;
 import bzh.plealog.bioinfo.api.core.config.CoreSystemConfigurator;
 import bzh.plealog.bioinfo.api.data.sequence.DAlphabet;
 import bzh.plealog.bioinfo.api.data.sequence.DSequence;
-import bzh.plealog.bioinfo.api.data.sequence.DViewerSystem;
 import bzh.plealog.bioinfo.data.sequence.DSequenceImplem;
+import bzh.plealog.bioinfo.util.DAlphabetUtils;
 
 public class DSequenceImplemSample {
     
@@ -29,7 +29,7 @@ public class DSequenceImplemSample {
     	DSequenceImplem seq;
 		String          seqStr = "ATAT";
 		
-    	alph = DViewerSystem.getIUPAC_DNA_Alphabet();
+    	alph = DAlphabetUtils.getIUPAC_DNA_Alphabet();
     	seq = new DSequenceImplem(seqStr, alph);
     	System.out.println("Parts for "+ seqStr +": "+seq.getSequenceParts());
 	}
@@ -39,7 +39,7 @@ public class DSequenceImplemSample {
     	DSequenceImplem seq;
 		String          seqStr = "AT-AT";
 		
-    	alph = DViewerSystem.getIUPAC_DNA_Alphabet();
+    	alph = DAlphabetUtils.getIUPAC_DNA_Alphabet();
     	seq = new DSequenceImplem(seqStr, alph);
     	System.out.println("Parts for "+ seqStr +": "+seq.getSequenceParts());
 	}
@@ -48,7 +48,7 @@ public class DSequenceImplemSample {
     	DSequenceImplem seq;
 		String          seqStr = "AT--AT";
 		
-    	alph = DViewerSystem.getIUPAC_DNA_Alphabet();
+    	alph = DAlphabetUtils.getIUPAC_DNA_Alphabet();
     	seq = new DSequenceImplem(seqStr, alph);
     	System.out.println("Parts for "+ seqStr +": "+seq.getSequenceParts());
 	}
@@ -57,7 +57,7 @@ public class DSequenceImplemSample {
     	DSequenceImplem seq;
 		String          seqStr = "-AT--AT";
 		
-    	alph = DViewerSystem.getIUPAC_DNA_Alphabet();
+    	alph = DAlphabetUtils.getIUPAC_DNA_Alphabet();
     	seq = new DSequenceImplem(seqStr, alph);
     	System.out.println("Parts for "+ seqStr +": "+seq.getSequenceParts());
 	}
@@ -66,7 +66,7 @@ public class DSequenceImplemSample {
     	DSequenceImplem seq;
 		String          seqStr = "--AT--TA--A-A";
 		
-    	alph = DViewerSystem.getIUPAC_DNA_Alphabet();
+    	alph = DAlphabetUtils.getIUPAC_DNA_Alphabet();
     	seq = new DSequenceImplem(seqStr, alph);
     	System.out.println("Parts for "+ seqStr +": "+seq.getSequenceParts());
 	}
@@ -77,7 +77,7 @@ public class DSequenceImplemSample {
     	DSequence       subSeq;
 		String          seqStr = "ATGCATGC";
 		
-    	alph = DViewerSystem.getIUPAC_DNA_Alphabet();
+    	alph = DAlphabetUtils.getIUPAC_DNA_Alphabet();
     	seq = new DSequenceImplem(seqStr, alph);
     	subSeq = seq.getSubSequence(0, 0, false);
     	System.out.println("Source sequence "+ seq);
@@ -104,7 +104,7 @@ public class DSequenceImplemSample {
     	DSequence       subSeq;
 		String          seqStr = "ATGCATGC";
 		
-    	alph = DViewerSystem.getIUPAC_DNA_Alphabet();
+    	alph = DAlphabetUtils.getIUPAC_DNA_Alphabet();
     	seq = new DSequenceImplem(seqStr, alph);
     	subSeq = seq.getSubSequence(0, 1, false);
     	System.out.println("Source sequence "+ seq);
@@ -122,7 +122,7 @@ public class DSequenceImplemSample {
     	DSequence       subSeq;
 		String          seqStr = "ATGCATGC";
 		
-    	alph = DViewerSystem.getIUPAC_DNA_Alphabet();
+    	alph = DAlphabetUtils.getIUPAC_DNA_Alphabet();
     	seq = new DSequenceImplem(seqStr, alph);
     	subSeq = seq.getSubSequence(0, 1, false);
     	System.out.println("Source sequence "+ seq);
@@ -136,7 +136,7 @@ public class DSequenceImplemSample {
     	DSequence       subSeq;
 		String          seqStr = "ATGCATGC";
 		
-    	alph = DViewerSystem.getIUPAC_DNA_Alphabet();
+    	alph = DAlphabetUtils.getIUPAC_DNA_Alphabet();
     	seq = new DSequenceImplem(seqStr, alph);
     	seq.createRulerModel(1, 1);
     	subSeq = seq.getSubSequence(0, 8, false);
@@ -154,7 +154,7 @@ public class DSequenceImplemSample {
     	DSequence       subSeq;
 		String          seqStr = "ATG--CATGC";
 		
-    	alph = DViewerSystem.getIUPAC_DNA_Alphabet();
+    	alph = DAlphabetUtils.getIUPAC_DNA_Alphabet();
     	seq = new DSequenceImplem(seqStr, alph);
     	seq.createRulerModel(1, 1);
     	subSeq = seq.getSubSequence(0, 8, false);
@@ -172,7 +172,7 @@ public class DSequenceImplemSample {
     	DSequence       subSeq;
 		String          seqStr = "--ATG--CATGC";
 		
-    	alph = DViewerSystem.getIUPAC_DNA_Alphabet();
+    	alph = DAlphabetUtils.getIUPAC_DNA_Alphabet();
     	seq = new DSequenceImplem(seqStr, alph);
     	seq.createRulerModel(1, 1);
     	subSeq = seq.getSubSequence(0, 8, false);
@@ -196,7 +196,7 @@ public class DSequenceImplemSample {
     	DSequence       subSeq;
 		String          seqStr = "ATGCATGC";
 		
-    	alph = DViewerSystem.getIUPAC_DNA_Alphabet();
+    	alph = DAlphabetUtils.getIUPAC_DNA_Alphabet();
     	seq = new DSequenceImplem(seqStr, alph);
     	seq.createRulerModel(8,-1);
     	subSeq = seq.getSubSequence(0, 8, true);

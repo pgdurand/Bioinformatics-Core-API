@@ -31,6 +31,7 @@ import bzh.plealog.bioinfo.api.data.sequence.DSequenceAlignment;
 import bzh.plealog.bioinfo.api.data.sequence.DSequenceFactory;
 import bzh.plealog.bioinfo.api.data.sequence.DViewerSystem;
 import bzh.plealog.bioinfo.data.sequence.DSequenceImplem;
+import bzh.plealog.bioinfo.util.DAlphabetUtils;
 
 public class DSequenceAlignedImplemSample {
 
@@ -45,7 +46,7 @@ public class DSequenceAlignedImplemSample {
 		int             i, size;
 		StringBuffer    szBuf;
 		
-    	alph = DViewerSystem.getIUPAC_DNA_Alphabet();
+    	alph = DAlphabetUtils.getIUPAC_DNA_Alphabet();
     	qSeq = new DSequenceImplem(qSeqStr, alph);
     	hSeq = new DSequenceImplem(hSeqStr, alph);
     	qSeq.createRulerModel(5, 1);
@@ -99,7 +100,7 @@ public class DSequenceAlignedImplemSample {
 		String           hSeqStr1 = "ACGTCA--CG";
 		String           hSeqStr2 = "AAA--GCTTT-T";
 		
-    	alph = DViewerSystem.getIUPAC_DNA_Alphabet();
+    	alph = DAlphabetUtils.getIUPAC_DNA_Alphabet();
     	qSeq1 = new DSequenceImplem(qSeqStr1, alph);
     	hSeq1 = new DSequenceImplem(hSeqStr1, alph);
     	qSeq1.createRulerModel(5, 1);
@@ -126,7 +127,7 @@ public class DSequenceAlignedImplemSample {
 		String             hSeqStr2 = "AAA--GCTTT-T";
 		ArrayList<DSequenceAligned> seqs;
 		int                i, j;
-    	alph = DViewerSystem.getIUPAC_DNA_Alphabet();
+    	alph = DAlphabetUtils.getIUPAC_DNA_Alphabet();
     	qSeq1 = new DSequenceImplem(qSeqStr1, alph);
     	hSeq1 = new DSequenceImplem(hSeqStr1, alph);
     	qSeq1.createRulerModel(5, 1);

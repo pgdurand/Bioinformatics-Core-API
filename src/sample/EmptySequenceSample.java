@@ -18,8 +18,8 @@ package sample;
 
 import bzh.plealog.bioinfo.api.data.sequence.DRulerModel;
 import bzh.plealog.bioinfo.api.data.sequence.DSequence;
-import bzh.plealog.bioinfo.api.data.sequence.DViewerSystem;
 import bzh.plealog.bioinfo.data.sequence.EmptySequence;
+import bzh.plealog.bioinfo.util.DAlphabetUtils;
 
 public class EmptySequenceSample {
 
@@ -27,7 +27,7 @@ public class EmptySequenceSample {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		EmptySequence seq = new EmptySequence(DViewerSystem.getIUPAC_DNA_Alphabet(), 1350);
+		EmptySequence seq = new EmptySequence(DAlphabetUtils.getIUPAC_DNA_Alphabet(), 1350);
 		DRulerModel   rModel;
 		
 		//check default ruler model

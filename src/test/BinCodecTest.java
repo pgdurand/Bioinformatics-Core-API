@@ -83,15 +83,15 @@ public class BinCodecTest {
     assertTrue(nbits == 5);
     nbits = BinCodec.getRequiredEncodingBits(33);
     assertTrue(nbits == 6);
-    DAlphabet alphabet = DViewerSystem.getIUPAC_Protein_Alphabet();
+    DAlphabet alphabet = DAlphabetUtils.getIUPAC_Protein_Alphabet();
     nbits = BinCodec.getRequiredEncodingBits(alphabet);
     assertTrue(alphabet.size() == 25);
     assertTrue(nbits == 5);
-    alphabet = DViewerSystem.getIUPAC_DNA_Alphabet();
+    alphabet = DAlphabetUtils.getIUPAC_DNA_Alphabet();
     nbits = BinCodec.getRequiredEncodingBits(alphabet);
     assertTrue(alphabet.size() == 17);
     assertTrue(nbits == 5);
-    alphabet = DViewerSystem.getComparer_Alphabet();
+    alphabet = DAlphabetUtils.getComparer_Alphabet();
     nbits = BinCodec.getRequiredEncodingBits(alphabet);
     assertTrue(alphabet.size() == 42);
     assertTrue(nbits == 6);
@@ -132,24 +132,24 @@ public class BinCodecTest {
   @Test
   public void testProteinAlphabetEncoding() {
     // wet get the Protein alphabet
-    testAlphabetEncoding(DViewerSystem.getIUPAC_Protein_Alphabet());
+    testAlphabetEncoding(DAlphabetUtils.getIUPAC_Protein_Alphabet());
   }
 
   @Test
   public void testDNAAlphabetEncoding() {
     // wet get the Protein alphabet
-    testAlphabetEncoding(DViewerSystem.getIUPAC_DNA_Alphabet());
+    testAlphabetEncoding(DAlphabetUtils.getIUPAC_DNA_Alphabet());
   }
 
   @Test
   public void testComparerAlphabetEncoding() {
     // wet get the Protein alphabet
-    testAlphabetEncoding(DViewerSystem.getComparer_Alphabet());
+    testAlphabetEncoding(DAlphabetUtils.getComparer_Alphabet());
   }
 
   @Test
   public void testDSequenceImplem() {
-    DAlphabet alphabet = DViewerSystem.getIUPAC_Protein_Alphabet();
+    DAlphabet alphabet = DAlphabetUtils.getIUPAC_Protein_Alphabet();
     StringReader str = new StringReader(protein);
     DSequence seq = DViewerSystem.getSequenceFactory().getSequence(str, alphabet);
     str.close();
@@ -168,7 +168,7 @@ public class BinCodecTest {
 
   @Test
   public void testDSequenceImplem2() {
-    DAlphabet alphabet = DViewerSystem.getIUPAC_Protein_Alphabet();
+    DAlphabet alphabet = DAlphabetUtils.getIUPAC_Protein_Alphabet();
     StringReader str = new StringReader(protein);
     DSequence seq = DViewerSystem.getSequenceFactory().getSequence(str, alphabet);
     str.close();
@@ -192,7 +192,7 @@ public class BinCodecTest {
   @Test
   public void testBitSetReverse() {
     // Get protein alphabet
-    DAlphabet alphabet = DViewerSystem.getIUPAC_Protein_Alphabet();
+    DAlphabet alphabet = DAlphabetUtils.getIUPAC_Protein_Alphabet();
     // Get its binary encoding size; i.e. number of bits required to
     // binary encore all symbols of the alphabet
     int nbits = BinCodec.getRequiredEncodingBits(alphabet);
@@ -216,7 +216,7 @@ public class BinCodecTest {
   
   @Test
   public void testBitSetComplement(){
-    DAlphabet alphabet = DViewerSystem.getIUPAC_DNA_Alphabet();
+    DAlphabet alphabet = DAlphabetUtils.getIUPAC_DNA_Alphabet();
     // Get its binary encoding size; i.e. number of bits required to
     // binary encore all symbols of the alphabet
     int nbits = BinCodec.getRequiredEncodingBits(alphabet);
@@ -240,7 +240,7 @@ public class BinCodecTest {
 
   @Test
   public void testBitSetReverseComplement(){
-    DAlphabet alphabet = DViewerSystem.getIUPAC_DNA_Alphabet();
+    DAlphabet alphabet = DAlphabetUtils.getIUPAC_DNA_Alphabet();
     // Get its binary encoding size; i.e. number of bits required to
     // binary encore all symbols of the alphabet
     int nbits = BinCodec.getRequiredEncodingBits(alphabet);
@@ -263,7 +263,7 @@ public class BinCodecTest {
   }
 
   private void testBitSubSet(int from, int nletters){
-    DAlphabet alphabet = DViewerSystem.getIUPAC_DNA_Alphabet();
+    DAlphabet alphabet = DAlphabetUtils.getIUPAC_DNA_Alphabet();
     // Get its binary encoding size; i.e. number of bits required to
     // binary encore all symbols of the alphabet
     int nbits = BinCodec.getRequiredEncodingBits(alphabet);

@@ -21,6 +21,8 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
 
+import bzh.plealog.bioinfo.util.DAlphabetUtils;
+
 /**
  * This class manages families of symbols.
  * 
@@ -47,7 +49,7 @@ public abstract class DSymbolFamilySystem {
 		DAlphabet     alph;
 		
 		//from: http://prowl.rockefeller.edu/aainfo/pchem.htm
-		alph = DViewerSystem.getIUPAC_Protein_Alphabet();
+		alph = DAlphabetUtils.getIUPAC_Protein_Alphabet();
 		family = new DSymbolFamily(DF_ALIPHATIC, DAlphabet.PROTEIN_ALPHABET);
 		family.addSymbol(alph.getSymbol('V'));
 		family.addSymbol(alph.getSymbol('I'));
@@ -87,7 +89,7 @@ public abstract class DSymbolFamilySystem {
 		family.addSymbol(alph.getSymbol('K'));
 		DSymbolFamilySystem.addFamily(DF_BASIC, family);
 
-		alph = DViewerSystem.getIUPAC_DNA_Alphabet();
+		alph = DAlphabetUtils.getIUPAC_DNA_Alphabet();
 		family = new DSymbolFamily(DF_GC, DAlphabet.DNA_ALPHABET);
 		family.addSymbol(alph.getSymbol('G'));
 		family.addSymbol(alph.getSymbol('C'));
