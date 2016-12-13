@@ -16,9 +16,13 @@
  */
 package bzh.plealog.bioinfo.data.sequence;
 
+import java.io.IOException;
+import java.io.Reader;
 import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.List;
+
+import com.plealog.genericapp.api.log.EZLogger;
 
 import bzh.plealog.bioinfo.api.data.sequence.DAlphabet;
 import bzh.plealog.bioinfo.api.data.sequence.DLocation;
@@ -44,10 +48,19 @@ public class DSequenceImplem implements DSequence {
   private int _gapContent = -1;
   private int _nbits;
   private int _size;
-  
+
+  /**
+   * Default constructor is not available.
+   */
   private DSequenceImplem() {
   }
 
+  /**
+   * Constructor from a String.
+   * 
+   * @param seq the sequence to encode
+   * @param alphabet the alphabet used to encode the string
+   */
   public DSequenceImplem(String seq, DAlphabet alphabet) {
     this();
     if (seq == null)
@@ -58,6 +71,43 @@ public class DSequenceImplem implements DSequence {
     _nbits = BinCodec.getRequiredEncodingBits(_alphabet);
     _size = seq.length();
     _sequence = BinCodec.encode(_alphabet, seq);
+  }
+
+  /**
+   * Constructor from a Reader.
+   * 
+   * @param reader the reader giving access to the sequence to encode
+   * @param alphabet the alphabet used to encode the string
+   */
+  public DSequenceImplem(Reader reader, DAlphabet alphabet) throws IOException{
+    this();
+    
+    if (reader == null)
+      throw new RuntimeException("Reader is not defined.");
+    if (alphabet == null)
+      throw new RuntimeException("Alphabet is not defined.");
+    
+    _alphabet = alphabet;
+    _nbits = BinCodec.getRequiredEncodingBits(_alphabet);
+    _sequence = new BitSet();
+    _size=0;
+
+    int ichr;
+    char ch;
+    DSymbol sym;
+    
+    // we must have chars, so we cast
+    while ((ichr = reader.read()) != -1) {
+      //most Alphabet only enable upper case letters
+      ch = Character.toUpperCase((char) ichr);
+      sym = alphabet.getSymbol(ch);
+      if (sym == null) {
+        EZLogger.warn("Symbol unknown for: " + ch + ". Continuing...");
+        continue;
+      }
+      BinCodec.encode(_sequence, sym.getCode(), _nbits, _size);
+      _size++;
+    }
   }
 
   protected DSequenceImplem(BitSet seq, DAlphabet alphabet, int seq_size) {
@@ -71,26 +121,25 @@ public class DSequenceImplem implements DSequence {
     _size = seq_size;
     _sequence = seq;
   }
-  
-  public DSymbol getSymbol(int idx){
-    	if (idx>=0 && idx<_sequence.length()){
-    		return (_alphabet.getSymbol(BinCodec.decode(_sequence, _nbits, idx)));
-        }
-        else{
-            return _letter;
-        }
+
+  public DSymbol getSymbol(int idx) {
+    if (idx >= 0 && idx < _sequence.length()) {
+      return (_alphabet.getSymbol(BinCodec.decode(_sequence, _nbits, idx)));
+    } else {
+      return _letter;
     }
+  }
 
   public DSequence getSubSequence(int idxFrom, int idxTo, boolean inverse) {
     DSequenceImplem seq;
     int startPos = -1, i, size, increment;
     BitSet subSeq;
-    
+
     size = _sequence.length();
     if (idxFrom < 0 || idxTo < 0 || idxFrom == size || idxTo > size || idxFrom >= idxTo)
       return null;
-    
-    size = idxTo-idxFrom;
+
+    size = idxTo - idxFrom;
     subSeq = BinCodec.subset(_sequence, _nbits, idxFrom, size);
 
     if (inverse) {
@@ -152,13 +201,13 @@ public class DSequenceImplem implements DSequence {
 
   public String toString() {
     StringBuffer buf;
-    
+
     buf = new StringBuffer();
-    
-    for(int i=0;i<_size;i++){
+
+    for (int i = 0; i < _size; i++) {
       buf.append(_alphabet.getSymbol(BinCodec.decode(_sequence, _nbits, i)).getChar());
     }
-    
+
     return buf.toString();
   }
 

@@ -38,7 +38,7 @@ public class BinCodec {
    * @param encoding_size nb bits used to encode integer
    * @param seq_pos sequence location coordinate. Zero-based value.
    */
-  private static void encode(BitSet bits, int code, int encoding_size, int seq_pos){
+  public static void encode(BitSet bits, int code, int encoding_size, int seq_pos){
     // The binary representation of a integer implies that bits
     // are read from right to left (bit of low weight is on the right).
     // However, we code that binary representation from LEFT to
