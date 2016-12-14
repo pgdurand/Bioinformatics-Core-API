@@ -31,7 +31,6 @@ import bzh.plealog.bioinfo.api.core.config.CoreSystemConfigurator;
 import bzh.plealog.bioinfo.api.data.sequence.DAlphabet;
 import bzh.plealog.bioinfo.api.data.sequence.DSequence;
 import bzh.plealog.bioinfo.api.data.sequence.DSymbol;
-import bzh.plealog.bioinfo.api.data.sequence.DViewerSystem;
 import bzh.plealog.bioinfo.util.BinCodec;
 import bzh.plealog.bioinfo.util.DAlphabetUtils;
 
@@ -151,7 +150,7 @@ public class BinCodecTest {
   public void testDSequenceImplem() {
     DAlphabet alphabet = DAlphabetUtils.getIUPAC_Protein_Alphabet();
     StringReader str = new StringReader(protein);
-    DSequence seq = DViewerSystem.getSequenceFactory().getSequence(str, alphabet);
+    DSequence seq = CoreSystemConfigurator.getSequenceFactory().getSequence(str, alphabet);
     str.close();
     assertTrue(seq.size() == protein_size);
     assertTrue(seq.toString().equals(protein));
@@ -170,7 +169,7 @@ public class BinCodecTest {
   public void testDSequenceImplem2() {
     DAlphabet alphabet = DAlphabetUtils.getIUPAC_Protein_Alphabet();
     StringReader str = new StringReader(protein);
-    DSequence seq = DViewerSystem.getSequenceFactory().getSequence(str, alphabet);
+    DSequence seq = CoreSystemConfigurator.getSequenceFactory().getSequence(str, alphabet);
     str.close();
 
     String sub_protein = protein.substring(8, 25);

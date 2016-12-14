@@ -21,6 +21,7 @@ import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
 
+import bzh.plealog.bioinfo.api.core.config.CoreSystemConfigurator;
 import bzh.plealog.bioinfo.api.data.searchresult.SRHit;
 import bzh.plealog.bioinfo.api.data.searchresult.SRHsp;
 import bzh.plealog.bioinfo.api.data.searchresult.SRIteration;
@@ -35,7 +36,6 @@ import bzh.plealog.bioinfo.api.data.sequence.DSequenceAlignment;
 import bzh.plealog.bioinfo.api.data.sequence.DSequenceAlignmentFactory;
 import bzh.plealog.bioinfo.api.data.sequence.DSequenceException;
 import bzh.plealog.bioinfo.api.data.sequence.DSequenceFactory;
-import bzh.plealog.bioinfo.api.data.sequence.DViewerSystem;
 
 /**
  * This is a default implementation of interface BIteration
@@ -196,13 +196,13 @@ public class ISRIteration implements SRIteration{
 		int                       i, hits, j, hsps, msaType;
 		
     	//check factory system
-		saFactory = DViewerSystem.getSequenceAlignedFactory();
+		saFactory = CoreSystemConfigurator.getSequenceAlignedFactory();
     	if (saFactory==null)
     		throw new DSequenceException(MSA_BUILD_ERR_MSG_HEADER+": no aligned sequence factory.");
-    	sFactory = DViewerSystem.getSequenceFactory();
+    	sFactory = CoreSystemConfigurator.getSequenceFactory();
     	if (sFactory==null)
     		throw new DSequenceException(MSA_BUILD_ERR_MSG_HEADER+": no sequence factory.");
-    	msaFactory = DViewerSystem.getSequenceAlignmentFactory();
+    	msaFactory = CoreSystemConfigurator.getSequenceAlignmentFactory();
     	if (msaFactory==null)
     		throw new DSequenceException(MSA_BUILD_ERR_MSG_HEADER+": no MSA factory.");
 		//creates MSA

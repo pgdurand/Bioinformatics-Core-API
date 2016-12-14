@@ -18,6 +18,8 @@ package bzh.plealog.bioinfo.api.data.sequence;
 
 import javax.swing.AbstractListModel;
 
+import bzh.plealog.bioinfo.api.core.config.CoreSystemConfigurator;
+
 /**
  * This class implements a sequence model. It is intended to wraps a DSequence
  * so that it can be viewed in a DSequenceListViewer.
@@ -27,7 +29,7 @@ import javax.swing.AbstractListModel;
 public class DSequenceModel extends AbstractListModel<DSymbol> {
   private static final long serialVersionUID = 4987143569550379293L;
   private DSequence  _sequence;
-  private DSymbol    _letter = DViewerSystem.getSymbolFactory().createDSymbol(0,' ');
+  private DSymbol    _letter = CoreSystemConfigurator.getSymbolFactory().createDSymbol(0,' ');
 
   /**
    * Constructor from a DSequence.

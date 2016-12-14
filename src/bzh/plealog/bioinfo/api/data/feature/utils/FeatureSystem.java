@@ -16,13 +16,23 @@
  */
 package bzh.plealog.bioinfo.api.data.feature.utils;
 
-public class FeatureSystem {
-	private static FeatureTableFactory _factory;
+import bzh.plealog.bioinfo.api.core.config.CoreSystemConfigurator;
 
-	public static void setFeatureTableFactory(FeatureTableFactory f){
-		_factory = f;
+public class FeatureSystem {
+
+	/**
+	 * @deprecated
+	 * @see CoreSystemConfigurator#setFeatureTableFactory(FeatureTableFactory)
+	 * */
+  public static void setFeatureTableFactory(FeatureTableFactory f){
+	  CoreSystemConfigurator.setFeatureTableFactory(f);
 	}
-	public static FeatureTableFactory getFeatureTableFactory(){
-		return _factory;
+
+  /**
+   * @deprecated
+   * @see CoreSystemConfigurator#getFeatureTableFactory()
+   * */
+public static FeatureTableFactory getFeatureTableFactory(){
+		return CoreSystemConfigurator.getFeatureTableFactory();
 	}
 }

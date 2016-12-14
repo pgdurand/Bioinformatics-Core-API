@@ -18,11 +18,11 @@ package bzh.plealog.bioinfo.data.searchresult;
 
 import java.io.StringReader;
 
+import bzh.plealog.bioinfo.api.core.config.CoreSystemConfigurator;
 import bzh.plealog.bioinfo.api.data.feature.FeatureTable;
 import bzh.plealog.bioinfo.api.data.searchresult.SRHsp;
 import bzh.plealog.bioinfo.api.data.searchresult.SRHspSequence;
 import bzh.plealog.bioinfo.api.data.sequence.DSequence;
-import bzh.plealog.bioinfo.api.data.sequence.DViewerSystem;
 import bzh.plealog.bioinfo.util.DAlphabetUtils;
 
 /**
@@ -158,10 +158,10 @@ public class ISRHspSequence implements SRHspSequence {
     if (dSequence != null)
       return dSequence;
     if (type == SRHspSequence.TYPE_MIDLINE) {
-      dSequence = DViewerSystem.getSequenceFactory().getSequence(new StringReader(sequence),
+      dSequence = CoreSystemConfigurator.getSequenceFactory().getSequence(new StringReader(sequence),
           DAlphabetUtils.getComparer_Alphabet());
     } else {
-      dSequence = DViewerSystem.getSequenceFactory().getSequence(new StringReader(sequence),
+      dSequence = CoreSystemConfigurator.getSequenceFactory().getSequence(new StringReader(sequence),
           (hsp.isProteic() ? DAlphabetUtils.getIUPAC_Protein_Alphabet() : DAlphabetUtils.getIUPAC_DNA_Alphabet()));
       int increment = SRUtils.getIncrement(getFrom(), getTo(), hsp.getScores().getAlignLen() - getGaps());
       dSequence.createRulerModel(getFrom(), increment);

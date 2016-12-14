@@ -19,12 +19,13 @@ package bzh.plealog.bioinfo.api.data.sequence;
 import java.io.StringReader;
 import java.text.MessageFormat;
 
+import bzh.plealog.bioinfo.api.core.config.CoreSystemConfigurator;
 import bzh.plealog.bioinfo.util.DAlphabetUtils;
 
 public class DSeqUtils {
 	public static DSequence getSequence(String seq, boolean isProteic){
         DSequence dSequence;
-        dSequence = DViewerSystem.getSequenceFactory().getSequence(
+        dSequence = CoreSystemConfigurator.getSequenceFactory().getSequence(
                 new StringReader(seq),
                 (isProteic ? 
                 DAlphabetUtils.getIUPAC_Protein_Alphabet() : 

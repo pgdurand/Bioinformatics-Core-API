@@ -25,7 +25,6 @@ import bzh.plealog.bioinfo.api.data.sequence.DLocation;
 import bzh.plealog.bioinfo.api.data.sequence.DRulerModel;
 import bzh.plealog.bioinfo.api.data.sequence.DSequence;
 import bzh.plealog.bioinfo.api.data.sequence.DSequenceFactory;
-import bzh.plealog.bioinfo.api.data.sequence.DViewerSystem;
 import bzh.plealog.bioinfo.data.sequence.DSequenceImplem;
 import bzh.plealog.bioinfo.util.DAlphabetUtils;
 
@@ -62,7 +61,7 @@ public class DSequenceSegmentedSample {
       seqPart.add(seqTmp);
       locPart.add(loc);
     }
-    sFactory = DViewerSystem.getSequenceFactory();
+    sFactory = CoreSystemConfigurator.getSequenceFactory();
     return (sFactory.getSequence(seqPart, locPart, hit.getAlphabet(), seqSize));
   }
 

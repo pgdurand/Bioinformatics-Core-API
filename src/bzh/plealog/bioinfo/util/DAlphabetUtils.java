@@ -19,10 +19,10 @@ package bzh.plealog.bioinfo.util;
 import java.awt.Color;
 import java.util.Hashtable;
 
+import bzh.plealog.bioinfo.api.core.config.CoreSystemConfigurator;
 import bzh.plealog.bioinfo.api.data.sequence.DAlphabet;
 import bzh.plealog.bioinfo.api.data.sequence.DSymbol;
 import bzh.plealog.bioinfo.api.data.sequence.DSymbolGraphics;
-import bzh.plealog.bioinfo.api.data.sequence.DViewerSystem;
 
 /**
  * Contains some utility methods to handle Alphabet of Symbols.
@@ -158,7 +158,7 @@ public class DAlphabetUtils {
   private static DSymbol addCharInAlphabet(DAlphabet alphabet, char ch, int code) {
     DSymbol symb;
 
-    symb = DViewerSystem.getSymbolFactory().createDSymbol(code, ch);
+    symb = CoreSystemConfigurator.getSymbolFactory().createDSymbol(code, ch);
     alphabet.addSymbol(code, symb);
     return (symb);
   }
@@ -170,7 +170,7 @@ public class DAlphabetUtils {
       return ((DAlphabet) _alphabets.get("Comparer"));
     }
     String chars = new String("ACDEFGHIKLMNPQRSTVWYXacdefghiklmnpqrstvwyx");
-    alphabet = DViewerSystem.getAlphabetFactory().createDAlphabet("Comparer", DAlphabet.OTHER_ALPHABET);
+    alphabet = CoreSystemConfigurator.getAlphabetFactory().createDAlphabet("Comparer", DAlphabet.OTHER_ALPHABET);
     int code_start = 6; // 0..5: reserved code, see DAlphabetImplem;
     for (int i = 0; i < chars.length(); i++) {
       addCharInAlphabet(alphabet, chars.charAt(i), code_start + i);
@@ -197,7 +197,7 @@ public class DAlphabetUtils {
     // t.setNegativeColor(true);
     n = new DSymbolGraphics(Color.white, Color.gray);
     // n.setNegativeColor(true);
-    alphabet = DViewerSystem.getAlphabetFactory().createDAlphabet("IUPAC_DNA", DAlphabet.DNA_ALPHABET);
+    alphabet = CoreSystemConfigurator.getAlphabetFactory().createDAlphabet("IUPAC_DNA", DAlphabet.DNA_ALPHABET);
     // standards nucleotides
     symb = addCharInAlphabet(alphabet, 'A', 6);// code: 0..5: reserved code, see
                                                // DAlphabetImplem;
@@ -255,7 +255,7 @@ public class DAlphabetUtils {
     other = new DSymbolGraphics(Color.white, Color.black);
     // gap = new DSymbolGraphics(Color.white, Color.lightGray);
 
-    alphabet = DViewerSystem.getAlphabetFactory().createDAlphabet("IUPAC_Protein", DAlphabet.PROTEIN_ALPHABET);
+    alphabet = CoreSystemConfigurator.getAlphabetFactory().createDAlphabet("IUPAC_Protein", DAlphabet.PROTEIN_ALPHABET);
     symb = addCharInAlphabet(alphabet, 'A', 6);// code: 0..5: reserved code, see
                                                // DAlphabetImplem;
     symb.setGraphics(other);

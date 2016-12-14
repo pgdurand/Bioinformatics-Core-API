@@ -29,7 +29,6 @@ import bzh.plealog.bioinfo.api.data.sequence.DSequenceAligned;
 import bzh.plealog.bioinfo.api.data.sequence.DSequenceAlignedFactory;
 import bzh.plealog.bioinfo.api.data.sequence.DSequenceAlignment;
 import bzh.plealog.bioinfo.api.data.sequence.DSequenceFactory;
-import bzh.plealog.bioinfo.api.data.sequence.DViewerSystem;
 import bzh.plealog.bioinfo.data.sequence.DSequenceImplem;
 import bzh.plealog.bioinfo.util.DAlphabetUtils;
 
@@ -86,8 +85,8 @@ public class DSequenceAlignedImplemSample {
     		seqTmp = hit.getSubSequence(loc.getFrom(), loc.getTo()+1, false);
     		szBuf.append(seqTmp.toString());
     	}
-    	sFactory = DViewerSystem.getSequenceFactory();
-    	saFactory = DViewerSystem.getSequenceAlignedFactory();
+    	sFactory = CoreSystemConfigurator.getSequenceFactory();
+    	saFactory = CoreSystemConfigurator.getSequenceAlignedFactory();
     	seqTmp = sFactory.getSequence(new StringReader(szBuf.toString()), hit.getAlphabet());
     	return (saFactory.getDSequenceAligned(seqTmp, startPos));
 	}
@@ -141,7 +140,7 @@ public class DSequenceAlignedImplemSample {
     	seqs = new ArrayList<DSequenceAligned>();
     	seqs.add(getSA(qSeq1, hSeq1));
     	seqs.add(getSA(qSeq2, hSeq2));
-    	msa = DViewerSystem.getSequenceAlignmentFactory().getDSequenceAlignment(seqs, 15, 
+    	msa = CoreSystemConfigurator.getSequenceAlignmentFactory().getDSequenceAlignment(seqs, 15, 
     			DSequenceAlignment.STANDARD_ALIGNMENT);
     	
     	if (msa==null){
