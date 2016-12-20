@@ -54,14 +54,14 @@ public class DAlphabetImplem implements DAlphabet {
     _symbols_char = new DSymbol[255];//ASCII Table at worst
 
     //creates the default symbols for special characters
-    _unknownSymbol = new DSymbolImplem(0,'?');
-    _gapSymbol = new DSymbolImplem(1,'-');
+    _unknownSymbol = new DSymbolImplem(DSymbol.UNKNOWN_SYMBOL_CODE,'?');
+    _gapSymbol = new DSymbolImplem(DSymbol.GAP_SYMBOL_CODE,'-');
     _gapSymbol.setGraphics(new DSymbolGraphics(Color.white, Color.lightGray));
-    _matchSymbol = new DSymbolImplem(2,'|');
-    _misMatchSymbol = new DSymbolImplem(3,' ');
-    _positiveSymbol = new DSymbolImplem(4,'+');
-    _anySymbol = new DSymbolImplem(5,'*');
-    _spaceSymbol = new DSymbolImplem(3,' ');
+    _matchSymbol = new DSymbolImplem(DSymbol.MATCH_SYMBOL_CODE,'|');
+    _misMatchSymbol = new DSymbolImplem(DSymbol.MISMATCH_SYMBOL_CODE,' ');
+    _positiveSymbol = new DSymbolImplem(DSymbol.POSITIVE_SYMBOL_CODE,'+');
+    _anySymbol = new DSymbolImplem(DSymbol.ANY_SYMBOL_CODE,'*');
+    _spaceSymbol = new DSymbolImplem(DSymbol.SPACE_SYMBOL_CODE,' ');
 
     //this a Map used to fastly retrieve DSymbol given the char representation
     _specialSymbols = new Hashtable<DSymbolImplem,DSymbolImplem>();

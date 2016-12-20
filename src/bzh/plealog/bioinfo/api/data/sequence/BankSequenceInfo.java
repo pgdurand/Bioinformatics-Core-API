@@ -81,6 +81,16 @@ public interface BankSequenceInfo extends Cloneable, Serializable{
   public int getSequenceSize();
 
   /**
+   * Sets the Id of a sequence.
+   */
+  public void setId(String id);
+
+  /**
+   * Sets the description of a sequence.
+   */
+  public void setDescription(String desc);
+  
+  /**
    * Sets the molecular type of a sequence.
    */
   public void setMoltype(String mtype);

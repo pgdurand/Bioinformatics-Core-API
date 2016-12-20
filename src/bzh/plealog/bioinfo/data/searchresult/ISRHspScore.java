@@ -59,6 +59,8 @@ public class ISRHspScore implements SRHspScore{
 	 */
     private int          density;
 
+    protected int          mismatches;
+
     public ISRHspScore(){}
     
 	public SRHspScore clone(){
@@ -104,5 +106,8 @@ public class ISRHspScore implements SRHspScore{
     
     public int getDensity(){return density;}
     public void setDensity(int val){density=val;}
+
+    public int getMismatches(){return mismatches;}
+    public void setMismatches(int val){mismatches=val;}
 
 }

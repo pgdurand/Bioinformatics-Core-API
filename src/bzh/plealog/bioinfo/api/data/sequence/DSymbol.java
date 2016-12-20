@@ -22,19 +22,19 @@ package bzh.plealog.bioinfo.api.data.sequence;
  * @author Patrick G. Durand
  */
 public interface DSymbol {
-    public static final int UNKNOWN_SYMBOL_CODE = -1;
+    public static final int UNKNOWN_SYMBOL_CODE = 0;
     
-    public static final int GAP_SYMBOL_CODE = -2;
+    public static final int GAP_SYMBOL_CODE = 1;
     
-    public static final int MATCH_SYMBOL_CODE = -3;
+    public static final int MATCH_SYMBOL_CODE = 2;
 
-    public static final int MISMATCH_SYMBOL_CODE = -4;
+    public static final int MISMATCH_SYMBOL_CODE = 3;
 
-    public static final int POSITIVE_SYMBOL_CODE = -5;
+    public static final int POSITIVE_SYMBOL_CODE = 4;
     
-    public static final int ANY_SYMBOL_CODE = -6;
+    public static final int ANY_SYMBOL_CODE = 5;
 
-    public static final int SPACE_SYMBOL_CODE = -7;
+    public static final int SPACE_SYMBOL_CODE = 3;
 
     /**
      * Sets the character representation of this symbol. This character

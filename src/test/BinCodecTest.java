@@ -290,4 +290,31 @@ public class BinCodecTest {
     testBitSubSet(2, 5);
     testBitSubSet(0, dna.length());
   }
+  
+  @Test
+  public void testAlignedSeq(){
+    String seq = "QT--AV*A";
+    DAlphabet alphabet = DAlphabetUtils.getIUPAC_Protein_Alphabet();
+    StringReader str = new StringReader(seq);
+    DSequence dseq = CoreSystemConfigurator.getSequenceFactory().getSequence(str, alphabet);
+    str.close();
+    
+    for(int i=0;i<dseq.size();i++){
+      assertTrue(dseq.getSymbol(i).getChar()==seq.charAt(i));
+    }
+  }
+
+  @Test
+  public void testComparaSeq(){
+    String seq = "F YP+ +N|K";
+    DAlphabet alphabet = DAlphabetUtils.getComparer_Alphabet();
+    StringReader str = new StringReader(seq);
+    DSequence dseq = CoreSystemConfigurator.getSequenceFactory().getSequence(str, alphabet);
+    str.close();
+    
+    for(int i=0;i<dseq.size();i++){
+      assertTrue(dseq.getSymbol(i).getChar()==seq.charAt(i));
+    }
+  }
+
 }

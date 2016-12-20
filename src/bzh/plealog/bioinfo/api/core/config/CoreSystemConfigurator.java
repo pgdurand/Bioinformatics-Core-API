@@ -17,6 +17,7 @@
 package bzh.plealog.bioinfo.api.core.config;
 
 import bzh.plealog.bioinfo.api.data.feature.utils.FeatureTableFactory;
+import bzh.plealog.bioinfo.api.data.searchresult.utils.SRFactory;
 import bzh.plealog.bioinfo.api.data.sequence.BankSequenceInfoFactory;
 import bzh.plealog.bioinfo.api.data.sequence.DAlphabetFactory;
 import bzh.plealog.bioinfo.api.data.sequence.DSequenceAlignedFactory;
@@ -25,6 +26,7 @@ import bzh.plealog.bioinfo.api.data.sequence.DSequenceFactory;
 import bzh.plealog.bioinfo.api.data.sequence.DSymbolFactory;
 import bzh.plealog.bioinfo.api.data.sequence.DSymbolFamilySystem;
 import bzh.plealog.bioinfo.data.feature.IFeatureTableFactory;
+import bzh.plealog.bioinfo.data.searchresult.ISRFactory;
 import bzh.plealog.bioinfo.data.sequence.DAlphabetFactoryImplem;
 import bzh.plealog.bioinfo.data.sequence.DSequenceAlignedFactoryImplem;
 import bzh.plealog.bioinfo.data.sequence.DSequenceAlignmentFactoryImplem;
@@ -46,7 +48,8 @@ public class CoreSystemConfigurator {
   private static DSequenceAlignedFactory _SAFactory;
   private static BankSequenceInfoFactory _BSIFactory;
   private static FeatureTableFactory _factory;
-
+  private static SRFactory _srFactory;
+  
   static {
     initializeSystem();
   }
@@ -64,7 +67,8 @@ public class CoreSystemConfigurator {
     CoreSystemConfigurator.setSequenceAlignedFactory(new DSequenceAlignedFactoryImplem());
     CoreSystemConfigurator.setSequenceAlignmentFactory(new DSequenceAlignmentFactoryImplem());
     CoreSystemConfigurator.setBankSequenceInfoFactory(new IBankSequenceInfoFactory());
-
+    CoreSystemConfigurator.setSRFactory(new ISRFactory());
+    
     DSymbolFamilySystem.initDefaultFamilies(null);
 
     CoreSystemConfigurator.setFeatureTableFactory(new IFeatureTableFactory());
@@ -142,6 +146,9 @@ public class CoreSystemConfigurator {
       _factory = f;
   }
 
+  public static void setSRFactory(SRFactory factory){
+    _srFactory = factory;
+  }
 
   /**
    * Get a DSequenceAlignmentFactory.
@@ -206,4 +213,8 @@ public class CoreSystemConfigurator {
     return _factory;
   }
 
+  public static SRFactory getSRFactory(){
+    return _srFactory;
+  }
+  
 }

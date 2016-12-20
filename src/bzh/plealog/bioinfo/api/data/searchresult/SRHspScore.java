@@ -85,6 +85,9 @@ public interface SRHspScore extends Serializable{
     public int getDensity();
     public void setDensity(int val);
 
+    public int getMismatches();
+    public void setMismatches(int val);
+
     /**
      * Forces the implementation of a clone method.
      */
