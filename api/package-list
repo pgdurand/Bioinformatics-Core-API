@@ -1,0 +1,15 @@
+bzh.plealog.bioinfo.api.core.config
+bzh.plealog.bioinfo.api.data.feature
+bzh.plealog.bioinfo.api.data.feature.utils
+bzh.plealog.bioinfo.api.data.searchresult
+bzh.plealog.bioinfo.api.data.searchresult.io
+bzh.plealog.bioinfo.api.data.searchresult.utils
+bzh.plealog.bioinfo.api.data.sequence
+bzh.plealog.bioinfo.api.data.sequence.stat
+bzh.plealog.bioinfo.data.blast.loader.ncbi
+bzh.plealog.bioinfo.data.feature
+bzh.plealog.bioinfo.data.searchresult
+bzh.plealog.bioinfo.data.sequence
+bzh.plealog.bioinfo.io.searchresult.ncbi
+bzh.plealog.bioinfo.io.searchresult.srnative
+bzh.plealog.bioinfo.util
