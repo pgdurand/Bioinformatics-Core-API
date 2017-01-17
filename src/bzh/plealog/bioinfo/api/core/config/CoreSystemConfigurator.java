@@ -129,7 +129,7 @@ public class CoreSystemConfigurator {
   /**
    * Set a BankSequenceInfoFactory.
    * 
-   * @param factory the new factory.
+   * @param bsiFactory the new factory.
    */
   public static void setBankSequenceInfoFactory(BankSequenceInfoFactory bsiFactory) {
     if (bsiFactory!=null)
@@ -139,7 +139,7 @@ public class CoreSystemConfigurator {
   /**
    * Set a FeatureTableFactory.
    * 
-   * @param factory the new factory.
+   * @param f the new factory.
    */
   public static void setFeatureTableFactory(FeatureTableFactory f) {
     if (f!=null)

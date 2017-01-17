@@ -163,7 +163,7 @@ public class DViewerSystem {
 
   /**
    * @deprecated
-   * @see DAlphabetUtils#getSpecialSymbols()
+   * @see DAlphabetUtils#getSpecialSymbols(DAlphabet)
    */
   public static String getSpecialSymbols(DAlphabet alphabet) {
     return DAlphabetUtils.getSpecialSymbols(alphabet);
@@ -171,7 +171,7 @@ public class DViewerSystem {
 
   /**
    * @deprecated
-   * @see DAlphabetUtils#isSpecialSymbol()
+   * @see DAlphabetUtils#isSpecialSymbol(DAlphabet, DSymbol)
    */
   public static boolean isSpecialSymbol(DAlphabet alphabet, DSymbol symbol) {
     return DAlphabetUtils.isSpecialSymbol(alphabet, symbol);
