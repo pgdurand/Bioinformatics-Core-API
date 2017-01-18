@@ -25,7 +25,7 @@ Since this package is a library, its primary purpose targets a use within other 
 * [Bioinformatics Core UI components](https://github.com/pgdurand/Bioinformatics-UI-API): a set of viewers of sequence/feature/etc objects
 
 
-See also [Wiki](https://github.com/pgdurand/Bioinformatics-Filter-Engine/wiki).
+See also [Wiki](https://github.com/pgdurand/Bioinformatics-Core-API/wiki).
 
 ##License and dependencies
 
