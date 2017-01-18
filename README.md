@@ -1,6 +1,6 @@
 #Bioinformatics Core API
 
-[![License](https://img.shields.io/badge/license-Affero%20GPL%203.0-blue.svg)](https://www.gnu.org/licenses/agpl-3.0.txt)
+[![License AGPL](https://img.shields.io/badge/license-Affero%20GPL%203.0-blue.svg)](https://www.gnu.org/licenses/agpl-3.0.txt)
 
 ##Introduction
 
@@ -23,6 +23,9 @@ Since this package is a library, its primary purpose targets a use within other 
 * "test" package in this project: it contains sample sources codes; "TestSerialSystem.java" is of particular interest
 * [Blast Filter Tool](https://github.com/pgdurand/BLAST-Filter-Tool) source code: a full example of a running application relying on this library
 * [Bioinformatics Core UI components](https://github.com/pgdurand/Bioinformatics-UI-API): a set of viewers of sequence/feature/etc objects
+
+
+See also [Wiki](https://github.com/pgdurand/Bioinformatics-Filter-Engine/wiki).
 
 ##License and dependencies
 
