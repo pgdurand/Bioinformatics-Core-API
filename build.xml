@@ -4,7 +4,7 @@
 <project name="Plealog-bioinfo-core" default="help" basedir=".">
 
 <property name="pbc.libName"    value="pb-core" />
-<property name="pbc.LibVersion" value="5.0.3" />
+<property name="pbc.LibVersion" value="5.0.4" />
 
 <property name="compile.optimize" value="on" />
 <property name="compile.debug"    value="off" />
@@ -63,7 +63,7 @@
          <include name="bzh/plealog/bioinfo/data/blast/**"/>
 
          <!-- I/O-->
-         <include name="bzh/plealog/bioinfo/io/searchresult/**"/>
+         <include name="bzh/plealog/bioinfo/io/**"/>
 
          <!-- utilities-->
          <include name="bzh/plealog/bioinfo/util/**"/>
@@ -115,7 +115,7 @@
 	<delete dir="${Ddoc.api}" />
   <mkdir dir="${Ddoc.api}" />
   <javadoc
-    packagenames="bzh.plealog.bioinfo.api.core.config,bzh.plealog.bioinfo.api.data.feature.*,bzh.plealog.bioinfo.api.data.searchresult.*,bzh.plealog.bioinfo.api.data.sequence.*,bzh.plealog.bioinfo.data.blast.loader.ncbi,bzh.plealog.bioinfo.data.feature.*,bzh.plealog.bioinfo.data.searchresult.*,bzh.plealog.bioinfo.data.sequence.*,bzh.plealog.bioinfo.io.searchresult.**,bzh.plealog.bioinfo.util.*"
+    packagenames="bzh.plealog.bioinfo.api.core.config,bzh.plealog.bioinfo.api.data.feature.*,bzh.plealog.bioinfo.api.data.searchresult.*,bzh.plealog.bioinfo.api.data.sequence.*,bzh.plealog.bioinfo.data.blast.loader.ncbi,bzh.plealog.bioinfo.data.feature.*,bzh.plealog.bioinfo.data.searchresult.*,bzh.plealog.bioinfo.data.sequence.*,bzh.plealog.bioinfo.io.**,bzh.plealog.bioinfo.util.*"
     excludepackagenames="test"
     Overview="${src}/overview.html" 
   	Private="false" 
