@@ -95,7 +95,7 @@ public class ExportableMSA implements DSequenceAlignmentViewPort {
   }
 
   /**
-   * @see DSequenceAlignmentViewPort#rowHeader()
+   * @see DSequenceAlignmentViewPort#rowHeader(int)
    * */
   public String rowHeader(int row) {
     return (String) _headers.get(row);

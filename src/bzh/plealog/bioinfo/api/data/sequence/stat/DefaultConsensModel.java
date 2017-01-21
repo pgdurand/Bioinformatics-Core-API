@@ -34,7 +34,7 @@ public class DefaultConsensModel implements ConsensusModel, DSequence {
    * 
    * @param msa
    *          the MSA from which to create the consensus sequence
-   * @param the
+   * @param psmType
    *          type of Position Specific Matrix used to create the consensus. See
    *          one of the XXX_MATRIX constants defined in PositionSpecificMatrix
    *          class.

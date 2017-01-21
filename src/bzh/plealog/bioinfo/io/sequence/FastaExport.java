@@ -65,11 +65,11 @@ public class FastaExport {
    *          the OutputStream where to save data
    * @param seqs
    *          the sequence(s) to save
-   * @param onlyChar
+   * @param noSpecials
    *          if true, does not write out special symbols
    * 
    * @throws Exception
-   *           this exception is thrown if something wrong occured during save
+   *           this exception is thrown if something wrong occurred during save
    *           process.
    */
   public void export(OutputStream os, DSequence[] seqs, boolean noSpecials)
