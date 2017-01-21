@@ -231,7 +231,7 @@ public class DSequenceImplem implements DSequence {
       return _parts;
     list = new ArrayList<DLocation>();
     gapCh = _alphabet.getSymbol(DSymbol.GAP_SYMBOL_CODE).getChar();
-    size = _sequence.length();
+    size = size();
     from = to = 0;
     for (i = 0; i < size; i++) {
       curCh = _alphabet.getSymbol(BinCodec.decode(_sequence, _nbits, i)).getChar();
@@ -262,7 +262,7 @@ public class DSequenceImplem implements DSequence {
     if (_gapContent >= 0)
       return _gapContent;
     ch = _alphabet.getSymbol(DSymbol.GAP_SYMBOL_CODE).getChar();
-    size = _sequence.length();
+    size = size();
     for (i = 0; i < size; i++) {
       if (_alphabet.getSymbol(BinCodec.decode(_sequence, _nbits, i)).getChar() == ch) {
         gaps++;
