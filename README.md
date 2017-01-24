@@ -5,11 +5,16 @@
 
 ##Introduction
 
-This package is a core library of APIs for the [BLAST Filter Tool](https://github.com/pgdurand/BLAST-Filter-Tool):
+This package is a core library of APIs:
 
 * to model Rich Search Results objects (e.g. annotated [NCBI BLAST](http://blast.ncbi.nlm.nih.gov/Blast.cgi) results) 
-* to provide readers/writers for these objects
-* to provide data models for the [Bioinformatics Core UI components](https://github.com/pgdurand/Bioinformatics-UI-API)
+* to model DNA and protein sequences
+* to model features / annotations
+* to provide readers and writers for these objects
+
+In turn, these object-oriented data models form the basic foundation of the [Bioinformatics Core UI components](https://github.com/pgdurand/Bioinformatics-UI-API)
+
+All in all, [Core](https://github.com/pgdurand/Bioinformatics-Core-API) and [Core-UI](https://github.com/pgdurand/Bioinformatics-UI-API) APIs are the building blocks to make bioinformatics tools;  *e.g.* [BLAST Filter](https://github.com/pgdurand/BLAST-Filter-Tool), [BioDocumentViewer](https://github.com/pgdurand/BioDocumentViewer) and [BlastViewer](https://github.com/pgdurand/BlastViewer)
 
 ##Requirements
 
@@ -35,4 +40,4 @@ Bioinformatics Core API itself is released under the GNU Affero General Public L
 It depends on several thrid-party libraries as stated in the NOTICE.txt file provided with this project.
 
 --
-(c) 2006-2016 - Patrick G. Durand
+(c) 2003-2017 - Patrick G. Durand
