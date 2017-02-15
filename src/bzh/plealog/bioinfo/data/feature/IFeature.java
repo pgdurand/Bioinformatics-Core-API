@@ -66,6 +66,14 @@ public class IFeature implements Feature{
         qualifiers = new ArrayList<Qualifier>();
     }
     
+    /**
+     * Constructor.
+     * 
+     * @param key the feature type
+     * @param from start location
+     * @param to stop location
+     * @param strand one of {@link Feature#PLUS_STRAND}, {@link Feature#MINUS_STRAND}
+     * */
     public IFeature(String key, int from, int to, int strand){
         this();
         setKey(key);
