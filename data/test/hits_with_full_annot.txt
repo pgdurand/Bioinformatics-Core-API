@@ -1,0 +1,633 @@
+KLAST 2.2
+
+Database: uniprot (P)    
+
+Query= KKCC1_RAT 
+      (505 letters)
+
+                                                              Score  E       
+"Hit Accession and Definition"                                bits   Value   
+
+"KKCC1_RAT  RecName: Full=Calcium/calmodulin-dependent p..."  954    1E-281  
+"M4K2_HUMAN  RecName: Full=Mitogen-activated protein kin..."  91     5E-022  
+"MP2K4_MOUSE  RecName: Full=Dual specificity mitogen-act..."  72     3E-016  
+"MP2K7_HUMAN  RecName: Full=Dual specificity mitogen-act..."  66     2E-014  
+"Q91356_COTCO  SubName: Full=Endothelial kinase Quek2; F..."  57     1E-011  
+"Q9NA00_9CRUS  SubName: Full=Wee1-like CDK tyrosine kina..."  35     5E-005  
+
+>KKCC1_RAT RecName: Full=Calcium/calmodulin-dependent protein kinase kinase 1; 
+    Short=CaM-KK 1; Short=CaM-kinase kinase 1; Short=CaMKK 1; EC=2.7.11.17; 
+    AltName: Full=CaM-kinase IV kinase; AltName: 
+    Full=Calcium/calmodulin-dependent protein kinase kinase alpha; Short=CaM-KK 
+    alpha; Short=CaM-kinase kinase alpha; Short=CaMKK alpha; 
+   Length: 505
+   Taxonomy : Eukaryota;Metazoa;Chordata;Craniata;Vertebrata;Euteleostomi;
+    Mammalia;Eutheria;Euarchontoglires;Glires;Rodentia;Sciurognathi;Muroidea;
+    Muridae;Murinae;Rattus;
+   Organism : Rattus norvegicus (Rat);
+
+ Score = 954 bits (2464),  Expect = 1E-281
+ Identities = 505/505 (100%), Positives = 477/505 (94.5%)
+ Feature Table: 
+    source    1..505 (1)
+        /organism=Rattus norvegicus (Rat).
+        /db_xref=taxon:10116
+    protein    1..505 (1)
+        /product=RecName: Full=Calcium/calmodulin-dependent protein kinase kinase 1;         Short=CaM-KK 1;         Short=CaM-kinase kinase 1;         Short=CaMKK 1;         EC=2.7.11.17;AltName: Full=CaM-kinase IV kinase;AltName: Full=Calcium/calmodulin-dependent protein kinase kinase alpha;         Short=CaM-KK alpha;         Short=CaM-kinase kinase alpha;         Short=CaMKK alpha;
+        /db_xref=EMBL; L42810; AAC42070.1; -; mRNA.
+        /db_xref=EMBL; AB023658; BAA75246.1; -; mRNA.
+        /db_xref=EMBL; S83194; AAB46910.1; -; mRNA.
+        /db_xref=PIR; A57156; A57156.
+        /db_xref=RefSeq; NP_113850.1; NM_031662.1.
+        /db_xref=UniGene; Rn.4851; -.
+        /db_xref=PDB; 1CKK; NMR; -; B=438-463.
+        /db_xref=PDBsum; 1CKK; -.
+        /db_xref=ProteinModelPortal; P97756; -.
+        /db_xref=SMR; P97756; 438-463.
+        /db_xref=IntAct; P97756; 4.
+        /db_xref=MINT; MINT-1203156; -.
+        /db_xref=PhosphoSite; P97756; -.
+        /db_xref=PaxDb; P97756; -.
+        /db_xref=PRIDE; P97756; -.
+        /db_xref=GeneID; 60341; -.
+        /db_xref=KEGG; rno:60341; -.
+        /db_xref=CTD; 84254; -.
+        /db_xref=RGD; 62023; Camkk1.
+        /db_xref=eggNOG; COG0515; -.
+        /db_xref=HOGENOM; HOG000007846; -.
+        /db_xref=HOVERGEN; HBG052262; -.
+        /db_xref=InParanoid; P97756; -.
+        /db_xref=KO; K07359; -.
+        /db_xref=EvolutionaryTrace; P97756; -.
+        /db_xref=NextBio; 611998; -.
+        /db_xref=PRO; PR:P97756; -.
+        /db_xref=Genevestigator; P97756; -.
+        /db_xref=GO; GO:0005737; C:cytoplasm; IEA:UniProtKB-SubCell.
+        /db_xref=GO; GO:0005634; C:nucleus; IEA:UniProtKB-SubCell.
+        /db_xref=GO; GO:0005524; F:ATP binding; IEA:UniProtKB-KW.
+        /db_xref=GO; GO:0005516; F:calmodulin binding; IDA:RGD.
+        /db_xref=GO; GO:0004683; F:calmodulin-dependent protein kinase activity; IDA:RGD.
+        /db_xref=GO; GO:0032147; P:activation of protein kinase activity; IDA:RGD.
+        /db_xref=InterPro; IPR020636; Ca/CaM-dep_Ca-dep_prot_Kinase.
+        /db_xref=InterPro; IPR011009; Kinase-like_dom.
+        /db_xref=InterPro; IPR000719; Prot_kinase_dom.
+        /db_xref=InterPro; IPR017441; Protein_kinase_ATP_BS.
+        /db_xref=InterPro; IPR002290; Ser/Thr_dual-sp_kinase_dom.
+        /db_xref=InterPro; IPR008271; Ser/Thr_kinase_AS.
+        /db_xref=PANTHER; PTHR24347; PTHR24347; 1.
+        /db_xref=Pfam; PF00069; Pkinase; 1.
+        /db_xref=SMART; SM00220; S_TKc; 1.
+        /db_xref=SUPFAM; SSF56112; SSF56112; 2.
+        /db_xref=PROSITE; PS00107; PROTEIN_KINASE_ATP; 1.
+        /db_xref=PROSITE; PS50011; PROTEIN_KINASE_DOM; 1.
+        /db_xref=PROSITE; PS00108; PROTEIN_KINASE_ST; 1.
+        /db_xref=EC; 2.7.11.17; -.
+    act_site    275..275 (1)
+        /Location=275
+        /act_site= Proton acceptor (By similarity).
+    binding    157..157 (1)
+        /Location=157
+        /binding= ATP (By similarity).
+    strand    455..457 (1)
+        /Location=455..457
+        /strand= 
+    helix    444..453 (1)
+        /Location=444..453
+        /helix= 
+    mod_res    458..458 (1)
+        /Location=458
+        /mod_res= Phosphoserine.
+    mutagen    177..177 (1)
+        /Location=177
+        /mutagen= R->E: Loss of substrate recognition and interaction with CAMK4.
+    mutagen    459..459 (1)
+        /Location=459
+        /mutagen= F->D: Loss of binding to Ca(2+)/calmodulin.
+    region    167..189 (1)
+        /Location=167..189
+        /region= RP domain.
+    mutagen    172..172 (1)
+        /Location=172
+        /mutagen= R->E: Loss of substrate recognition and interaction with CAMK4.
+    mod_res    74..74 (1)
+        /Location=74
+        /mod_res= Phosphoserine.
+    region    438..463 (1)
+        /Location=438..463
+        /region= Calmodulin-binding.
+    mod_res    492..492 (1)
+        /Location=492
+        /mod_res= Phosphoserine (By similarity).
+    conflict    81..81 (1)
+        /Location=81
+        /conflict= G -> E (in Ref. 1; AAC42070).
+    region    435..440 (1)
+        /Location=435..440
+        /region= Autoinhibitory domain.
+    mutagen    74..74 (1)
+        /Location=74
+        /mutagen= S->A: Decrease in phosphorylation by PKA.
+    mutagen    458..458 (1)
+        /Location=458
+        /mutagen= S->A: Decrease in phosphorylation and partial inhibition by PKA. Almost loss of inhibition by PKA; when associated with A-108.
+    conflict    45..45 (1)
+        /Location=45
+        /conflict= P -> S (in Ref. 1; AAC42070).
+    mutagen    108..108 (1)
+        /Location=108
+        /mutagen= T->A: Decrease in phosphorylation and partial inhibition by PKA. Almost loss of inhibition by PKA; when associated with A-458.
+    mutagen    463..463 (1)
+        /Location=463
+        /mutagen= F->D: Loss of binding to Ca(2+)/calmodulin.
+    chain    1..505 (1)
+        /Location=1..505
+        /chain= Calcium/calmodulin-dependent protein kinase kinase 1. /FTId=PRO_0000086143.
+    np_bind    134..142 (1)
+        /Location=134..142
+        /np_bind= ATP (By similarity).
+    mod_res    108..108 (1)
+        /Location=108
+        /mod_res= Phosphothreonine.
+    domain    128..409 (1)
+        /Location=128..409
+        /domain= Protein kinase.
+
+
+>M4K2_HUMAN RecName: Full=Mitogen-activated protein kinase kinase kinase kinase 
+    2; EC=2.7.11.1; AltName: Full=B lymphocyte serine/threonine-protein kinase; 
+    AltName: Full=Germinal center kinase; Short=GC kinase; AltName: 
+    Full=MAPK/ERK kinase kinase kinase 2; Short=MEK kinase kinase 2; Short=MEKKK 
+    2; AltName: Full=Rab8-interacting protein; 
+   Length: 820
+   Taxonomy : Eukaryota;Metazoa;Chordata;Craniata;Vertebrata;Euteleostomi;
+    Mammalia;Eutheria;Euarchontoglires;Primates;Haplorrhini;Catarrhini;Hominidae;
+    Homo;
+   Organism : Homo sapiens (Human);
+
+ Score = 91 bits (225),  Expect = 5E-022
+ Identities = 56/151 (37.1%), Positives = 79/151 (52.3%), Gaps = 2/151 (1.3%)
+ Frame = 1 / 1
+ Feature Table: 
+    source    55..203 (1)
+        /organism=Homo sapiens (Human).
+        /db_xref=taxon:9606
+    protein    55..203 (1)
+        /product=RecName: Full=Mitogen-activated protein kinase kinase kinase kinase 2;         EC=2.7.11.1;AltName: Full=B lymphocyte serine/threonine-protein kinase;AltName: Full=Germinal center kinase;         Short=GC kinase;AltName: Full=MAPK/ERK kinase kinase kinase 2;         Short=MEK kinase kinase 2;         Short=MEKKK 2;AltName: Full=Rab8-interacting protein;
+        /db_xref=EMBL; AP001462; -; NOT_ANNOTATED_CDS; Genomic_DNA.
+        /db_xref=EMBL; U07349; AAA20968.1; ALT_SEQ; mRNA.
+        /db_xref=PIR; A53714; A53714.
+        /db_xref=RefSeq; NP_004570.2; NM_004579.3.
+        /db_xref=UniGene; Hs.534341; -.
+        /db_xref=ProteinModelPortal; Q12851; -.
+        /db_xref=SMR; Q12851; 10-389.
+        /db_xref=BioGrid; 111809; 16.
+        /db_xref=IntAct; Q12851; 11.
+        /db_xref=MINT; MINT-8247528; -.
+        /db_xref=STRING; 9606.ENSP00000294066; -.
+        /db_xref=BindingDB; Q12851; -.
+        /db_xref=ChEMBL; CHEMBL5330; -.
+        /db_xref=GuidetoPHARMACOLOGY; 2086; -.
+        /db_xref=PhosphoSite; Q12851; -.
+        /db_xref=DMDM; 215274019; -.
+        /db_xref=PaxDb; Q12851; -.
+        /db_xref=PRIDE; Q12851; -.
+        /db_xref=DNASU; 5871; -.
+        /db_xref=Ensembl; ENST00000294066; ENSP00000294066; ENSG00000168067.
+        /db_xref=GeneID; 5871; -.
+        /db_xref=KEGG; hsa:5871; -.
+        /db_xref=UCSC; uc001obh.3; human.
+        /db_xref=CTD; 5871; -.
+        /db_xref=GeneCards; GC11M064556; -.
+        /db_xref=H-InvDB; HIX0026186; -.
+        /db_xref=HGNC; HGNC:6864; MAP4K2.
+        /db_xref=HPA; HPA007330; -.
+        /db_xref=MIM; 603166; gene.
+        /db_xref=neXtProt; NX_Q12851; -.
+        /db_xref=PharmGKB; PA30610; -.
+        /db_xref=eggNOG; COG0515; -.
+        /db_xref=HOGENOM; HOG000230824; -.
+        /db_xref=HOVERGEN; HBG036702; -.
+        /db_xref=InParanoid; Q12851; -.
+        /db_xref=KO; K04414; -.
+        /db_xref=OMA; EIYHATG; -.
+        /db_xref=PhylomeDB; Q12851; -.
+        /db_xref=TreeFam; TF105121; -.
+        /db_xref=SignaLink; Q12851; -.
+        /db_xref=GeneWiki; MAP4K2; -.
+        /db_xref=GenomeRNAi; 5871; -.
+        /db_xref=NextBio; 22804; -.
+        /db_xref=PRO; PR:Q12851; -.
+        /db_xref=ArrayExpress; Q12851; -.
+        /db_xref=Bgee; Q12851; -.
+        /db_xref=CleanEx; HS_GCK; -.
+        /db_xref=CleanEx; HS_MAP4K2; -.
+        /db_xref=Genevestigator; Q12851; -.
+        /db_xref=GO; GO:0016323; C:basolateral plasma membrane; IEA:UniProtKB-SubCell.
+        /db_xref=GO; GO:0000139; C:Golgi membrane; TAS:ProtInc.
+        /db_xref=GO; GO:0005524; F:ATP binding; IDA:UniProtKB.
+        /db_xref=GO; GO:0008349; F:MAP kinase kinase kinase kinase activity; IBA:RefGenome.
+        /db_xref=GO; GO:0005083; F:small GTPase regulator activity; IEA:InterPro.
+        /db_xref=GO; GO:0007257; P:activation of JUN kinase activity; IDA:UniProtKB.
+        /db_xref=GO; GO:0006955; P:immune response; TAS:ProtInc.
+        /db_xref=GO; GO:0045087; P:innate immune response; IEA:UniProtKB-KW.
+        /db_xref=GO; GO:0046330; P:positive regulation of JNK cascade; IDA:UniProtKB.
+        /db_xref=GO; GO:0006903; P:vesicle targeting; IEA:Ensembl.
+        /db_xref=InterPro; IPR001180; Citron.
+        /db_xref=InterPro; IPR011009; Kinase-like_dom.
+        /db_xref=InterPro; IPR021160; MAPKKKK.
+        /db_xref=InterPro; IPR000719; Prot_kinase_dom.
+        /db_xref=InterPro; IPR017441; Protein_kinase_ATP_BS.
+        /db_xref=InterPro; IPR002290; Ser/Thr_dual-sp_kinase_dom.
+        /db_xref=Pfam; PF00780; CNH; 1.
+        /db_xref=Pfam; PF00069; Pkinase; 1.
+        /db_xref=PIRSF; PIRSF038172; MAPKKKK; 1.
+        /db_xref=SMART; SM00036; CNH; 1.
+        /db_xref=SMART; SM00220; S_TKc; 1.
+        /db_xref=SUPFAM; SSF56112; SSF56112; 1.
+        /db_xref=PROSITE; PS50219; CNH; 1.
+        /db_xref=PROSITE; PS00107; PROTEIN_KINASE_ATP; 1.
+        /db_xref=PROSITE; PS50011; PROTEIN_KINASE_DOM; 1.
+        /db_xref=EC; 2.7.11.1; -.
+    domain    55..203 (1)
+        /Location=<55..>203
+        /domain= Protein kinase.
+    conflict    120..120 (1)
+        /Location=120
+        /conflict= A -> R (in Ref. 2; AAA20968).
+    act_site    136..136 (1)
+        /Location=136
+        /act_site= Proton acceptor (By similarity).
+    chain    55..203 (1)
+        /Location=<55..>203
+        /chain= Mitogen-activated protein kinase kinase kinase kinase 2. /FTId=PRO_0000086275.
+
+
+>MP2K4_MOUSE RecName: Full=Dual specificity mitogen-activated protein kinase 
+    kinase 4; Short=MAP kinase kinase 4; Short=MAPKK 4; EC=2.7.12.2; AltName: 
+    Full=C-JUN N-terminal kinase kinase 1; Short=JNK kinase 1; Short=JNKK 1; 
+    AltName: Full=JNK-activating kinase 1; AltName: Full=MAPK/ERK kinase 4; 
+    Short=MEK 4; AltName: Full=SAPK/ERK kinase 1; Short=SEK1; 
+   Length: 397
+   Taxonomy : Eukaryota;Metazoa;Chordata;Craniata;Vertebrata;Euteleostomi;
+    Mammalia;Eutheria;Euarchontoglires;Glires;Rodentia;Sciurognathi;Muroidea;
+    Muridae;Murinae;Mus;Mus;
+   Organism : Mus musculus (Mouse);
+
+ Score = 72 bits (176),  Expect = 3E-016
+ Identities = 83/313 (26.5%), Positives = 130/313 (41.5%), Gaps = 21/313 (6.7%)
+ Frame = 1 / 1
+ Feature Table: 
+    source    19..305 (1)
+        /organism=Mus musculus (Mouse).
+        /db_xref=taxon:10090
+    protein    19..305 (1)
+        /product=RecName: Full=Dual specificity mitogen-activated protein kinase kinase 4;         Short=MAP kinase kinase 4;         Short=MAPKK 4;         EC=2.7.12.2;AltName: Full=C-JUN N-terminal kinase kinase 1;         Short=JNK kinase 1;         Short=JNKK 1;AltName: Full=JNK-activating kinase 1;AltName: Full=MAPK/ERK kinase 4;         Short=MEK 4;AltName: Full=SAPK/ERK kinase 1;         Short=SEK1;
+        /db_xref=EMBL; U18310; AAB81554.1; -; mRNA.
+        /db_xref=PIR; S52423; S52423.
+        /db_xref=RefSeq; NP_033183.1; NM_009157.4.
+        /db_xref=UniGene; Mm.412922; -.
+        /db_xref=ProteinModelPortal; P47809; -.
+        /db_xref=SMR; P47809; 93-386.
+        /db_xref=BioGrid; 204952; 7.
+        /db_xref=DIP; DIP-869N; -.
+        /db_xref=IntAct; P47809; 2.
+        /db_xref=MINT; MINT-4102306; -.
+        /db_xref=STRING; 10090.ENSMUSP00000041282; -.
+        /db_xref=BindingDB; P47809; -.
+        /db_xref=ChEMBL; CHEMBL2201; -.
+        /db_xref=PhosphoSite; P47809; -.
+        /db_xref=PaxDb; P47809; -.
+        /db_xref=PRIDE; P47809; -.
+        /db_xref=DNASU; 26398; -.
+        /db_xref=Ensembl; ENSMUST00000046963; ENSMUSP00000041282; ENSMUSG00000033352.
+        /db_xref=GeneID; 26398; -.
+        /db_xref=KEGG; mmu:26398; -.
+        /db_xref=UCSC; uc007jlb.1; mouse.
+        /db_xref=CTD; 6416; -.
+        /db_xref=MGI; MGI:1346869; Map2k4.
+        /db_xref=eggNOG; COG0515; -.
+        /db_xref=HOGENOM; HOG000234206; -.
+        /db_xref=HOVERGEN; HBG108518; -.
+        /db_xref=InParanoid; P47809; -.
+        /db_xref=KO; K04430; -.
+        /db_xref=OMA; VMKSNDC; -.
+        /db_xref=OrthoDB; EOG7J9VPW; -.
+        /db_xref=TreeFam; TF350701; -.
+        /db_xref=BRENDA; 2.7.12.2; 3474.
+        /db_xref=Reactome; REACT_98458; Immune System.
+        /db_xref=NextBio; 304351; -.
+        /db_xref=PRO; PR:P47809; -.
+        /db_xref=ArrayExpress; P47809; -.
+        /db_xref=Bgee; P47809; -.
+        /db_xref=CleanEx; MM_MAP2K4; -.
+        /db_xref=Genevestigator; P47809; -.
+        /db_xref=GO; GO:0005829; C:cytosol; TAS:Reactome.
+        /db_xref=GO; GO:0032839; C:dendrite cytoplasm; IEA:Ensembl.
+        /db_xref=GO; GO:0005634; C:nucleus; IEA:UniProtKB-SubCell.
+        /db_xref=GO; GO:0043204; C:perikaryon; IEA:Ensembl.
+        /db_xref=GO; GO:0005524; F:ATP binding; IEA:UniProtKB-KW.
+        /db_xref=GO; GO:0008545; F:JUN kinase kinase activity; IEA:Ensembl.
+        /db_xref=GO; GO:0004674; F:protein serine/threonine kinase activity; IEA:UniProtKB-KW.
+        /db_xref=GO; GO:0004713; F:protein tyrosine kinase activity; IEA:UniProtKB-KW.
+        /db_xref=GO; GO:0007257; P:activation of JUN kinase activity; ISO:MGI.
+        /db_xref=GO; GO:0006915; P:apoptotic process; IEA:UniProtKB-KW.
+        /db_xref=GO; GO:0071260; P:cellular response to mechanical stimulus; IEA:Ensembl.
+        /db_xref=GO; GO:0072709; P:cellular response to sorbitol; IEA:Ensembl.
+        /db_xref=GO; GO:0018108; P:peptidyl-tyrosine phosphorylation; IEA:GOC.
+        /db_xref=GO; GO:0045740; P:positive regulation of DNA replication; IEA:Ensembl.
+        /db_xref=GO; GO:0043525; P:positive regulation of neuron apoptotic process; IEA:Ensembl.
+        /db_xref=InterPro; IPR011009; Kinase-like_dom.
+        /db_xref=InterPro; IPR000719; Prot_kinase_dom.
+        /db_xref=InterPro; IPR017441; Protein_kinase_ATP_BS.
+        /db_xref=InterPro; IPR002290; Ser/Thr_dual-sp_kinase_dom.
+        /db_xref=InterPro; IPR008271; Ser/Thr_kinase_AS.
+        /db_xref=Pfam; PF00069; Pkinase; 1.
+        /db_xref=SMART; SM00220; S_TKc; 1.
+        /db_xref=SUPFAM; SSF56112; SSF56112; 1.
+        /db_xref=PROSITE; PS00107; PROTEIN_KINASE_ATP; 1.
+        /db_xref=PROSITE; PS50011; PROTEIN_KINASE_DOM; 1.
+        /db_xref=PROSITE; PS00108; PROTEIN_KINASE_ST; 1.
+        /db_xref=EC; 2.7.12.2; -.
+    mod_res    259..259 (1)
+        /Location=259
+        /mod_res= Phosphothreonine; by MAP3K (By similarity).
+    chain    19..305 (1)
+        /Location=<19..>305
+        /chain= Dual specificity mitogen-activated protein kinase kinase 4. /FTId=PRO_0000086382.
+    region    35..50 (1)
+        /Location=35..50
+        /region= D domain (By similarity).
+    mutagen    129..129 (1)
+        /Location=129
+        /mutagen= K->R: Loss of ATP-binding.
+    np_bind    106..114 (1)
+        /Location=106..114
+        /np_bind= ATP (By similarity).
+    domain    100..305 (1)
+        /Location=100..>305
+        /domain= Protein kinase.
+    mod_res    255..255 (1)
+        /Location=255
+        /mod_res= Phosphoserine; by MAP3K (By similarity).
+    binding    129..129 (1)
+        /Location=129
+        /binding= ATP.
+    act_site    227..227 (1)
+        /Location=227
+        /act_site= Proton acceptor (By similarity).
+    mod_res    88..88 (1)
+        /Location=88
+        /mod_res= Phosphoserine (By similarity).
+
+
+>MP2K7_HUMAN RecName: Full=Dual specificity mitogen-activated protein kinase 
+    kinase 7; Short=MAP kinase kinase 7; Short=MAPKK 7; EC=2.7.12.2; AltName: 
+    Full=JNK-activating kinase 2; AltName: Full=MAPK/ERK kinase 7; Short=MEK 7; 
+    AltName: Full=Stress-activated protein kinase kinase 4; Short=SAPK kinase 4; 
+    Short=SAPKK-4; Short=SAPKK4; AltName: Full=c-Jun N-terminal kinase kinase 2; 
+    Short=JNK kinase 2; Short=JNKK 2; 
+   Length: 419
+   Taxonomy : Eukaryota;Metazoa;Chordata;Craniata;Vertebrata;Euteleostomi;
+    Mammalia;Eutheria;Euarchontoglires;Primates;Haplorrhini;Catarrhini;Hominidae;
+    Homo;
+   Organism : Homo sapiens (Human);
+
+ Score = 66 bits (160),  Expect = 2E-014
+ Identities = 41/112 (36.6%), Positives = 62/112 (55.4%), Gaps = 4/112 (3.6%)
+ Frame = 1 / 1
+ Feature Table: 
+    source    213..322 (1)
+        /organism=Homo sapiens (Human).
+        /db_xref=taxon:9606
+    protein    213..322 (1)
+        /product=RecName: Full=Dual specificity mitogen-activated protein kinase kinase 7;         Short=MAP kinase kinase 7;         Short=MAPKK 7;         EC=2.7.12.2;AltName: Full=JNK-activating kinase 2;AltName: Full=MAPK/ERK kinase 7;         Short=MEK 7;AltName: Full=Stress-activated protein kinase kinase 4;         Short=SAPK kinase 4;         Short=SAPKK-4;         Short=SAPKK4;AltName: Full=c-Jun N-terminal kinase kinase 2;         Short=JNK kinase 2;         Short=JNKK 2;
+        /db_xref=EMBL; AF014401; AAB88048.1; -; mRNA.
+        /db_xref=EMBL; AF006689; AAB97813.1; ALT_SEQ; mRNA.
+        /db_xref=EMBL; AF013588; AAC16272.1; -; mRNA.
+        /db_xref=EMBL; AF013589; AAC16273.1; -; mRNA.
+        /db_xref=EMBL; DQ445915; ABE03013.1; -; mRNA.
+        /db_xref=EMBL; AF022805; AAC26142.1; -; mRNA.
+        /db_xref=EMBL; AK313899; BAG36622.1; -; mRNA.
+        /db_xref=EMBL; CH471139; EAW68964.1; -; Genomic_DNA.
+        /db_xref=EMBL; CH471139; EAW68968.1; -; Genomic_DNA.
+        /db_xref=EMBL; BC038295; AAH38295.1; -; mRNA.
+        /db_xref=EMBL; AF003199; AAB63374.1; -; mRNA.
+        /db_xref=RefSeq; NP_660186.1; NM_145185.2.
+        /db_xref=RefSeq; XP_005272546.1; XM_005272489.1.
+        /db_xref=RefSeq; XP_005272547.1; XM_005272490.1.
+        /db_xref=UniGene; Hs.531754; -.
+        /db_xref=PDB; 2DYL; X-ray; 2.45 A; A=101-405.
+        /db_xref=PDBsum; 2DYL; -.
+        /db_xref=ProteinModelPortal; O14733; -.
+        /db_xref=SMR; O14733; 53-402.
+        /db_xref=BioGrid; 111595; 34.
+        /db_xref=IntAct; O14733; 18.
+        /db_xref=MINT; MINT-1378223; -.
+        /db_xref=STRING; 9606.ENSP00000381066; -.
+        /db_xref=BindingDB; O14733; -.
+        /db_xref=ChEMBL; CHEMBL3530; -.
+        /db_xref=DrugBank; DB00773; Etoposide.
+        /db_xref=GuidetoPHARMACOLOGY; 2068; -.
+        /db_xref=PhosphoSite; O14733; -.
+        /db_xref=PaxDb; O14733; -.
+        /db_xref=PRIDE; O14733; -.
+        /db_xref=DNASU; 5609; -.
+        /db_xref=Ensembl; ENST00000397979; ENSP00000381066; ENSG00000076984. [O14733-1]
+        /db_xref=Ensembl; ENST00000397981; ENSP00000381068; ENSG00000076984. [O14733-4]
+        /db_xref=Ensembl; ENST00000397983; ENSP00000381070; ENSG00000076984. [O14733-3]
+        /db_xref=GeneID; 5609; -.
+        /db_xref=KEGG; hsa:5609; -.
+        /db_xref=UCSC; uc002mit.3; human. [O14733-1]
+        /db_xref=UCSC; uc002miv.2; human. [O14733-4]
+        /db_xref=CTD; 5609; -.
+        /db_xref=GeneCards; GC19P007968; -.
+        /db_xref=HGNC; HGNC:6847; MAP2K7.
+        /db_xref=HPA; CAB004262; -.
+        /db_xref=HPA; HPA001633; -.
+        /db_xref=MIM; 603014; gene.
+        /db_xref=neXtProt; NX_O14733; -.
+        /db_xref=PharmGKB; PA284; -.
+        /db_xref=eggNOG; COG0515; -.
+        /db_xref=HOVERGEN; HBG108518; -.
+        /db_xref=KO; K04431; -.
+        /db_xref=OrthoDB; EOG7J9VPW; -.
+        /db_xref=TreeFam; TF350701; -.
+        /db_xref=BRENDA; 2.7.12.2; 2681.
+        /db_xref=Reactome; REACT_120956; Cellular responses to stress.
+        /db_xref=Reactome; REACT_6782; TRAF6 Mediated Induction of proinflammatory cytokines.
+        /db_xref=Reactome; REACT_6900; Immune System.
+        /db_xref=SignaLink; O14733; -.
+        /db_xref=EvolutionaryTrace; O14733; -.
+        /db_xref=GeneWiki; MAP2K7; -.
+        /db_xref=GenomeRNAi; 5609; -.
+        /db_xref=NextBio; 21802; -.
+        /db_xref=PMAP-CutDB; O14733; -.
+        /db_xref=PRO; PR:O14733; -.
+        /db_xref=ArrayExpress; O14733; -.
+        /db_xref=Bgee; O14733; -.
+        /db_xref=CleanEx; HS_MAP2K7; -.
+        /db_xref=Genevestigator; O14733; -.
+        /db_xref=GO; GO:0005829; C:cytosol; TAS:Reactome.
+        /db_xref=GO; GO:0005634; C:nucleus; ISS:UniProtKB.
+        /db_xref=GO; GO:0005524; F:ATP binding; IEA:UniProtKB-KW.
+        /db_xref=GO; GO:0008545; F:JUN kinase kinase activity; IEA:Ensembl.
+        /db_xref=GO; GO:0000287; F:magnesium ion binding; IDA:UniProtKB.
+        /db_xref=GO; GO:0004708; F:MAP kinase kinase activity; IDA:UniProtKB.
+        /db_xref=GO; GO:0019903; F:protein phosphatase binding; ISS:BHF-UCL.
+        /db_xref=GO; GO:0004674; F:protein serine/threonine kinase activity; IEA:UniProtKB-KW.
+        /db_xref=GO; GO:0004713; F:protein tyrosine kinase activity; IEA:UniProtKB-KW.
+        /db_xref=GO; GO:0007257; P:activation of JUN kinase activity; ISS:BHF-UCL.
+        /db_xref=GO; GO:0006915; P:apoptotic process; IEA:UniProtKB-KW.
+        /db_xref=GO; GO:0072709; P:cellular response to sorbitol; IEA:Ensembl.
+        /db_xref=GO; GO:0038095; P:Fc-epsilon receptor signaling pathway; TAS:Reactome.
+        /db_xref=GO; GO:0045087; P:innate immune response; TAS:Reactome.
+        /db_xref=GO; GO:0002755; P:MyD88-dependent toll-like receptor signaling pathway; TAS:Reactome.
+        /db_xref=GO; GO:0018108; P:peptidyl-tyrosine phosphorylation; IEA:GOC.
+        /db_xref=GO; GO:0043525; P:positive regulation of neuron apoptotic process; IEA:Ensembl.
+        /db_xref=GO; GO:0034166; P:toll-like receptor 10 signaling pathway; TAS:Reactome.
+        /db_xref=GO; GO:0034134; P:toll-like receptor 2 signaling pathway; TAS:Reactome.
+        /db_xref=GO; GO:0034138; P:toll-like receptor 3 signaling pathway; TAS:Reactome.
+        /db_xref=GO; GO:0034142; P:toll-like receptor 4 signaling pathway; TAS:Reactome.
+        /db_xref=GO; GO:0034146; P:toll-like receptor 5 signaling pathway; TAS:Reactome.
+        /db_xref=GO; GO:0034162; P:toll-like receptor 9 signaling pathway; TAS:Reactome.
+        /db_xref=GO; GO:0038123; P:toll-like receptor TLR1:TLR2 signaling pathway; TAS:Reactome.
+        /db_xref=GO; GO:0038124; P:toll-like receptor TLR6:TLR2 signaling pathway; TAS:Reactome.
+        /db_xref=GO; GO:0035666; P:TRIF-dependent toll-like receptor signaling pathway; TAS:Reactome.
+        /db_xref=InterPro; IPR011009; Kinase-like_dom.
+        /db_xref=InterPro; IPR000719; Prot_kinase_dom.
+        /db_xref=InterPro; IPR002290; Ser/Thr_dual-sp_kinase_dom.
+        /db_xref=InterPro; IPR008271; Ser/Thr_kinase_AS.
+        /db_xref=Pfam; PF00069; Pkinase; 1.
+        /db_xref=SMART; SM00220; S_TKc; 1.
+        /db_xref=SUPFAM; SSF56112; SSF56112; 1.
+        /db_xref=PROSITE; PS50011; PROTEIN_KINASE_DOM; 1.
+        /db_xref=PROSITE; PS00108; PROTEIN_KINASE_ST; 1.
+        /db_xref=EC; 2.7.12.2; -.
+    chain    213..322 (1)
+        /Location=<213..>322
+        /chain= Dual specificity mitogen-activated protein kinase kinase 7. /FTId=PRO_0000086388.
+    domain    213..322 (1)
+        /Location=<213..>322
+        /domain= Protein kinase.
+    helix    286..289 (1)
+        /Location=286..289
+        /helix= 
+    strand    249..251 (1)
+        /Location=249..251
+        /strand= 
+    var_seq    312..312 (1)
+        /Location=312
+        /var_seq= L -> LPCPSPSQ (in isoform 4). /FTId=VSP_022310.
+    turn    321..322 (1)
+        /Location=321..>322
+        /turn= 
+    strand    257..259 (1)
+        /Location=257..259
+        /strand= 
+    mod_res    275..275 (1)
+        /Location=275
+        /mod_res= Phosphothreonine; by MAP3K (By similarity).
+    variant    259..259 (1)
+        /Location=259
+        /variant= L -> F (in dbSNP:rs1053566). /FTId=VAR_029890.
+    helix    246..248 (1)
+        /Location=246..248
+        /helix= 
+    mod_res    271..271 (1)
+        /Location=271
+        /mod_res= Phosphoserine; by MAP3K (By similarity).
+    act_site    243..243 (1)
+        /Location=243
+        /act_site= Proton acceptor (By similarity).
+    helix    302..317 (1)
+        /Location=302..317
+        /helix= 
+    helix    216..237 (1)
+        /Location=216..237
+        /helix= 
+
+
+>Q91356_COTCO SubName: Full=Endothelial kinase Quek2; Flags: Fragment; 
+   Length: 367
+   Taxonomy : Eukaryota;Metazoa;Chordata;Craniata;Vertebrata;Euteleostomi;
+    Testudines + Archosauria group;Archosauria;Dinosauria;Saurischia;Theropoda;
+    Coelurosauria;Aves;Neognathae;Galliformes;Phasianidae;Perdicinae;Coturnix;
+   Organism : Coturnix coturnix (Common quail) (Tetrao coturnix);
+
+ Score = 57 bits (135),  Expect = 1E-011
+ Identities = 37/111 (33.3%), Positives = 61/111 (55%), Gaps = 5/111 (4.5%)
+ Frame = 1 / 1
+ Feature Table: 
+    source    8..115 (1)
+        /organism=Coturnix coturnix (Common quail) (Tetrao coturnix).
+        /db_xref=taxon:9091
+    protein    8..115 (1)
+        /product=SubName: Full=Endothelial kinase Quek2;Flags: Fragment;
+        /db_xref=EMBL; S65207; AAB28128.1; -; mRNA.
+        /db_xref=PIR; B56598; B56598.
+        /db_xref=ProteinModelPortal; Q91356; -.
+        /db_xref=HOVERGEN; HBG080796; -.
+        /db_xref=GO; GO:0005887; C:integral component of plasma membrane; IEA:InterPro.
+        /db_xref=GO; GO:0005524; F:ATP binding; IEA:InterPro.
+        /db_xref=GO; GO:0005021; F:vascular endothelial growth factor-activated receptor activity; IEA:InterPro.
+        /db_xref=GO; GO:0018108; P:peptidyl-tyrosine phosphorylation; IEA:GOC.
+        /db_xref=GO; GO:0048010; P:vascular endothelial growth factor receptor signaling pathway; IEA:InterPro.
+        /db_xref=GO; GO:0038084; P:vascular endothelial growth factor signaling pathway; IEA:GOC.
+        /db_xref=InterPro; IPR011009; Kinase-like_dom.
+        /db_xref=InterPro; IPR000719; Prot_kinase_dom.
+        /db_xref=InterPro; IPR001245; Ser-Thr/Tyr_kinase_cat_dom.
+        /db_xref=InterPro; IPR008266; Tyr_kinase_AS.
+        /db_xref=InterPro; IPR009137; VEGFR3_rcpt.
+        /db_xref=PANTHER; PTHR24416:SF49; PTHR24416:SF49; 1.
+        /db_xref=Pfam; PF07714; Pkinase_Tyr; 1.
+        /db_xref=PRINTS; PR00109; TYRKINASE.
+        /db_xref=SUPFAM; SSF56112; SSF56112; 1.
+        /db_xref=PROSITE; PS50011; PROTEIN_KINASE_DOM; 1.
+        /db_xref=PROSITE; PS00109; PROTEIN_KINASE_TYR; 1.
+
+
+>Q9NA00_9CRUS SubName: Full=Wee1-like CDK tyrosine kinase; Flags: Fragment; 
+   Length: 494
+   Taxonomy : Eukaryota;Metazoa;Ecdysozoa;Arthropoda;Crustacea;Branchiopoda;
+    Diplostraca;Cladocera;Anomopoda;Daphniidae;Daphnia;
+   Organism : Daphnia magna;
+
+ Score = 35 bits (79),  Expect = 5E-005
+ Identities = 53/259 (20.5%), Positives = 96/259 (37.1%), Gaps = 15/259 (5.8%)
+ Frame = 1 / 1
+ Feature Table: 
+    source    218..464 (1)
+        /organism=Daphnia magna.
+        /db_xref=taxon:35525
+    protein    218..464 (1)
+        /product=SubName: Full=Wee1-like CDK tyrosine kinase;Flags: Fragment;
+        /db_xref=EMBL; AJ292557; CAB99477.1; -; mRNA.
+        /db_xref=ProteinModelPortal; Q9NA00; -.
+        /db_xref=GO; GO:0005634; C:nucleus; IEA:InterPro.
+        /db_xref=GO; GO:0005524; F:ATP binding; IEA:UniProtKB-KW.
+        /db_xref=GO; GO:0000287; F:magnesium ion binding; IEA:InterPro.
+        /db_xref=GO; GO:0004715; F:non-membrane spanning protein tyrosine kinase activity; IEA:InterPro.
+        /db_xref=GO; GO:0004674; F:protein serine/threonine kinase activity; IEA:UniProtKB-KW.
+        /db_xref=GO; GO:0007067; P:mitosis; IEA:InterPro.
+        /db_xref=GO; GO:0018108; P:peptidyl-tyrosine phosphorylation; IEA:GOC.
+        /db_xref=InterPro; IPR011009; Kinase-like_dom.
+        /db_xref=InterPro; IPR000719; Prot_kinase_dom.
+        /db_xref=InterPro; IPR017441; Protein_kinase_ATP_BS.
+        /db_xref=InterPro; IPR008271; Ser/Thr_kinase_AS.
+        /db_xref=InterPro; IPR017164; Wee1-like_protein_kinase.
+        /db_xref=Pfam; PF00069; Pkinase; 1.
+        /db_xref=PIRSF; PIRSF037281; Wee1-like_protein_kinase; 1.
+        /db_xref=SUPFAM; SSF56112; SSF56112; 1.
+        /db_xref=PROSITE; PS00107; PROTEIN_KINASE_ATP; 1.
+        /db_xref=PROSITE; PS50011; PROTEIN_KINASE_DOM; 1.
+        /db_xref=PROSITE; PS00108; PROTEIN_KINASE_ST; 1.
+    np_bind    218..226 (1)
+        /Location=218..226
+        /np_bind= ATP (By similarity).
+    binding    241..241 (1)
+        /Location=241
+        /binding= ATP (By similarity).
+    act_site    339..339 (1)
+        /Location=339
+        /act_site= Proton acceptor (By similarity).
+
