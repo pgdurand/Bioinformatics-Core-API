@@ -1,0 +1,19 @@
+Hit:0-Hsp:0: 25 features
+  Rattus norvegicus (Rat)
+  Eukaryota;Metazoa;Chordata;Craniata;Vertebrata;Euteleostomi;Mammalia;Eutheria;Euarchontoglires;Glires;Rodentia;Sciurognathi;Muroidea;Muridae;Murinae;Rattus
+Hit:1-Hsp:0: 6 features
+  Homo sapiens (Human)
+  Eukaryota;Metazoa;Chordata;Craniata;Vertebrata;Euteleostomi;Mammalia;Eutheria;Euarchontoglires;Primates;Haplorrhini;Catarrhini;Hominidae;Homo
+Hit:2-Hsp:0: 12 features
+  Mus musculus (Mouse)
+  Eukaryota;Metazoa;Chordata;Craniata;Vertebrata;Euteleostomi;Mammalia;Eutheria;Euarchontoglires;Glires;Rodentia;Sciurognathi;Muroidea;Muridae;Murinae;Mus;Mus
+Hit:3-Hsp:0: 16 features
+  Homo sapiens (Human)
+  Eukaryota;Metazoa;Chordata;Craniata;Vertebrata;Euteleostomi;Mammalia;Eutheria;Euarchontoglires;Primates;Haplorrhini;Catarrhini;Hominidae;Homo
+Hit:4-Hsp:0: 2 features
+  Coturnix coturnix (Common quail) (Tetrao coturnix)
+  Eukaryota;Metazoa;Chordata;Craniata;Vertebrata;Euteleostomi;Testudines + Archosauria group;Archosauria;Dinosauria;Saurischia;Theropoda;Coelurosauria;Aves;Neognathae;Galliformes;Phasianidae;Perdicinae;Coturnix
+Hit:5-Hsp:0: 5 features
+  Daphnia magna
+  Eukaryota;Metazoa;Ecdysozoa;Arthropoda;Crustacea;Branchiopoda;Diplostraca;Cladocera;Anomopoda;Daphniidae;Daphnia
+
