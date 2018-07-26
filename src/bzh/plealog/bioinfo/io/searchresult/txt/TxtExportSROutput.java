@@ -26,8 +26,10 @@ import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.MessageFormat;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.StringTokenizer;
+import java.util.TreeMap;
 
 import bzh.plealog.bioinfo.api.data.feature.Feature;
 import bzh.plealog.bioinfo.api.data.feature.FeatureTable;
@@ -43,6 +45,8 @@ import bzh.plealog.bioinfo.api.data.sequence.DSequence;
 import bzh.plealog.bioinfo.api.data.sequence.DSymbol;
 import bzh.plealog.bioinfo.data.searchresult.SRUtils;
 import bzh.plealog.bioinfo.io.PrintfFormat;
+import bzh.plealog.bioinfo.io.searchresult.csv.AnnotationDataModel;
+import bzh.plealog.bioinfo.io.searchresult.csv.ExtractAnnotation;
 import bzh.plealog.bioinfo.util.CoreUtil;
 
 /**
@@ -170,7 +174,7 @@ public class TxtExportSROutput {
       "#",
       // why '_' ? See DataColumn.setColName()
       // \" added to enable loading of text file within spreadsheet app.
-      "\"Hit_Accession_and_Definition\"",// "Sequences_producing_significant_alignments:",
+      "Hit_Accession_and_Definition",// "Sequences_producing_significant_alignments:",
       "Hit length",
       "Nb. HSPs",
       "Score bits",
@@ -198,6 +202,25 @@ public class TxtExportSROutput {
       PCT_FORMATTER_TXT.length(), INT_FORMATTER_TXT.length(), 25, 25, 25, 60,
       60, INT_FORMATTER_TXT.length(), INT_FORMATTER_TXT.length(), };
 
+  public static int[] getDefaultColumnIDs() {
+    int columns=0, idx=0;
+    for(boolean val : DATA_COL_VISIBILITY) {
+      if (val) {
+        idx++;
+      }
+    }
+    int[] colids = new int[idx];
+    columns=HIT_NUM;
+    idx=0;
+    for(boolean val : DATA_COL_VISIBILITY) {
+      if (val) {
+        colids[idx]=columns;
+        idx++;
+      }
+      columns++;
+    }
+    return colids;
+  }
   private DataColumn[] getDefaultDataColumnModel(boolean full) {
     if (_tableColumns != null)
       return _tableColumns;
@@ -479,8 +502,12 @@ public class TxtExportSROutput {
       start += _msaWidth;
     }
   }
-
   public static String getFormattedData(SRHit hit, SRHsp hsp, int colId,
+      boolean escapeStringWithQuotes, boolean addPctString) {
+    return getFormattedData(null, hit, hsp, colId, escapeStringWithQuotes, addPctString);
+  }
+  public static String getFormattedData(TreeMap<String, TreeMap<ExtractAnnotation.ANNOTATION_CATEGORY, HashMap<String, AnnotationDataModel>>> annotatedHitsHashMap,
+      SRHit hit, SRHsp hsp, int colId,
       boolean escapeStringWithQuotes, boolean addPctString) {
     StringBuffer buf;
     String val = "?";
@@ -644,6 +671,22 @@ public class TxtExportSROutput {
         break;
       case BIO_CLASSIF:
         val = "n/a";
+        if (annotatedHitsHashMap!=null){
+          val = ExtractAnnotation.getFormattedFeatures(
+                  annotatedHitsHashMap, 
+                  0, 
+                  0, 
+                  hit.getHitNum()-1);
+          if(val.length()!=0){
+            if (escapeStringWithQuotes){
+                buf = new StringBuffer();
+              buf.append("\"");
+              buf.append(val);
+              buf.append("\"");
+              val = buf.toString();
+            }
+          }
+      }
         break;
     }
     return val;
