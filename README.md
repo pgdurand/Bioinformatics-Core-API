@@ -1,6 +1,6 @@
 # Bioinformatics Core API
 
-[![License AGPL](https://img.shields.io/badge/license-Affero%20GPL%203.0-blue.svg)](https://www.gnu.org/licenses/agpl-3.0.txt) [![Build Status](https://travis-ci.org/pgdurand/Bioinformatics-Core-API.svg?branch=master)](https://travis-ci.org/pgdurand/Bioinformatics-Core-API) [![](https://tokei.rs/b1/github/pgdurand/Bioinformatics-Core-API?category=code)](https://github.com/pgdurand/Bioinformatics-Core-API) [![](https://img.shields.io/badge/platform-Java--1.7+-yellow.svg)](http://www.oracle.com/technetwork/java/javase/downloads/index.html) [![](https://img.shields.io/badge/run_on-Linux--Mac_OSX--Windows-yellowgreen.svg)]()
+[![License AGPL](https://img.shields.io/badge/license-Affero%20GPL%203.0-blue.svg)](https://www.gnu.org/licenses/agpl-3.0.txt) [![Build Status](https://travis-ci.org/pgdurand/Bioinformatics-Core-API.svg?branch=master)](https://travis-ci.org/pgdurand/Bioinformatics-Core-API) [![](https://tokei.rs/b1/github/pgdurand/Bioinformatics-Core-API?category=code)](https://github.com/pgdurand/Bioinformatics-Core-API) [![](https://img.shields.io/badge/platform-Java--1.8+-yellow.svg)](http://www.oracle.com/technetwork/java/javase/downloads/index.html) [![](https://img.shields.io/badge/run_on-Linux--Mac_OSX--Windows-yellowgreen.svg)]()
 
 ## Introduction
 
@@ -17,7 +17,7 @@ All in all, [Core](https://github.com/pgdurand/Bioinformatics-Core-API) and [Cor
 
 ## Requirements
 
-Use a [Java Virtual Machine](http://www.oracle.com/technetwork/java/javase/downloads/index.html) 1.7 (or above) from Oracle. 
+Use a [Java Virtual Machine](http://www.oracle.com/technetwork/java/javase/downloads/index.html) 1.8 (or above) from Oracle. 
 
 *Not tested with any other JVM providers but Oracle... so there is no guarantee that the software will work as expected if not using Oracle's JVM.*
 
