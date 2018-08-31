@@ -41,20 +41,24 @@ public class CSVExportSROutput {
   private boolean _showQName;
   private boolean _addPctString;
   private boolean _bestHitOnly;
+  private boolean _firstHspOnly;
   private boolean _showColumnHeader;
   private boolean _showQueryId;
   private boolean _showQueryLength;
   private int[] _colIds;
+  private CSVExportSROutputHandler _exportHandler;
   
   public CSVExportSROutput() {
     _escapeString = true;// used for data only, not column headers
     _showQName = true;
     _addPctString = true;
-    _bestHitOnly = true;
+    _bestHitOnly = false;
+    _firstHspOnly = false;
     _showColumnHeader = true;
     _showQueryId = true;
     _showQueryLength = false;
     _colIds = TxtExportSROutput.getDefaultColumnIDs();
+    _exportHandler = null;
   }
 
   /**
@@ -111,6 +115,9 @@ public class CSVExportSROutput {
   public void showBestHitOnly(boolean bestHitOnly) {
     _bestHitOnly = bestHitOnly;
   }
+  public void showFirstHspOnly(boolean firstHspOnly) {
+    _firstHspOnly = firstHspOnly;
+  }
   public void showColumnHeader(boolean columnHeader) {
     _showColumnHeader = columnHeader;
   }
@@ -123,6 +130,9 @@ public class CSVExportSROutput {
   public void ssetColumnIds(int[] colIds) {
     this._colIds = colIds;
   }
+  public void setCSVExportSROutputHandler(CSVExportSROutputHandler handler) {
+    _exportHandler = handler;
+  }
   private void writeString(Writer writer, String data) throws IOException {
     if (_escapeString) {
       writer.write("\"");
@@ -133,6 +143,20 @@ public class CSVExportSROutput {
     }
   }
 
+  private void writeQueryInfo(Writer writer, String qId, String qName, String qLength) throws IOException {
+    if (_showQueryId) {
+      writeString(writer, qId);
+      writer.write(_separator);
+      if (_showQName) {
+        writeString(writer, qName);
+        writer.write(_separator);
+      }
+    }
+    if (_showQueryLength) {
+      writer.write(qLength);
+      writer.write(_separator);
+    }
+  }
   public void export(Writer writer, SROutput output) throws Exception {
     if (writer == null || output == null)
       return;
@@ -163,7 +187,7 @@ public class CSVExportSROutput {
       }
       for (i = 0; i < cols; i++) {
         s = TxtExportSROutput.DATA_COL_HEADERS[_colIds[i]];
-        writer.write("\"" + s + "\"");
+        writer.write("\"" + s.replaceAll("_", " ") + "\"");
         if ((i + 1) < cols)
           writer.write(_separator);
       }
@@ -172,7 +196,11 @@ public class CSVExportSROutput {
 
     // need to export Biological classification ?
     for (i = 0; i < cols; i++) {
-      if (_colIds[i] == TxtExportSROutput.BIO_CLASSIF) {
+      if (_colIds[i] == TxtExportSROutput.BIO_CLASSIF ||
+          _colIds[i] == TxtExportSROutput.BIO_CLASSIF_TAX ||
+          _colIds[i] == TxtExportSROutput.BIO_CLASSIF_GO ||
+          _colIds[i] == TxtExportSROutput.BIO_CLASSIF_EC ||
+          _colIds[i] == TxtExportSROutput.BIO_CLASSIF_IPR) {
         annotatedHitsHashMap = new TreeMap<String, TreeMap<ExtractAnnotation.ANNOTATION_CATEGORY, HashMap<String, AnnotationDataModel>>>();
         annotationDictionary = new TreeMap<ExtractAnnotation.ANNOTATION_CATEGORY, TreeMap<String, AnnotationDataModel>>();
         ExtractAnnotation.buildAnnotatedHitDataSet(output, 0, annotatedHitsHashMap, annotationDictionary);
@@ -201,42 +229,52 @@ public class CSVExportSROutput {
       size = output.countIteration();
       for (i = 0; i < size; i++) {// loop on iterations
         iteration = output.getIteration(i);
+        qId = iteration.getIterationQueryID();
+        qName = iteration.getIterationQueryDesc();
+        qLength = String.valueOf(iteration.getIterationQueryLength());
         size2 = iteration.countHit();
+        if (size2==0) {
+          //query with no match
+          writeQueryInfo(writer, qId, qName, qLength);
+          for (l = 0; l < cols; l++) {// loop on data columns
+            if (_escapeString) {writer.write("\"");}
+            writer.write("-");
+            if (_escapeString) {writer.write("\"");}
+            if ((l + 1) < cols)
+              writer.write(_separator);
+          }
+          writer.write("\n");
+        }
         for (j = 0; j < size2; j++) {// loop on hits
           hit = iteration.getHit(j);
           size3 = hit.countHsp();
           for (k = 0; k < size3; k++) {// loop on hsp
             hsp = hit.getHsp(k);
-            if (_showQueryId) {
-              writeString(writer, qId);
-              writer.write(_separator);
-              if (_showQName) {
-                writeString(writer, qName);
-                writer.write(_separator);
-              }
-            }
-            if (_showQueryLength) {
-              writer.write(qLength);
-              writer.write(_separator);
-            }
+            writeQueryInfo(writer, qId, qName, qLength);
             for (l = 0; l < cols; l++) {// loop on data columns
-              s = TxtExportSROutput.getFormattedData(annotatedHitsHashMap, hit, hsp, _colIds[l], _escapeString,
+              s = TxtExportSROutput.getFormattedData(annotatedHitsHashMap, iteration, hit, hsp, _colIds[l], _escapeString,
                   _addPctString);
+              if (_exportHandler!=null) {
+                s = _exportHandler.handle(s, _colIds[l]);
+              }
               writer.write(s);
               if ((l + 1) < cols)
                 writer.write(_separator);
             }
             writer.write("\n");
-            if (_bestHitOnly) {
-              if (annotatedHitsHashMap != null)
-                annotatedHitsHashMap.clear();
-              if (annotationDictionary != null)
-                annotationDictionary.clear();
-              return;
+            if (_firstHspOnly) {
+              break;
             }
+          }
+          if (_bestHitOnly) {
+            break;
           }
         }
       }
+      if (annotatedHitsHashMap != null)
+        annotatedHitsHashMap.clear();
+      if (annotationDictionary != null)
+        annotationDictionary.clear();
     } else {// empty results
       if (_showQueryId) {
         writeString(writer, qId);

@@ -47,6 +47,7 @@ import bzh.plealog.bioinfo.data.searchresult.SRUtils;
 import bzh.plealog.bioinfo.io.PrintfFormat;
 import bzh.plealog.bioinfo.io.searchresult.csv.AnnotationDataModel;
 import bzh.plealog.bioinfo.io.searchresult.csv.ExtractAnnotation;
+import bzh.plealog.bioinfo.io.searchresult.csv.ExtractAnnotation.ANNOTATION_CATEGORY;
 import bzh.plealog.bioinfo.util.CoreUtil;
 
 /**
@@ -161,15 +162,20 @@ public class TxtExportSROutput {
   public static final int            TAXONOMY              = 22;
   public static final int            ACCESSION             = 23;
   public static final int            DEFINITION            = 24;
-  public static final int            BIO_CLASSIF           = 25;
+  public static final int            BIO_CLASSIF           = 25;//all: GO+TAX+EC+IPR
   public static final int            MISMATCHES            = 26;
   public static final int            T_GAPS                = 27;
+  public static final int            BIO_CLASSIF_TAX       = 28;
+  public static final int            BIO_CLASSIF_GO        = 29;
+  public static final int            BIO_CLASSIF_IPR       = 30;
+  public static final int            BIO_CLASSIF_EC        = 31;
 
   public static final int[]          DATA_COL_IDS          = { HIT_NUM,
       ACCESS_DEF, LENGTH, NBHSPS, SCORE_BITS, EVALUE, SCORE, Q_FROM, Q_TO,
       Q_GAPS, Q_FRAME, Q_COVERAGE, H_FROM, H_TO, H_GAP, H_FRAME, H_COVERAGE,
       IDENTITY, POSITIVE, GAPS, ALI_LEN, ORGANISM, TAXONOMY, ACCESSION,
-      DEFINITION, BIO_CLASSIF, MISMATCHES, T_GAPS         };
+      DEFINITION, BIO_CLASSIF, MISMATCHES, T_GAPS, BIO_CLASSIF_TAX, BIO_CLASSIF_GO,
+      BIO_CLASSIF_IPR, BIO_CLASSIF_EC};
   public static final String[]       DATA_COL_HEADERS      = {
       "#",
       // why '_' ? See DataColumn.setColName()
@@ -184,11 +190,13 @@ public class TxtExportSROutput {
       "Query frame", "Query Coverage", "Hit from", "Hit to", "Hit gaps",
       "Hit frame", "Hit coverage", "Identity", "Positive", "GapsP",
       "Align. length", "Organism", "Taxonomy", "Hit Accession",
-      "Hit Definition", "Biological classification", "Mismatches", "Gaps" };
+      "Hit Definition", "Biological classification", "Mismatches", "Gaps",
+      "NCBI Taxonomy Classification", "GeneOntology Classification",
+      "InterPro Classification", "Enzyme Commission Classification"};
   private static final boolean[]     DATA_COL_VISIBILITY   = { false, true,
       false, false, true, true, false, false, false, false, false, false,
       false, false, false, false, false, false, false, false, false, false,
-      false, false, false, false, false, false            };
+      false, false, false, false, false, false, false, false, false, false            };
   private static final int[]         DATA_COL_SIZE         = {
       SCORE_FORMATTER_TXT.length(), 60, INT_FORMATTER_TXT.length(),
       SCORE_FORMATTER_TXT.length(), SCORE_FORMATTER_TXT.length(),
@@ -200,7 +208,7 @@ public class TxtExportSROutput {
       SCORE_FORMATTER_TXT.length(), PCT_FORMATTER_TXT.length(),
       PCT_FORMATTER_TXT.length(), PCT_FORMATTER_TXT.length(),
       PCT_FORMATTER_TXT.length(), INT_FORMATTER_TXT.length(), 25, 25, 25, 60,
-      60, INT_FORMATTER_TXT.length(), INT_FORMATTER_TXT.length(), };
+      60, INT_FORMATTER_TXT.length(), INT_FORMATTER_TXT.length(), 60, 60, 60, 60};
 
   public static int[] getDefaultColumnIDs() {
     int columns=0, idx=0;
@@ -504,10 +512,10 @@ public class TxtExportSROutput {
   }
   public static String getFormattedData(SRHit hit, SRHsp hsp, int colId,
       boolean escapeStringWithQuotes, boolean addPctString) {
-    return getFormattedData(null, hit, hsp, colId, escapeStringWithQuotes, addPctString);
+    return getFormattedData(null, null, hit, hsp, colId, escapeStringWithQuotes, addPctString);
   }
   public static String getFormattedData(TreeMap<String, TreeMap<ExtractAnnotation.ANNOTATION_CATEGORY, HashMap<String, AnnotationDataModel>>> annotatedHitsHashMap,
-      SRHit hit, SRHsp hsp, int colId,
+      SRIteration iteration, SRHit hit, SRHsp hsp, int colId,
       boolean escapeStringWithQuotes, boolean addPctString) {
     StringBuffer buf;
     String val = "?";
@@ -670,23 +678,45 @@ public class TxtExportSROutput {
         }
         break;
       case BIO_CLASSIF:
+      case BIO_CLASSIF_TAX:
+      case BIO_CLASSIF_GO:
+      case BIO_CLASSIF_EC:
+      case BIO_CLASSIF_IPR:
         val = "n/a";
         if (annotatedHitsHashMap!=null){
+          ANNOTATION_CATEGORY cat;
+          if (colId==BIO_CLASSIF_TAX) {
+            cat = ANNOTATION_CATEGORY.TAX;
+          }
+          else if (colId==BIO_CLASSIF_GO) {
+            cat = ANNOTATION_CATEGORY.GO;
+          }
+          else if (colId==BIO_CLASSIF_EC) {
+            cat = ANNOTATION_CATEGORY.EC;
+          }
+          else if (colId==BIO_CLASSIF_IPR) {
+            cat = ANNOTATION_CATEGORY.IPR;
+          }
+          else {
+            cat = null;
+          }
           val = ExtractAnnotation.getFormattedFeatures(
                   annotatedHitsHashMap, 
                   0, 
-                  0, 
-                  hit.getHitNum()-1);
-          if(val.length()!=0){
-            if (escapeStringWithQuotes){
-                buf = new StringBuffer();
-              buf.append("\"");
-              buf.append(val);
-              buf.append("\"");
-              val = buf.toString();
-            }
+                  iteration!=null?iteration.getIterationIterNum()-1:0, 
+                  hit.getHitNum()-1, 
+                  cat);
+          if (escapeStringWithQuotes){
+            buf = new StringBuffer();
+            buf.append("\"");
+            buf.append(val.length()!=0?val:"-");
+            buf.append("\"");
+            val = buf.toString();
           }
-      }
+          else {
+            val = (val.length()!=0?val:"-");
+          }
+        }
         break;
     }
     return val;

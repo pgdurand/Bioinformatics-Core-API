@@ -464,6 +464,11 @@ public class ExtractAnnotation {
     return feature;
   }
 
+  public static String getFormattedFeatures(
+      TreeMap<String, TreeMap<ANNOTATION_CATEGORY, HashMap<String, AnnotationDataModel>>> annotatedHitsHashMap,
+      int output_file_index, int iteration_index, int hit_index) {
+    return getFormattedFeatures(annotatedHitsHashMap, output_file_index, iteration_index, hit_index, null);
+  }
   /**
    * Formats the annotation to write them in a csv cell.
    * 
@@ -480,7 +485,7 @@ public class ExtractAnnotation {
    */
   public static String getFormattedFeatures(
       TreeMap<String, TreeMap<ANNOTATION_CATEGORY, HashMap<String, AnnotationDataModel>>> annotatedHitsHashMap,
-      int output_file_index, int iteration_index, int hit_index) {
+      int output_file_index, int iteration_index, int hit_index, ANNOTATION_CATEGORY restrictToCategoty) {
     HashMap<String, AnnotationDataModel> featureTreeMap = null;
     TreeMap<ANNOTATION_CATEGORY, HashMap<String, AnnotationDataModel>> hitFeaturesTreeMap = null;
     Iterator<ANNOTATION_CATEGORY> iteratorCategories = null;
@@ -502,6 +507,9 @@ public class ExtractAnnotation {
       iteratorCategories = hitFeaturesTreeMap.keySet().iterator();
       while (iteratorCategories.hasNext()) {
         category = iteratorCategories.next();
+        if (restrictToCategoty!=null && category.equals(restrictToCategoty)==false) {
+          continue;
+        }
         featureTreeMap = (HashMap<String, AnnotationDataModel>) hitFeaturesTreeMap.get(category);
         iteratorFeatures = featureTreeMap.keySet().iterator();
         while (iteratorFeatures.hasNext()) {
@@ -509,6 +517,10 @@ public class ExtractAnnotation {
           annotationDataModel = featureTreeMap.get(featureKey);
           if (category.equals(ANNOTATION_CATEGORY.TAX)) {
             featureCell.append(ANNOTATION_CATEGORY.TAX.name());
+            featureCell.append(AnnotationDataModelConstants.CATEGORY_CODE_SEPARATOR);
+          }
+          else if (category.equals(ANNOTATION_CATEGORY.EC)) {
+            featureCell.append(ANNOTATION_CATEGORY.EC.name());
             featureCell.append(AnnotationDataModelConstants.CATEGORY_CODE_SEPARATOR);
           }
           featureCell.append(annotationDataModel.getAccession());
