@@ -1,4 +1,4 @@
-package bzh.plealog.bioinfo.io.searchresult.csv;
+package bzh.plealog.bioinfo.api.data.feature;
 
 /* Copyright (C) 2006-2018 Patrick G. Durand
 *
@@ -18,6 +18,15 @@ package bzh.plealog.bioinfo.io.searchresult.csv;
 */
 public class AnnotationDataModelConstants {
 
+  //Special keys to get information about Classifications
+  //Format for values associated to these keys is free
+  public static enum ANNOTATION_CATEGORY {
+  TAX, // NCBI Taxonomy 
+  GO,  //Gene Ontology 
+  IPR, //InterPro
+  EC,  //Enzyme Commission Nomenclature 
+  LCA  //Least Common Ancestor (computed)
+  }
   // general
   public static final String SEPARATOR = "_";
   public static final String SPACE = " ";

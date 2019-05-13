@@ -16,20 +16,22 @@
  */
 package bzh.plealog.bioinfo.io.searchresult.csv;
 
+import bzh.plealog.bioinfo.api.data.feature.AnnotationDataModelConstants;
+
 public class AnnotationDataModel {
 
   private String _accession = "";
   private String _label = "";
   private int _nbHits = 0;
-  private ExtractAnnotation.ANNOTATION_CATEGORY _annotationType = null;
+  private AnnotationDataModelConstants.ANNOTATION_CATEGORY _annotationType = null;
 
-  public AnnotationDataModel(String key, String label, ExtractAnnotation.ANNOTATION_CATEGORY type) {
+  public AnnotationDataModel(String key, String label, AnnotationDataModelConstants.ANNOTATION_CATEGORY type) {
     _accession = key;
     _label = label;
     _annotationType = type;
   }
 
-  public AnnotationDataModel(String key, ExtractAnnotation.ANNOTATION_CATEGORY type) {
+  public AnnotationDataModel(String key, AnnotationDataModelConstants.ANNOTATION_CATEGORY type) {
     _accession = key;
     _annotationType = type;
   }
@@ -63,11 +65,11 @@ public class AnnotationDataModel {
     _label = label;
   }
 
-  public void setAnnotationType(ExtractAnnotation.ANNOTATION_CATEGORY type) {
+  public void setAnnotationType(AnnotationDataModelConstants.ANNOTATION_CATEGORY type) {
     _annotationType = type;
   }
 
-  public ExtractAnnotation.ANNOTATION_CATEGORY getAnnotationType() {
+  public AnnotationDataModelConstants.ANNOTATION_CATEGORY getAnnotationType() {
     return _annotationType;
   }
 

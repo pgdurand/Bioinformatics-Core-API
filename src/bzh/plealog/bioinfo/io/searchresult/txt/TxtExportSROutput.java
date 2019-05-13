@@ -31,6 +31,8 @@ import java.util.Locale;
 import java.util.StringTokenizer;
 import java.util.TreeMap;
 
+import bzh.plealog.bioinfo.api.data.feature.AnnotationDataModelConstants;
+import bzh.plealog.bioinfo.api.data.feature.AnnotationDataModelConstants.ANNOTATION_CATEGORY;
 import bzh.plealog.bioinfo.api.data.feature.Feature;
 import bzh.plealog.bioinfo.api.data.feature.FeatureTable;
 import bzh.plealog.bioinfo.api.data.feature.Qualifier;
@@ -47,7 +49,6 @@ import bzh.plealog.bioinfo.data.searchresult.SRUtils;
 import bzh.plealog.bioinfo.io.PrintfFormat;
 import bzh.plealog.bioinfo.io.searchresult.csv.AnnotationDataModel;
 import bzh.plealog.bioinfo.io.searchresult.csv.ExtractAnnotation;
-import bzh.plealog.bioinfo.io.searchresult.csv.ExtractAnnotation.ANNOTATION_CATEGORY;
 import bzh.plealog.bioinfo.util.CoreUtil;
 
 /**
@@ -514,7 +515,7 @@ public class TxtExportSROutput {
       boolean escapeStringWithQuotes, boolean addPctString) {
     return getFormattedData(null, null, hit, hsp, colId, escapeStringWithQuotes, addPctString);
   }
-  public static String getFormattedData(TreeMap<String, TreeMap<ExtractAnnotation.ANNOTATION_CATEGORY, HashMap<String, AnnotationDataModel>>> annotatedHitsHashMap,
+  public static String getFormattedData(TreeMap<String, TreeMap<AnnotationDataModelConstants.ANNOTATION_CATEGORY, HashMap<String, AnnotationDataModel>>> annotatedHitsHashMap,
       SRIteration iteration, SRHit hit, SRHsp hsp, int colId,
       boolean escapeStringWithQuotes, boolean addPctString) {
     StringBuffer buf;
@@ -684,18 +685,18 @@ public class TxtExportSROutput {
       case BIO_CLASSIF_IPR:
         val = "n/a";
         if (annotatedHitsHashMap!=null){
-          ANNOTATION_CATEGORY cat;
+          AnnotationDataModelConstants.ANNOTATION_CATEGORY cat;
           if (colId==BIO_CLASSIF_TAX) {
-            cat = ANNOTATION_CATEGORY.TAX;
+            cat = AnnotationDataModelConstants.ANNOTATION_CATEGORY.TAX;
           }
           else if (colId==BIO_CLASSIF_GO) {
-            cat = ANNOTATION_CATEGORY.GO;
+            cat = AnnotationDataModelConstants.ANNOTATION_CATEGORY.GO;
           }
           else if (colId==BIO_CLASSIF_EC) {
-            cat = ANNOTATION_CATEGORY.EC;
+            cat = AnnotationDataModelConstants.ANNOTATION_CATEGORY.EC;
           }
           else if (colId==BIO_CLASSIF_IPR) {
-            cat = ANNOTATION_CATEGORY.IPR;
+            cat = AnnotationDataModelConstants.ANNOTATION_CATEGORY.IPR;
           }
           else {
             cat = null;

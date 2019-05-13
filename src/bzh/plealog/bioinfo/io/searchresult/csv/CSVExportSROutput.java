@@ -21,6 +21,7 @@ import java.io.Writer;
 import java.util.HashMap;
 import java.util.TreeMap;
 
+import bzh.plealog.bioinfo.api.data.feature.AnnotationDataModelConstants;
 import bzh.plealog.bioinfo.api.data.searchresult.SRHit;
 import bzh.plealog.bioinfo.api.data.searchresult.SRHsp;
 import bzh.plealog.bioinfo.api.data.searchresult.SRIteration;
@@ -161,8 +162,8 @@ public class CSVExportSROutput {
     if (writer == null || output == null)
       return;
 
-    TreeMap<String, TreeMap<ExtractAnnotation.ANNOTATION_CATEGORY, HashMap<String, AnnotationDataModel>>> annotatedHitsHashMap = null;
-    TreeMap<ExtractAnnotation.ANNOTATION_CATEGORY, TreeMap<String, AnnotationDataModel>> annotationDictionary = null;
+    TreeMap<String, TreeMap<AnnotationDataModelConstants.ANNOTATION_CATEGORY, HashMap<String, AnnotationDataModel>>> annotatedHitsHashMap = null;
+    TreeMap<AnnotationDataModelConstants.ANNOTATION_CATEGORY, TreeMap<String, AnnotationDataModel>> annotationDictionary = null;
 
     SRIteration iteration;
     SRHit hit;
@@ -201,8 +202,8 @@ public class CSVExportSROutput {
           _colIds[i] == TxtExportSROutput.BIO_CLASSIF_GO ||
           _colIds[i] == TxtExportSROutput.BIO_CLASSIF_EC ||
           _colIds[i] == TxtExportSROutput.BIO_CLASSIF_IPR) {
-        annotatedHitsHashMap = new TreeMap<String, TreeMap<ExtractAnnotation.ANNOTATION_CATEGORY, HashMap<String, AnnotationDataModel>>>();
-        annotationDictionary = new TreeMap<ExtractAnnotation.ANNOTATION_CATEGORY, TreeMap<String, AnnotationDataModel>>();
+        annotatedHitsHashMap = new TreeMap<String, TreeMap<AnnotationDataModelConstants.ANNOTATION_CATEGORY, HashMap<String, AnnotationDataModel>>>();
+        annotationDictionary = new TreeMap<AnnotationDataModelConstants.ANNOTATION_CATEGORY, TreeMap<String, AnnotationDataModel>>();
         ExtractAnnotation.buildAnnotatedHitDataSet(output, 0, annotatedHitsHashMap, annotationDictionary);
         //HashSet<ExtractAnnotation.ANNOTATION_CATEGORY> DEF_CAT = new HashSet<ExtractAnnotation.ANNOTATION_CATEGORY>();
         //DEF_CAT.add(ANNOTATION_CATEGORY.GO);

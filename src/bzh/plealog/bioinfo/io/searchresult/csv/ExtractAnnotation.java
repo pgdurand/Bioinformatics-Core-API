@@ -26,6 +26,7 @@ import java.util.TreeMap;
 
 import org.apache.log4j.Logger;
 
+import bzh.plealog.bioinfo.api.data.feature.AnnotationDataModelConstants;
 import bzh.plealog.bioinfo.api.data.feature.Feature;
 import bzh.plealog.bioinfo.api.data.feature.FeatureTable;
 import bzh.plealog.bioinfo.api.data.feature.Qualifier;
@@ -36,24 +37,20 @@ import bzh.plealog.bioinfo.api.data.searchresult.SROutput;
 
 public class ExtractAnnotation {
 
-  public static enum ANNOTATION_CATEGORY {
-  TAX, GO, IPR, EC, LCA
-  /* , ORGANISM */}
-
   private static final Logger LOG = Logger.getLogger(ExtractAnnotation.class.getSimpleName());
 
-  private static HashSet<ExtractAnnotation.ANNOTATION_CATEGORY> DEF_CAT = new HashSet<ExtractAnnotation.ANNOTATION_CATEGORY>();
+  private static HashSet<AnnotationDataModelConstants.ANNOTATION_CATEGORY> DEF_CAT = new HashSet<AnnotationDataModelConstants.ANNOTATION_CATEGORY>();
 
   static {
-    DEF_CAT.add(ExtractAnnotation.ANNOTATION_CATEGORY.EC);
-    DEF_CAT.add(ExtractAnnotation.ANNOTATION_CATEGORY.GO);
-    DEF_CAT.add(ExtractAnnotation.ANNOTATION_CATEGORY.IPR);
-    DEF_CAT.add(ExtractAnnotation.ANNOTATION_CATEGORY.TAX);
+    DEF_CAT.add(AnnotationDataModelConstants.ANNOTATION_CATEGORY.EC);
+    DEF_CAT.add(AnnotationDataModelConstants.ANNOTATION_CATEGORY.GO);
+    DEF_CAT.add(AnnotationDataModelConstants.ANNOTATION_CATEGORY.IPR);
+    DEF_CAT.add(AnnotationDataModelConstants.ANNOTATION_CATEGORY.TAX);
   }
 
   public static void buildAnnotatedHitDataSet(SROutput bo, int file_index,
-      TreeMap<String, TreeMap<ExtractAnnotation.ANNOTATION_CATEGORY, HashMap<String, AnnotationDataModel>>> annotatedHitsHashMap,
-      TreeMap<ExtractAnnotation.ANNOTATION_CATEGORY, TreeMap<String, AnnotationDataModel>> annotationDictionary) {
+      TreeMap<String, TreeMap<AnnotationDataModelConstants.ANNOTATION_CATEGORY, HashMap<String, AnnotationDataModel>>> annotatedHitsHashMap,
+      TreeMap<AnnotationDataModelConstants.ANNOTATION_CATEGORY, TreeMap<String, AnnotationDataModel>> annotationDictionary) {
     ExtractAnnotation.buildAnnotatedHitDataSet(bo, file_index, annotatedHitsHashMap, annotationDictionary,
         DEF_CAT);
   }
@@ -72,9 +69,9 @@ public class ExtractAnnotation {
    *          category to retrieve. Cannot be null.
    */
   public static void buildAnnotatedHitDataSet(SROutput bo, int file_index,
-      TreeMap<String, TreeMap<ExtractAnnotation.ANNOTATION_CATEGORY, HashMap<String, AnnotationDataModel>>> annotatedHitsHashMap,
-      TreeMap<ExtractAnnotation.ANNOTATION_CATEGORY, TreeMap<String, AnnotationDataModel>> annotationDictionary,
-      Set<ExtractAnnotation.ANNOTATION_CATEGORY> categoryToRetrieve) {
+      TreeMap<String, TreeMap<AnnotationDataModelConstants.ANNOTATION_CATEGORY, HashMap<String, AnnotationDataModel>>> annotatedHitsHashMap,
+      TreeMap<AnnotationDataModelConstants.ANNOTATION_CATEGORY, TreeMap<String, AnnotationDataModel>> annotationDictionary,
+      Set<AnnotationDataModelConstants.ANNOTATION_CATEGORY> categoryToRetrieve) {
 
     SRIteration hitList = null;
     SRHit hit = null;
@@ -85,7 +82,7 @@ public class ExtractAnnotation {
     int hit_num_index = 0;
     boolean getFirstHspOnly = true;
     HashMap<String, AnnotationDataModel> featuresHashMap = null;
-    TreeMap<ExtractAnnotation.ANNOTATION_CATEGORY, HashMap<String, AnnotationDataModel>> categoryHashMap = null;
+    TreeMap<AnnotationDataModelConstants.ANNOTATION_CATEGORY, HashMap<String, AnnotationDataModel>> categoryHashMap = null;
     boolean useInternalAnnotationKey = false;
 
     // filtering case
@@ -107,58 +104,58 @@ public class ExtractAnnotation {
       nb_hits = hitList.countHit();
       for (hit_index = 0; hit_index < nb_hits; hit_index++) {
         hit = hitList.getHit(hit_index);
-        categoryHashMap = new TreeMap<ExtractAnnotation.ANNOTATION_CATEGORY, HashMap<String, AnnotationDataModel>>();
+        categoryHashMap = new TreeMap<AnnotationDataModelConstants.ANNOTATION_CATEGORY, HashMap<String, AnnotationDataModel>>();
         hit_num_index = hit.getHitNum() - 1;
 
-        if (categoryToRetrieve.contains(ExtractAnnotation.ANNOTATION_CATEGORY.TAX)) {
+        if (categoryToRetrieve.contains(AnnotationDataModelConstants.ANNOTATION_CATEGORY.TAX)) {
           // extract TAXON - xref
           featuresHashMap = new HashMap<String, AnnotationDataModel>();
           extractFeatureFromHitHsp(hit, file_index, query_index, hit_num_index,
               AnnotationDataModelConstants.FEATURE_QUALIFIER_XREF, AnnotationDataModelConstants.FEATURE_QUALIFIER_ANNOTATION_KEYWORD_TAXON,
               getFirstHspOnly, useInternalAnnotationKey, featuresHashMap);
-          categoryHashMap.put(ExtractAnnotation.ANNOTATION_CATEGORY.TAX, featuresHashMap);
-          fillAnnotationDictionary(annotationDictionary, ExtractAnnotation.ANNOTATION_CATEGORY.TAX, featuresHashMap);
+          categoryHashMap.put(AnnotationDataModelConstants.ANNOTATION_CATEGORY.TAX, featuresHashMap);
+          fillAnnotationDictionary(annotationDictionary, AnnotationDataModelConstants.ANNOTATION_CATEGORY.TAX, featuresHashMap);
         }
 
-        if (categoryToRetrieve.contains(ExtractAnnotation.ANNOTATION_CATEGORY.GO)) {
+        if (categoryToRetrieve.contains(AnnotationDataModelConstants.ANNOTATION_CATEGORY.GO)) {
           // extract GO - xref
           featuresHashMap = new HashMap<String, AnnotationDataModel>();
           extractFeatureFromHitHsp(hit, file_index, query_index, hit_num_index,
               AnnotationDataModelConstants.FEATURE_QUALIFIER_XREF, AnnotationDataModelConstants.FEATURE_QUALIFIER_ANNOTATION_KEYWORD_GO,
               getFirstHspOnly, useInternalAnnotationKey, featuresHashMap);
-          categoryHashMap.put(ExtractAnnotation.ANNOTATION_CATEGORY.GO, featuresHashMap);
-          fillAnnotationDictionary(annotationDictionary, ExtractAnnotation.ANNOTATION_CATEGORY.GO, featuresHashMap);
+          categoryHashMap.put(AnnotationDataModelConstants.ANNOTATION_CATEGORY.GO, featuresHashMap);
+          fillAnnotationDictionary(annotationDictionary, AnnotationDataModelConstants.ANNOTATION_CATEGORY.GO, featuresHashMap);
         }
-        if (categoryToRetrieve.contains(ExtractAnnotation.ANNOTATION_CATEGORY.IPR)) {
+        if (categoryToRetrieve.contains(AnnotationDataModelConstants.ANNOTATION_CATEGORY.IPR)) {
           // extract INTERPRO - xref
           featuresHashMap = new HashMap<String, AnnotationDataModel>();
           extractFeatureFromHitHsp(hit, file_index, query_index, hit_num_index,
               AnnotationDataModelConstants.FEATURE_QUALIFIER_XREF,
               AnnotationDataModelConstants.FEATURE_QUALIFIER_ANNOTATION_KEYWORD_INTERPRO, getFirstHspOnly,
               useInternalAnnotationKey, featuresHashMap);
-          categoryHashMap.put(ExtractAnnotation.ANNOTATION_CATEGORY.IPR, featuresHashMap);
-          fillAnnotationDictionary(annotationDictionary, ExtractAnnotation.ANNOTATION_CATEGORY.IPR, featuresHashMap);
+          categoryHashMap.put(AnnotationDataModelConstants.ANNOTATION_CATEGORY.IPR, featuresHashMap);
+          fillAnnotationDictionary(annotationDictionary, AnnotationDataModelConstants.ANNOTATION_CATEGORY.IPR, featuresHashMap);
         }
-        if (categoryToRetrieve.contains(ExtractAnnotation.ANNOTATION_CATEGORY.EC)) {
+        if (categoryToRetrieve.contains(AnnotationDataModelConstants.ANNOTATION_CATEGORY.EC)) {
           // extract ENZYME - xref
           featuresHashMap = new HashMap<String, AnnotationDataModel>();
           extractFeatureFromHitHsp(hit, file_index, query_index, hit_num_index,
               AnnotationDataModelConstants.FEATURE_QUALIFIER_XREF, AnnotationDataModelConstants.FEATURE_QUALIFIER_ANNOTATION_KEYWORD_ENZYME,
               getFirstHspOnly, useInternalAnnotationKey, featuresHashMap);
-          categoryHashMap.put(ExtractAnnotation.ANNOTATION_CATEGORY.EC, featuresHashMap);
-          fillAnnotationDictionary(annotationDictionary, ExtractAnnotation.ANNOTATION_CATEGORY.EC, featuresHashMap);
+          categoryHashMap.put(AnnotationDataModelConstants.ANNOTATION_CATEGORY.EC, featuresHashMap);
+          fillAnnotationDictionary(annotationDictionary, AnnotationDataModelConstants.ANNOTATION_CATEGORY.EC, featuresHashMap);
           // extract ENZYME
           featuresHashMap = new HashMap<String, AnnotationDataModel>();
           extractFeatureFromHitHsp(hit, file_index, query_index, hit_num_index,
               AnnotationDataModelConstants.FEATURE_QUALIFIER_ENZYME, AnnotationDataModelConstants.FEATURE_QUALIFIER_ANNOTATION_KEYWORD_NIL,
               getFirstHspOnly, useInternalAnnotationKey, featuresHashMap);
-          if (!categoryHashMap.containsKey(ExtractAnnotation.ANNOTATION_CATEGORY.EC)) {
-            categoryHashMap.put(ExtractAnnotation.ANNOTATION_CATEGORY.EC, featuresHashMap);
+          if (!categoryHashMap.containsKey(AnnotationDataModelConstants.ANNOTATION_CATEGORY.EC)) {
+            categoryHashMap.put(AnnotationDataModelConstants.ANNOTATION_CATEGORY.EC, featuresHashMap);
           } else {
             // add ENZYME - EC number annotation to already loaded ENZYME - xref
-            categoryHashMap.get(ExtractAnnotation.ANNOTATION_CATEGORY.EC).putAll(featuresHashMap);
+            categoryHashMap.get(AnnotationDataModelConstants.ANNOTATION_CATEGORY.EC).putAll(featuresHashMap);
           }
-          fillAnnotationDictionary(annotationDictionary, ExtractAnnotation.ANNOTATION_CATEGORY.EC, featuresHashMap);
+          fillAnnotationDictionary(annotationDictionary, AnnotationDataModelConstants.ANNOTATION_CATEGORY.EC, featuresHashMap);
         }
 
         // fillAnnotationDictionary (annotationDictionary, ANNOTATION_CATEGORY.ENZYME,
@@ -172,8 +169,8 @@ public class ExtractAnnotation {
   }
 
   public static void fillAnnotationDictionary(
-      TreeMap<ExtractAnnotation.ANNOTATION_CATEGORY, TreeMap<String, AnnotationDataModel>> annotationDictionary,
-      ExtractAnnotation.ANNOTATION_CATEGORY category, HashMap<String, AnnotationDataModel> featuresHashMap) {
+      TreeMap<AnnotationDataModelConstants.ANNOTATION_CATEGORY, TreeMap<String, AnnotationDataModel>> annotationDictionary,
+      AnnotationDataModelConstants.ANNOTATION_CATEGORY category, HashMap<String, AnnotationDataModel> featuresHashMap) {
     Iterator<String> iterator = null;
     AnnotationDataModel annotationDataModel = null;
     String annotationKey = "";
@@ -200,7 +197,7 @@ public class ExtractAnnotation {
     }
   }
 
-  public static void countClassificationCategory(SROutput koriblastDataSet, ExtractAnnotation.ANNOTATION_CATEGORY categoryToRetrieve,
+  public static void countClassificationCategory(SROutput koriblastDataSet, AnnotationDataModelConstants.ANNOTATION_CATEGORY categoryToRetrieve,
       HashMap<String, AnnotationDataModel> featuresHashMap) {
     SRIteration hitList = null;
     SRHit hit = null;
@@ -229,26 +226,26 @@ public class ExtractAnnotation {
         hit = hitList.getHit(hit_index);
         hit_num_index = hit.getHitNum() - 1;
 
-        if (categoryToRetrieve.equals((ExtractAnnotation.ANNOTATION_CATEGORY.TAX))) {
+        if (categoryToRetrieve.equals((AnnotationDataModelConstants.ANNOTATION_CATEGORY.TAX))) {
           // extract TAXON - xref
           extractFeatureFromHitHsp(hit, file_index, query_index, hit_num_index,
               AnnotationDataModelConstants.FEATURE_QUALIFIER_XREF, AnnotationDataModelConstants.FEATURE_QUALIFIER_ANNOTATION_KEYWORD_TAXON,
               getFirstHspOnly, useInternalAnnotationKey, featuresHashMap);
         }
-        if (categoryToRetrieve.equals(ExtractAnnotation.ANNOTATION_CATEGORY.GO)) {
+        if (categoryToRetrieve.equals(AnnotationDataModelConstants.ANNOTATION_CATEGORY.GO)) {
           // extract GO - xref
           extractFeatureFromHitHsp(hit, file_index, query_index, hit_num_index,
               AnnotationDataModelConstants.FEATURE_QUALIFIER_XREF, AnnotationDataModelConstants.FEATURE_QUALIFIER_ANNOTATION_KEYWORD_GO,
               getFirstHspOnly, useInternalAnnotationKey, featuresHashMap);
         }
-        if (categoryToRetrieve.equals(ExtractAnnotation.ANNOTATION_CATEGORY.IPR)) {
+        if (categoryToRetrieve.equals(AnnotationDataModelConstants.ANNOTATION_CATEGORY.IPR)) {
           // extract INTERPRO - xref
           extractFeatureFromHitHsp(hit, file_index, query_index, hit_num_index,
               AnnotationDataModelConstants.FEATURE_QUALIFIER_XREF,
               AnnotationDataModelConstants.FEATURE_QUALIFIER_ANNOTATION_KEYWORD_INTERPRO, getFirstHspOnly,
               useInternalAnnotationKey, featuresHashMap);
         }
-        if (categoryToRetrieve.equals(ExtractAnnotation.ANNOTATION_CATEGORY.EC)) {
+        if (categoryToRetrieve.equals(AnnotationDataModelConstants.ANNOTATION_CATEGORY.EC)) {
           // extract ENZYME - xref
           extractFeatureFromHitHsp(hit, file_index, query_index, hit_num_index,
               AnnotationDataModelConstants.FEATURE_QUALIFIER_XREF, AnnotationDataModelConstants.FEATURE_QUALIFIER_ANNOTATION_KEYWORD_ENZYME,
@@ -407,7 +404,7 @@ public class ExtractAnnotation {
     }
   }
 
-  public static String getCode(ANNOTATION_CATEGORY category) {
+  public static String getCode(AnnotationDataModelConstants.ANNOTATION_CATEGORY category) {
     String label = "N/A";
     switch (category) {
     case LCA:
@@ -432,17 +429,17 @@ public class ExtractAnnotation {
     return label;
   }
 
-  public static ANNOTATION_CATEGORY getCategory(String cat) {
-    if (ANNOTATION_CATEGORY.TAX.toString().equals(cat)) {
-      return ANNOTATION_CATEGORY.TAX;
-    } else if (ANNOTATION_CATEGORY.LCA.toString().equals(cat)) {
-      return ANNOTATION_CATEGORY.LCA;
-    } else if (ANNOTATION_CATEGORY.GO.toString().equals(cat)) {
-      return ANNOTATION_CATEGORY.GO;
-    } else if (ANNOTATION_CATEGORY.IPR.toString().equals(cat)) {
-      return ANNOTATION_CATEGORY.IPR;
-    } else if (ANNOTATION_CATEGORY.EC.toString().equals(cat)) {
-      return ANNOTATION_CATEGORY.EC;
+  public static AnnotationDataModelConstants.ANNOTATION_CATEGORY getCategory(String cat) {
+    if (AnnotationDataModelConstants.ANNOTATION_CATEGORY.TAX.toString().equals(cat)) {
+      return AnnotationDataModelConstants.ANNOTATION_CATEGORY.TAX;
+    } else if (AnnotationDataModelConstants.ANNOTATION_CATEGORY.LCA.toString().equals(cat)) {
+      return AnnotationDataModelConstants.ANNOTATION_CATEGORY.LCA;
+    } else if (AnnotationDataModelConstants.ANNOTATION_CATEGORY.GO.toString().equals(cat)) {
+      return AnnotationDataModelConstants.ANNOTATION_CATEGORY.GO;
+    } else if (AnnotationDataModelConstants.ANNOTATION_CATEGORY.IPR.toString().equals(cat)) {
+      return AnnotationDataModelConstants.ANNOTATION_CATEGORY.IPR;
+    } else if (AnnotationDataModelConstants.ANNOTATION_CATEGORY.EC.toString().equals(cat)) {
+      return AnnotationDataModelConstants.ANNOTATION_CATEGORY.EC;
     } else {
       return null;
     }
@@ -465,7 +462,7 @@ public class ExtractAnnotation {
   }
 
   public static String getFormattedFeatures(
-      TreeMap<String, TreeMap<ANNOTATION_CATEGORY, HashMap<String, AnnotationDataModel>>> annotatedHitsHashMap,
+      TreeMap<String, TreeMap<AnnotationDataModelConstants.ANNOTATION_CATEGORY, HashMap<String, AnnotationDataModel>>> annotatedHitsHashMap,
       int output_file_index, int iteration_index, int hit_index) {
     return getFormattedFeatures(annotatedHitsHashMap, output_file_index, iteration_index, hit_index, null);
   }
@@ -484,12 +481,12 @@ public class ExtractAnnotation {
    * @return the annotation formatted
    */
   public static String getFormattedFeatures(
-      TreeMap<String, TreeMap<ANNOTATION_CATEGORY, HashMap<String, AnnotationDataModel>>> annotatedHitsHashMap,
-      int output_file_index, int iteration_index, int hit_index, ANNOTATION_CATEGORY restrictToCategoty) {
+      TreeMap<String, TreeMap<AnnotationDataModelConstants.ANNOTATION_CATEGORY, HashMap<String, AnnotationDataModel>>> annotatedHitsHashMap,
+      int output_file_index, int iteration_index, int hit_index, AnnotationDataModelConstants.ANNOTATION_CATEGORY restrictToCategoty) {
     HashMap<String, AnnotationDataModel> featureTreeMap = null;
-    TreeMap<ANNOTATION_CATEGORY, HashMap<String, AnnotationDataModel>> hitFeaturesTreeMap = null;
-    Iterator<ANNOTATION_CATEGORY> iteratorCategories = null;
-    ANNOTATION_CATEGORY category = null;
+    TreeMap<AnnotationDataModelConstants.ANNOTATION_CATEGORY, HashMap<String, AnnotationDataModel>> hitFeaturesTreeMap = null;
+    Iterator<AnnotationDataModelConstants.ANNOTATION_CATEGORY> iteratorCategories = null;
+    AnnotationDataModelConstants.ANNOTATION_CATEGORY category = null;
     Iterator<String> iteratorFeatures = null;
   
     StringBuffer featureCell =new StringBuffer();
@@ -502,7 +499,7 @@ public class ExtractAnnotation {
   
     hit_key = KeyDataSetManager.buildHitKeyFromIndex(output_file_index, iteration_index, hit_index);
     if (annotatedHitsHashMap.containsKey(hit_key)) {
-      hitFeaturesTreeMap = (TreeMap<ANNOTATION_CATEGORY, HashMap<String, AnnotationDataModel>>) annotatedHitsHashMap
+      hitFeaturesTreeMap = (TreeMap<AnnotationDataModelConstants.ANNOTATION_CATEGORY, HashMap<String, AnnotationDataModel>>) annotatedHitsHashMap
           .get(hit_key);
       iteratorCategories = hitFeaturesTreeMap.keySet().iterator();
       while (iteratorCategories.hasNext()) {
@@ -515,12 +512,12 @@ public class ExtractAnnotation {
         while (iteratorFeatures.hasNext()) {
           featureKey = (String) iteratorFeatures.next();
           annotationDataModel = featureTreeMap.get(featureKey);
-          if (category.equals(ANNOTATION_CATEGORY.TAX)) {
-            featureCell.append(ANNOTATION_CATEGORY.TAX.name());
+          if (category.equals(AnnotationDataModelConstants.ANNOTATION_CATEGORY.TAX)) {
+            featureCell.append(AnnotationDataModelConstants.ANNOTATION_CATEGORY.TAX.name());
             featureCell.append(AnnotationDataModelConstants.CATEGORY_CODE_SEPARATOR);
           }
-          else if (category.equals(ANNOTATION_CATEGORY.EC)) {
-            featureCell.append(ANNOTATION_CATEGORY.EC.name());
+          else if (category.equals(AnnotationDataModelConstants.ANNOTATION_CATEGORY.EC)) {
+            featureCell.append(AnnotationDataModelConstants.ANNOTATION_CATEGORY.EC.name());
             featureCell.append(AnnotationDataModelConstants.CATEGORY_CODE_SEPARATOR);
           }
           featureCell.append(annotationDataModel.getAccession());
