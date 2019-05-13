@@ -25,6 +25,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.xml.DomDriver;
+
 import bzh.plealog.bioinfo.api.data.feature.FPosition;
 import bzh.plealog.bioinfo.api.data.feature.FRange;
 import bzh.plealog.bioinfo.api.data.feature.FeatureLocation;
@@ -32,6 +35,8 @@ import bzh.plealog.bioinfo.api.data.searchresult.SROutput;
 import bzh.plealog.bioinfo.data.feature.IFeature;
 import bzh.plealog.bioinfo.data.feature.IFeatureTable;
 import bzh.plealog.bioinfo.data.feature.IQualifier;
+import bzh.plealog.bioinfo.data.searchresult.ISRCTerm;
+import bzh.plealog.bioinfo.data.searchresult.ISRClassification;
 import bzh.plealog.bioinfo.data.searchresult.ISRHit;
 import bzh.plealog.bioinfo.data.searchresult.ISRHsp;
 import bzh.plealog.bioinfo.data.searchresult.ISRHspScore;
@@ -43,9 +48,6 @@ import bzh.plealog.bioinfo.data.searchresult.ISRRequestInfo;
 import bzh.plealog.bioinfo.data.searchresult.ISRStatistics;
 import bzh.plealog.bioinfo.data.sequence.IBankSequenceInfo;
 import bzh.plealog.bioinfo.util.ZipUtil;
-
-import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.io.xml.DomDriver;
 
 /**
  * This class defines an XML serializer framework aims at saving/loading
@@ -74,6 +76,8 @@ public class BlastSerializer {
 		streamer.alias("FeatureLocation", FeatureLocation.class);
 		streamer.alias("FRange", FRange.class);
 		streamer.alias("FPosition", FPosition.class);
+    streamer.alias("BClassification", ISRClassification.class);
+    streamer.alias("BCTerm", ISRCTerm.class);
 	}
 
 	private static final String ERR_1 = "Unable to save BOutput in: ";

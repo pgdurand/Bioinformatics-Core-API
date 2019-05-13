@@ -136,4 +136,14 @@ public interface SROutput extends Serializable{
      * Check if this BOutput contains valid SequenceInfo and Features data.
      */
     public FEATURES_CONTAINER checkFeatures();
+    
+    /**
+     * Return classification data associated to this SROutput.
+     */
+    public SRClassification getClassification();
+    /**
+     * Set classification data to this SROutput.
+     */
+    public void SetClassification(SRClassification classif);
+    
 }

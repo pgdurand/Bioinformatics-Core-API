@@ -25,6 +25,7 @@ import java.util.List;
 import com.plealog.genericapp.api.log.EZLogger;
 
 import bzh.plealog.bioinfo.api.data.feature.FeatureTable;
+import bzh.plealog.bioinfo.api.data.searchresult.SRClassification;
 import bzh.plealog.bioinfo.api.data.searchresult.SRHit;
 import bzh.plealog.bioinfo.api.data.searchresult.SRHsp;
 import bzh.plealog.bioinfo.api.data.searchresult.SRIteration;
@@ -46,6 +47,7 @@ public class ISROutput implements SROutput{
     private SRRequestInfo          requestInfo;
     private SRParameters           parameters;
     private ArrayList<SRIteration> iterationList;
+    private SRClassification       classification;
     
     public ISROutput(){
     	iterationList = new ArrayList<SRIteration>();
@@ -354,6 +356,16 @@ public class ISROutput implements SROutput{
 			return FEATURES_CONTAINER.someWithErrors;
 		else
 			return FEATURES_CONTAINER.none;
+    }
+
+    @Override
+    public SRClassification getClassification() {
+      return classification;
+    }
+
+    @Override
+    public void SetClassification(SRClassification classif) {
+      classification = classif;
     }
 }
 

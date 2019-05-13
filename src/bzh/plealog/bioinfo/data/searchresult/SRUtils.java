@@ -17,7 +17,6 @@
 package bzh.plealog.bioinfo.data.searchresult;
 
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.List;
 
@@ -149,6 +148,53 @@ public class SRUtils {
       riTgt.setValue(key,  str);
     }
   }
+  private static void transferData(SRRequestInfo ri, String key, String value) {
+    if (value!=null)
+      ri.setValue(key, value);
+  }
+  /**
+   * Extract an individual SRIteration from a multi-fasta SROutput.
+   * 
+   * @param result source result
+   * @param iteration to extract. Zero-based value.
+   * 
+   * @return extracted SROutput. It is worth noting that IterNum is always
+   * set to one in the resulting SROutput.
+   * */
+  public static SROutput extractResult(SROutput result, int iterID) {
+    SRFactory srFactory = CoreSystemConfigurator.getSRFactory();
+    SROutput result2;
+    SRIteration iterSrc, iterTgt;
+    SRRequestInfo riSrc, ri2;
+    
+    // we have to create a single SROuput for each SRIteration
+    result2 = srFactory.createBOutput();
+    result2.setBlastType(result.getBlastType());
+    // BlastParam can be directly assigned to new SROutput
+    result2.setBlastOutputParam(result.getBlastOutputParam());
+    // however, RequestInfo have to be set with correct query information contained
+    // on each individual SRIteration
+    iterSrc = result.getIteration(iterID);
+    riSrc = result.getRequestInfo();
+    ri2 = CoreSystemConfigurator.getSRFactory().createBRequestInfo();
+    transferData(ri2, SRRequestInfo.QUERY_ID_DESCRIPTOR_KEY, iterSrc.getIterationQueryID());
+    transferData(ri2, SRRequestInfo.QUERY_DEF_DESCRIPTOR_KEY, iterSrc.getIterationQueryDesc());
+    ri2.setValue(SRRequestInfo.QUERY_LENGTH_DESCRIPTOR_KEY, iterSrc.getIterationQueryLength());
+    transferData(ri2, riSrc, SRRequestInfo.DATABASE_DESCRIPTOR_KEY);
+    transferData(ri2, riSrc, SRRequestInfo.PROGRAM_DESCRIPTOR_KEY);
+    transferData(ri2, riSrc, SRRequestInfo.PRGM_VERSION_DESCRIPTOR_KEY);
+    transferData(ri2, riSrc, SRRequestInfo.PRGM_REFERENCE_DESCRIPTOR_KEY);
+    //since we extract individual SRIteration, we have to reset IterNum on
+    //a clone instance (DO NOT alter original data)
+    iterTgt = iterSrc.clone(false);
+    iterTgt.setIterationIterNum(1);
+    //setup new result
+    result2.setRequestInfo(ri2);
+    result2.addIteration(iterTgt);
+
+    return result2;
+  }
+
   /**
    * Split a mutli-query Blast result into individual results.
    * 
@@ -156,24 +202,20 @@ public class SRUtils {
    * returns a single Blast result (legacy XML) containing results for each query
    * into a separate iteration.
    * 
-   * So, this method associate invidual iterations to individuals results.
+   * So, this method associate individual iterations to individuals results.
    * 
    * This method does nothing for a PSI-BLAST result.
    * 
-   * This method does not clone SRIteration to create new SRResults, it only does
-   * object reference transfer.
+   * This method does clone SRIteration to create new SRResults, and IterNum is set
+   * to 1 in each SRIteration.
    * 
    * @param result Blast result containing many queries
    * @return list of SRResult
    * */
   public static List<SROutput> splitMultiResult(SROutput result){
-    SRFactory srFactory = CoreSystemConfigurator.getSRFactory();
     ArrayList<SROutput> results;
-    SROutput result2;
-    SRIteration iterSrc;
-    SRRequestInfo riSrc, ri2;
+    int i, size;
     
-    Enumeration<SRIteration> iter = result.enumerateIteration();
     results = new ArrayList<>();
     // we should not separate Iterations when considering a PSI-BLAST result
     if (result.getBlastType()==SROutput.PSIBLAST) {
@@ -181,28 +223,10 @@ public class SRUtils {
     }
     else {
       //loop over all iterations (each of them contains results for an individual fasta query)
-      while(iter.hasMoreElements()) {
+      size = result.countIteration();
+      for(i=0;i<size;i++) {
         // we have to create a single SROuput for each SRIteration
-        result2 = srFactory.createBOutput();
-        result2.setBlastType(result.getBlastType());
-        // BlastParam can be directly assigned to new SROutput
-        result2.setBlastOutputParam(result.getBlastOutputParam());
-        // however, RequestInfo have to be set with correct query information contained
-        // on each individual SRIteration
-        iterSrc = iter.nextElement();
-        riSrc = result.getRequestInfo();
-        ri2 = CoreSystemConfigurator.getSRFactory().createBRequestInfo();
-        ri2.setValue(SRRequestInfo.QUERY_ID_DESCRIPTOR_KEY, iterSrc.getIterationQueryID());
-        ri2.setValue(SRRequestInfo.QUERY_DEF_DESCRIPTOR_KEY, iterSrc.getIterationQueryDesc());
-        ri2.setValue(SRRequestInfo.QUERY_LENGTH_DESCRIPTOR_KEY, iterSrc.getIterationQueryLength());
-        transferData(ri2, riSrc, SRRequestInfo.DATABASE_DESCRIPTOR_KEY);
-        transferData(ri2, riSrc, SRRequestInfo.PROGRAM_DESCRIPTOR_KEY);
-        transferData(ri2, riSrc, SRRequestInfo.PRGM_VERSION_DESCRIPTOR_KEY);
-        transferData(ri2, riSrc, SRRequestInfo.PRGM_REFERENCE_DESCRIPTOR_KEY);
-        //setup new result
-        result2.setRequestInfo(ri2);
-        result2.addIteration(iterSrc);
-        results.add(result2);
+        results.add(extractResult(result, i));
       }
     }
     return results;
