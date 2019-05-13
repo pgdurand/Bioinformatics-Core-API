@@ -144,6 +144,6 @@ public interface SROutput extends Serializable{
     /**
      * Set classification data to this SROutput.
      */
-    public void SetClassification(SRClassification classif);
+    public void setClassification(SRClassification classif);
     
 }
