@@ -18,7 +18,18 @@ package bzh.plealog.bioinfo.api.data.searchjob;
 
 import java.io.Serializable;
 import java.text.DecimalFormat;
+import java.util.Comparator;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.TreeMap;
 
+import bzh.plealog.bioinfo.api.core.config.CoreSystemConfigurator;
+import bzh.plealog.bioinfo.api.data.feature.AnnotationDataModelConstants;
+import bzh.plealog.bioinfo.api.data.feature.AnnotationDataModelConstants.ANNOTATION_CATEGORY;
+import bzh.plealog.bioinfo.api.data.searchresult.SRCTerm;
+import bzh.plealog.bioinfo.api.data.searchresult.SRClassification;
 import bzh.plealog.bioinfo.api.data.searchresult.SRHit;
 import bzh.plealog.bioinfo.api.data.searchresult.SRHsp;
 import bzh.plealog.bioinfo.api.data.searchresult.SRHspScore;
@@ -27,6 +38,8 @@ import bzh.plealog.bioinfo.api.data.searchresult.SRIteration;
 import bzh.plealog.bioinfo.api.data.searchresult.SROutput;
 import bzh.plealog.bioinfo.api.data.searchresult.SRRequestInfo;
 import bzh.plealog.bioinfo.api.data.sequence.BankSequenceInfo;
+import bzh.plealog.bioinfo.io.searchresult.csv.AnnotationDataModel;
+import bzh.plealog.bioinfo.io.searchresult.csv.ExtractAnnotation;
 
 /**
  * This class contains the summary of a BLAST result. Such a summary reports the
@@ -36,7 +49,7 @@ import bzh.plealog.bioinfo.api.data.sequence.BankSequenceInfo;
  * 
  * @author Patrick G. Durand
  */
-public class BFileSummary implements Serializable {
+public class SRFileSummary implements Serializable {
 
   private static final long serialVersionUID = 7467266811057328060L;
 
@@ -69,16 +82,20 @@ public class BFileSummary implements Serializable {
   private String execMsg;
   private String queryRID;
   private SROutput.FEATURES_CONTAINER featContainer;
-  protected transient String totalGaps;
-  protected transient String percentGaps;
-  protected transient String mistmatches;
-  protected transient String LCA;
-  protected transient String rankLCA;
-  protected transient String originJobName = NOT_APPLICABLE;
-  protected transient String originJobId = NOT_APPLICABLE;
-
   private boolean filtered;
-
+  //complete classification (main Terms + FAKE ones (those internal to paths).
+  private SRClassification classification;
+  
+  private transient String totalGaps;
+  private transient String percentGaps;
+  private transient String mistmatches;
+  private transient String LCA;
+  private transient String rankLCA;
+  private transient String originJobName = NOT_APPLICABLE;
+  private transient String originJobId = NOT_APPLICABLE;
+  //mains terms only for View purpose
+  private transient List<SRTermSummary> mainTermsForView;
+  
   private transient boolean _initialized;
   
   public static final String UNKNOWN = "-";
@@ -94,7 +111,7 @@ public class BFileSummary implements Serializable {
   /**
    * Default constructor.
    */
-  public BFileSummary() {
+  public SRFileSummary() {
     reset(true);
     setBestHitAccession(NOT_APPLICABLE);
     setBestHitDescription(NOT_APPLICABLE);
@@ -230,6 +247,44 @@ public class BFileSummary implements Serializable {
         organism = si.getOrganism();
       if (si.getTaxonomy() != null)
         taxonomy = si.getTaxonomy();
+    }
+
+    // Get unique set of Bio Classification IDs
+    if (output.getClassification()!=null) {
+      SRClassification classification = CoreSystemConfigurator.getSRFactory().creationBClassification();
+      SRClassification refClassification;
+      
+      //classification data if any; get data for best hit only by default
+      TreeMap<String, TreeMap<AnnotationDataModelConstants.ANNOTATION_CATEGORY, HashMap<String, AnnotationDataModel>>> annotatedHitsHashMap = 
+          new TreeMap<String, TreeMap<AnnotationDataModelConstants.ANNOTATION_CATEGORY, HashMap<String, AnnotationDataModel>>>();
+      TreeMap<AnnotationDataModelConstants.ANNOTATION_CATEGORY, TreeMap<String, AnnotationDataModel>> annotationDictionary = 
+          new TreeMap<AnnotationDataModelConstants.ANNOTATION_CATEGORY, TreeMap<String, AnnotationDataModel>>();
+
+      // Prepare Bio Classification (IPR, EC, GO and TAX) for all hits
+      //this call populates annotatedHitsHashMap and annotationDictionary
+      ExtractAnnotation.buildAnnotatedHitDataSet(output, 0, annotatedHitsHashMap, annotationDictionary);
+
+      // Collect unique set of Bio Classification IDs of first hit only
+      refClassification = ExtractAnnotation.buildClassificationDataSet(output.getClassification(), annotatedHitsHashMap, 0, 0, 0);
+      //then discard FAKE terms (those making path of Terms associated to hits)
+      Enumeration<String> ids = refClassification.getTermIDs();
+      String id;
+      SRCTerm term;
+      //prepare the view List of main Terms
+      LinkedList<SRTermSummary>mapTerms = new LinkedList<>();
+      while(ids.hasMoreElements()) {
+        id = ids.nextElement();
+        term = refClassification.getTerm(id);
+        classification.addTerm(id, term);
+        if ((term.getType().equals(SRCTerm.FAKE_TERM)||
+            term.getType().equals(ANNOTATION_CATEGORY.TAX.name()))==false) {
+          mapTerms.add(new SRTermSummary(id, term));
+        }
+      }
+      setClassification(classification);  
+      //Java 8 style to sort a List by two fields
+      mapTerms.sort(Comparator.comparing(SRTermSummary::getClassificationClass).thenComparing(SRTermSummary::getID));
+      setClassificationForView(mapTerms);
     }
 
     _initialized = true;
@@ -572,6 +627,21 @@ public class BFileSummary implements Serializable {
     this.originJobId = originJobId;
   }
 
+  public void setClassification(SRClassification classification) {
+    this.classification = classification;
+  }
+
+  public SRClassification getClassification() {
+    return classification;
+  }
+  
+  public void setClassificationForView(List<SRTermSummary> terms) {
+    mainTermsForView = terms;
+  }
+  
+  public List<SRTermSummary> getClassificationForView(){
+    return mainTermsForView;
+  }
   public String toString() {
     StringBuffer szBuf;
 
