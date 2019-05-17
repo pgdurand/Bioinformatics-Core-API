@@ -108,7 +108,7 @@ public abstract class QueryBase {
   /**
    * Returns an enumeration over all query result summary objects.
    */
-  public abstract Enumeration<BFileSummary> getSummaries();
+  public abstract Enumeration<SRFileSummary> getSummaries();
   
   /**
    * Count how many queries has a particular status.
@@ -124,7 +124,7 @@ public abstract class QueryBase {
   /**
    * Returns a summary.
    */
-  public abstract BFileSummary getSummary(int queryNum);
+  public abstract SRFileSummary getSummary(int queryNum);
 
   /**
    * Returns specific query execution status.

@@ -16,6 +16,8 @@
  */
 package bzh.plealog.bioinfo.data.searchresult;
 
+import bzh.plealog.bioinfo.api.data.searchresult.SRCTerm;
+import bzh.plealog.bioinfo.api.data.searchresult.SRClassification;
 import bzh.plealog.bioinfo.api.data.searchresult.SRHit;
 import bzh.plealog.bioinfo.api.data.searchresult.SRHsp;
 import bzh.plealog.bioinfo.api.data.searchresult.SRHspPattern;
@@ -68,4 +70,14 @@ public class ISRFactory implements SRFactory {
 	public SRRequestInfo createBRequestInfo(){
 		return new ISRRequestInfo();
 	}
+
+  @Override
+  public SRClassification creationBClassification() {
+    return new ISRClassification();
+  }
+
+  @Override
+  public SRCTerm creationBTerm() {
+    return new ISRCTerm();
+  }
 }

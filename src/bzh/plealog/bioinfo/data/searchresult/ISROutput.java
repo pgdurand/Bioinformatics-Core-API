@@ -364,7 +364,7 @@ public class ISROutput implements SROutput{
     }
 
     @Override
-    public void SetClassification(SRClassification classif) {
+    public void setClassification(SRClassification classif) {
       classification = classif;
     }
 }

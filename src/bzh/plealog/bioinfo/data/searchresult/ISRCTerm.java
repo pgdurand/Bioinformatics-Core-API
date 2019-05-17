@@ -28,6 +28,7 @@ public class ISRCTerm implements SRCTerm {
   private static final long serialVersionUID = -6026541098625860919L;
   private String path;
   private String desc;
+  private String type;
   
   public ISRCTerm() {
     
@@ -51,6 +52,16 @@ public class ISRCTerm implements SRCTerm {
   @Override
   public void setDescription(String desc) {
     this.desc = desc;
+  }
+
+  @Override
+  public String getType() {
+    return type;
+  }
+
+  @Override
+  public void setType(String type) {
+    this.type = type;
   }
 
 }

@@ -16,6 +16,7 @@
  */
 package bzh.plealog.bioinfo.data.searchresult;
 
+import java.util.Enumeration;
 import java.util.Hashtable;
 
 import bzh.plealog.bioinfo.api.data.searchresult.SRCTerm;
@@ -39,8 +40,19 @@ public class ISRClassification implements SRClassification {
     return terms.get(key);
   }
 
-  public void setTerm(String key, SRCTerm term) {
+  public void addTerm(String key, SRCTerm term) {
     terms.put(key, term);
+  }
+
+  public SRCTerm addTerm(String key) {
+    SRCTerm term;
+    
+    term = terms.get(key);
+    if (term==null) {
+      term = new ISRCTerm();
+      terms.put(key, term);
+    }
+    return term;
   }
 
   @Override
@@ -52,6 +64,14 @@ public class ISRClassification implements SRClassification {
 
   public void copy(ISRClassification src) {
     this.terms = new Hashtable<String, SRCTerm>(src.terms);
+  }
+
+  public Enumeration<String> getTermIDs() {
+    return terms.keys();
+  }
+  
+  public int size() {
+    return terms.size();
   }
 
 }

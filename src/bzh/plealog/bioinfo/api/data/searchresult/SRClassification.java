@@ -17,6 +17,7 @@
 package bzh.plealog.bioinfo.api.data.searchresult;
 
 import java.io.Serializable;
+import java.util.Enumeration;
 
 /**
  * This is an object representation of classification data. It aims at storing
@@ -37,16 +38,40 @@ public interface SRClassification extends Serializable {
   public SRCTerm getTerm(String key);
 
   /**
-   * Set a Classification Term given an ID.
+   * Add a Classification Term given an ID. This method does not check whether or not term
+   * already exists in this SRClassification.
    * 
-   * @param key an classification ID.
-   * @param o corresponding Term
+   * @param key a classification ID.
+   * @param term corresponding Term
    */
-  public void setTerm(String key, SRCTerm term);
+  public void addTerm(String key, SRCTerm term);
+
+  /**
+   * Add a new term.
+   * 
+   * @param key term ID
+   * 
+   * @return a new SRCTerm instance if not existing yet, existing instance otherwise.
+   */
+  public SRCTerm addTerm(String key);
+  
 
   /**
    * Forces the implementation of a clone method.
    */
   public SRClassification clone();
 
+  /**
+   * Enumerate over all Classification IDs.
+   * 
+   * @return enumeration of classification IDs.
+   */
+  public Enumeration<String> getTermIDs();
+  
+  /**
+   * Content of this SRClassification.
+   * 
+   * @return number of classification IDs contained in this SRClassification
+   */
+  public int size();
 }

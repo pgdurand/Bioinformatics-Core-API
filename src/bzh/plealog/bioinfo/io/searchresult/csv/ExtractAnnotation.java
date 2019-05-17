@@ -26,10 +26,13 @@ import java.util.TreeMap;
 
 import org.apache.log4j.Logger;
 
+import bzh.plealog.bioinfo.api.core.config.CoreSystemConfigurator;
 import bzh.plealog.bioinfo.api.data.feature.AnnotationDataModelConstants;
 import bzh.plealog.bioinfo.api.data.feature.Feature;
 import bzh.plealog.bioinfo.api.data.feature.FeatureTable;
 import bzh.plealog.bioinfo.api.data.feature.Qualifier;
+import bzh.plealog.bioinfo.api.data.searchresult.SRCTerm;
+import bzh.plealog.bioinfo.api.data.searchresult.SRClassification;
 import bzh.plealog.bioinfo.api.data.searchresult.SRHit;
 import bzh.plealog.bioinfo.api.data.searchresult.SRHsp;
 import bzh.plealog.bioinfo.api.data.searchresult.SRIteration;
@@ -48,6 +51,56 @@ public class ExtractAnnotation {
     DEF_CAT.add(AnnotationDataModelConstants.ANNOTATION_CATEGORY.TAX);
   }
 
+  /**
+   * Utility method to prepare an instance of SRClassification filled from an annotationDictionary object.
+   * SRClassification contains SRCTerms where only Type if appropriately set.
+   * */
+  public static SRClassification buildClassificationDataSet(
+      TreeMap<AnnotationDataModelConstants.ANNOTATION_CATEGORY, TreeMap<String, AnnotationDataModel>> annotationDictionary) {
+    SRClassification classification = CoreSystemConfigurator.getSRFactory().creationBClassification();
+    
+    //loop over Classification categories
+    String catStr;
+    SRCTerm term;
+    AnnotationDataModelConstants.ANNOTATION_CATEGORY cat;
+    Iterator<AnnotationDataModelConstants.ANNOTATION_CATEGORY> cats = annotationDictionary.keySet().iterator();
+    StringBuilder sb = new StringBuilder(32);
+    while(cats.hasNext()) {
+      cat = cats.next();
+      catStr = cat.name();
+      //loop over IDs of a particular classification
+      Iterator<String> ids = annotationDictionary.get(cat).keySet().iterator();
+      while(ids.hasNext()) {
+        sb.setLength( 0 );
+        if(cat.equals(AnnotationDataModelConstants.ANNOTATION_CATEGORY.TAX)){
+          sb.append(AnnotationDataModelConstants.ANNOTATION_CATEGORY.TAX.name());
+          sb.append(AnnotationDataModelConstants.CATEGORY_CODE_SEPARATOR);
+        }
+        else if(cat.equals(AnnotationDataModelConstants.ANNOTATION_CATEGORY.EC)){
+          sb.append(AnnotationDataModelConstants.ANNOTATION_CATEGORY.EC.name());
+          sb.append(AnnotationDataModelConstants.CATEGORY_CODE_SEPARATOR);
+        }
+        sb.append(ids.next());
+        term = classification.addTerm(sb.toString());
+        term.setType(catStr);
+      }
+    }
+    return classification;
+  }
+
+  /**
+   * Construct the tree of the annotation of a SROutput for default categories. Default categories
+   * are EC, TAX, GO and IPR.
+   * 
+   * @param bo
+   *          the SROutput
+   * @param file_index
+   *          the number of the SROutput in the map
+   * @param annotatedHitsHashMap
+   *          the TreeMap which will contain the annotations organized by SROutput-SRHit-SRHsp triplets.
+   * @param annotationDictionary
+   *          the TreeMap containing all annotation IDs organized by category.
+ * */
   public static void buildAnnotatedHitDataSet(SROutput bo, int file_index,
       TreeMap<String, TreeMap<AnnotationDataModelConstants.ANNOTATION_CATEGORY, HashMap<String, AnnotationDataModel>>> annotatedHitsHashMap,
       TreeMap<AnnotationDataModelConstants.ANNOTATION_CATEGORY, TreeMap<String, AnnotationDataModel>> annotationDictionary) {
@@ -55,8 +108,9 @@ public class ExtractAnnotation {
         DEF_CAT);
   }
 
+  
   /**
-   * Construct the tree of the annotation of a SROutput
+   * Construct the tree of the annotation of a SROutput for a specific category.
    * 
    * @param bo
    *          the SROutput
@@ -526,6 +580,93 @@ public class ExtractAnnotation {
       }
     }
     return featureCell.toString();
+  }
+  /**
+   * Utility method to prepare an instance of SRClassification filled from an annotatedHitsHashMap object.
+   * SRClassification contains SRCTerms where only Type if appropriately set.
+   * 
+   * Before calling this method, SRClassification must be created to en empty instance.
+   * */
+  private static void buildClassificationDataSet(
+      SRClassification refClassification,
+      SRClassification classification,
+      TreeMap<String, TreeMap<AnnotationDataModelConstants.ANNOTATION_CATEGORY, HashMap<String, AnnotationDataModel>>> annotatedHitsHashMap,
+      int output_file_index, int iteration_index, int hit_index) {
+    HashMap<String, AnnotationDataModel>  featureTreeMap = null;
+    Iterator<String>                      iteratorFeatures = null;
+    String                                hit_key, featureKey, id;
+    AnnotationDataModel                   annotationDataModel = null;
+    SRCTerm                               term;
+    TreeMap<AnnotationDataModelConstants.ANNOTATION_CATEGORY, 
+    HashMap<String, AnnotationDataModel>>                      hitFeaturesTreeMap = null;
+    Iterator<AnnotationDataModelConstants.ANNOTATION_CATEGORY> iteratorCategories = null;
+    AnnotationDataModelConstants.ANNOTATION_CATEGORY           category = null;
+    
+    // get ID of the particular hit
+    hit_key = KeyDataSetManager.buildHitKeyFromIndex(output_file_index, iteration_index, hit_index);
+    // got it in data structure containing associated Classification (Features) dta?
+    if (annotatedHitsHashMap.containsKey(hit_key)) {
+      // get classification data for that hit
+      hitFeaturesTreeMap = (TreeMap<AnnotationDataModelConstants.ANNOTATION_CATEGORY, HashMap<String, AnnotationDataModel>>) 
+          annotatedHitsHashMap.get(hit_key);
+      //and loop over all data
+      iteratorCategories = hitFeaturesTreeMap.keySet().iterator();
+      StringBuilder sb = new StringBuilder(32);
+      while (iteratorCategories.hasNext()) {
+        category = iteratorCategories.next();
+        /*if (restrictToCategoty!=null && category.equals(restrictToCategoty)==false) {
+          continue;
+        }*/
+        featureTreeMap = (HashMap<String, AnnotationDataModel>) hitFeaturesTreeMap.get(category);
+        iteratorFeatures = featureTreeMap.keySet().iterator();
+        while (iteratorFeatures.hasNext()) {
+          featureKey = (String) iteratorFeatures.next();
+          annotationDataModel = featureTreeMap.get(featureKey);
+          
+          sb.setLength( 0 );
+          if(category.equals(AnnotationDataModelConstants.ANNOTATION_CATEGORY.TAX)){
+            sb.append(AnnotationDataModelConstants.ANNOTATION_CATEGORY.TAX.name());
+            sb.append(AnnotationDataModelConstants.CATEGORY_CODE_SEPARATOR);
+          }
+          else if(category.equals(AnnotationDataModelConstants.ANNOTATION_CATEGORY.EC)){
+            sb.append(AnnotationDataModelConstants.ANNOTATION_CATEGORY.EC.name());
+            sb.append(AnnotationDataModelConstants.CATEGORY_CODE_SEPARATOR);
+          }
+          sb.append(annotationDataModel.getAccession());
+          id = sb.toString();
+          term = refClassification.getTerm(id);
+          classification.addTerm(id, term);
+        }
+      }
+    }
+    
+  }
+
+  /**
+   * Utility method to prepare an instance of SRClassification filled from an annotatedHitsHashMap object.
+   * SRClassification contains SRCTerms where only Type if appropriately set.
+   * */
+  public static SRClassification buildClassificationDataSet(
+      SRClassification refClassification,
+      TreeMap<String, TreeMap<AnnotationDataModelConstants.ANNOTATION_CATEGORY, HashMap<String, AnnotationDataModel>>> annotatedHitsHashMap,
+      int output_file_index, int iteration_index, int hit_index) {
+    SRClassification classification = CoreSystemConfigurator.getSRFactory().creationBClassification();
+    buildClassificationDataSet(refClassification, classification, annotatedHitsHashMap, output_file_index, iteration_index, hit_index);
+    return classification;
+  }
+  /**
+   * Utility method to prepare an instance of SRClassification filled from an annotatedHitsHashMap object.
+   * SRClassification contains SRCTerms where only Type if appropriately set.
+   * */
+  public static SRClassification buildClassificationDataSet(
+      SRClassification refClassification,
+      TreeMap<String, TreeMap<AnnotationDataModelConstants.ANNOTATION_CATEGORY, HashMap<String, AnnotationDataModel>>> annotatedHitsHashMap,
+      int output_file_index, int iteration_index, int hit_index_from, int hit_index_to) {
+    SRClassification classification = CoreSystemConfigurator.getSRFactory().creationBClassification();
+    for(int i = hit_index_from ; i <= hit_index_to ; i++) {
+      buildClassificationDataSet(refClassification, classification, annotatedHitsHashMap, output_file_index, iteration_index, i);
+    }
+    return classification;
   }
 
 }

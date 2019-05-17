@@ -24,6 +24,8 @@ import java.io.Serializable;
  * @author Patrick G. Durand
  */
 public interface SRCTerm extends Serializable {
+  public static String FAKE_TERM = "FT";
+  
   /**
    * Return a classification path. Can be null.
    */
@@ -44,4 +46,17 @@ public interface SRCTerm extends Serializable {
    * @param desc the description
    * */
   public void setDescription(String desc);
+  
+  /**
+   * Return the type of the term.
+   * 
+   * @return string representation of one of the values ANNOTATION_CATEGORY
+   * */
+  public String getType();
+  
+  /**
+   * Set the term type.
+   * 
+   * @param type MUST use string representation of one of the values ANNOTATION_CATEGORY*/
+  public void setType(String type);
 }

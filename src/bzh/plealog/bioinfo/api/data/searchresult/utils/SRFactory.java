@@ -16,6 +16,8 @@
  */
 package bzh.plealog.bioinfo.api.data.searchresult.utils;
 
+import bzh.plealog.bioinfo.api.data.searchresult.SRCTerm;
+import bzh.plealog.bioinfo.api.data.searchresult.SRClassification;
 import bzh.plealog.bioinfo.api.data.searchresult.SRHit;
 import bzh.plealog.bioinfo.api.data.searchresult.SRHsp;
 import bzh.plealog.bioinfo.api.data.searchresult.SRHspPattern;
@@ -54,4 +56,8 @@ public interface SRFactory {
 	public SRStatistics createBStatistics();
 	
 	public SRRequestInfo createBRequestInfo();
+	
+	public SRClassification creationBClassification();
+	
+	public SRCTerm creationBTerm();
 }
