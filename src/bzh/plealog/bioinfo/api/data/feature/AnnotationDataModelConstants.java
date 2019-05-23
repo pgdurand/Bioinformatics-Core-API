@@ -21,12 +21,48 @@ public class AnnotationDataModelConstants {
   //Special keys to get information about Classifications
   //Format for values associated to these keys is free
   public static enum ANNOTATION_CATEGORY {
-  TAX, // NCBI Taxonomy 
-  GO,  //Gene Ontology 
-  IPR, //InterPro
-  EC,  //Enzyme Commission Nomenclature 
-  LCA  //Least Common Ancestor (computed)
+    TAX ("TAX","NCBI Taxonomy"),
+    GO ("GO", "Gene Ontology"),
+    IPR ("IPR", "InterPro"),
+    EC ("EC", "Enzyme Commission"),
+    LCA ("LCA", "Least Common Ancestor");
+    
+    private String type;
+    private String description;
+    ANNOTATION_CATEGORY(String type, String description){
+      this.type = type;
+      this.description = description;
+    }
+    
+    public String getType() {
+      return type;
+    }
+    public String getDescription() {
+      return description;
+    }
   }
+  //Special keys to get information about GO sub-classifications
+  public static enum ANNOTATION_GO_SUBCATEGORY {
+    P ("P","Biological Process"), 
+    F ("F","Molecular Function"),
+    C ("C","Cellular Component");
+  
+    private String type;
+    private String description;
+    
+    ANNOTATION_GO_SUBCATEGORY(String type, String description){
+      this.type = type;
+      this.description = description;
+    }
+    
+    public String getType() {
+      return type;
+    }
+    public String getDescription() {
+      return description;
+    }
+  }
+
   // general
   public static final String SEPARATOR = "_";
   public static final String SPACE = " ";

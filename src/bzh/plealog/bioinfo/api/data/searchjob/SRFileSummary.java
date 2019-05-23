@@ -18,6 +18,7 @@ package bzh.plealog.bioinfo.api.data.searchjob;
 
 import java.io.Serializable;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -283,7 +284,7 @@ public class SRFileSummary implements Serializable {
       }
       setClassification(classification);  
       //Java 8 style to sort a List by two fields
-      mapTerms.sort(Comparator.comparing(SRTermSummary::getClassificationClass).thenComparing(SRTermSummary::getID));
+      mapTerms.sort(Comparator.comparing(SRTermSummary::getViewType).thenComparing(SRTermSummary::getID));
       setClassificationForView(mapTerms);
     }
 
@@ -642,6 +643,31 @@ public class SRFileSummary implements Serializable {
   public List<SRTermSummary> getClassificationForView(){
     return mainTermsForView;
   }
+  
+  /**
+   * Returned a filtered list of SRTermSummary.
+   * 
+   * @param types list of String representation of AnnotationDataModelConstants.ANNOTATION_CATEGORY values.
+   * We use that design to enable sub-filtering of GO terms. Indeed, in addition to ANNOTATION_CATEGORY.GO, one
+   * can use the following strings: GOC, GOP, GOF. In this parameter is null full list of SRTermSummary
+   * is returned.
+   * */
+  public List<SRTermSummary> getClassificationForView(List<String> types){
+    if (types==null) {
+      return mainTermsForView;
+    }
+    ArrayList<SRTermSummary> newList;
+    String type;
+    newList = new ArrayList<>();
+    for(SRTermSummary term : mainTermsForView) {
+      type = term.getViewType();
+      if (types.contains(type)) {
+        newList.add(term);
+      }
+    }
+    return newList;
+  }
+  
   public String toString() {
     StringBuffer szBuf;
 

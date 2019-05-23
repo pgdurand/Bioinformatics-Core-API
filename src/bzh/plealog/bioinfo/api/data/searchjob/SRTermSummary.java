@@ -16,6 +16,8 @@
  */
 package bzh.plealog.bioinfo.api.data.searchjob;
 
+import java.text.MessageFormat;
+
 import bzh.plealog.bioinfo.api.data.feature.AnnotationDataModelConstants;
 import bzh.plealog.bioinfo.api.data.searchresult.SRCTerm;
 
@@ -28,15 +30,21 @@ import bzh.plealog.bioinfo.api.data.searchresult.SRCTerm;
 public class SRTermSummary {
   private String _id;
   private SRCTerm _term;
-  private String _classifClass = "-";
+  private String _viewType = "-";
+  
+  private static MessageFormat VIEW_TYPE_FORMAT = new MessageFormat("{0}:{1}")  ;
   
   public SRTermSummary(String id, SRCTerm term) {
     _id = id;
     _term = term;
+    //handle sub-classification (C, P or F) for GO. 
     if (getType().equals(AnnotationDataModelConstants.ANNOTATION_CATEGORY.GO.name())) {
       //GO description is: "C:cytoplasm"
       //in this example, we have to get first letter
-      _classifClass = getDescription().substring(0, 1);
+      _viewType = formatViewType(getType(),getDescription().substring(0, 1));
+    }
+    else {
+      _viewType = getType();
     }
   }
 
@@ -52,7 +60,15 @@ public class SRTermSummary {
   public String getPath() {
     return _term.getPath();
   }
-  public String getClassificationClass() {
-    return _classifClass;
+  /**
+   * Return type to be used for UI purpose. For instance getType() returns GO
+   * while getViewType() can return one of GOP, GOF, GOC. 
+   */
+  public String getViewType() {
+    return _viewType;
+  }
+  
+  public static String formatViewType(String type, String subtype) {
+    return VIEW_TYPE_FORMAT.format(new Object[]{type, subtype});
   }
 }
