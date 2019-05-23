@@ -653,7 +653,7 @@ public class SRFileSummary implements Serializable {
    * is returned.
    * */
   public List<SRTermSummary> getClassificationForView(List<String> types){
-    if (types==null) {
+    if (types==null || mainTermsForView==null) {
       return mainTermsForView;
     }
     ArrayList<SRTermSummary> newList;
