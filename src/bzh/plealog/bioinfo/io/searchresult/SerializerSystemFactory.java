@@ -19,6 +19,7 @@ package bzh.plealog.bioinfo.io.searchresult;
 import bzh.plealog.bioinfo.api.data.searchresult.io.SRLoader;
 import bzh.plealog.bioinfo.api.data.searchresult.io.SRWriter;
 import bzh.plealog.bioinfo.io.searchresult.ncbi.BlastLoader;
+import bzh.plealog.bioinfo.io.searchresult.ncbi.BlastLoader2;
 import bzh.plealog.bioinfo.io.searchresult.srnative.NativeBlastLoader;
 import bzh.plealog.bioinfo.io.searchresult.srnative.NativeBlastWriter;
 
@@ -33,6 +34,10 @@ public class SerializerSystemFactory {
 	 * Loader to handle NCBI XML formatted results.
 	 */
 	public static final int NCBI_LOADER = 1;
+  /**
+   * Loader to handle NCBI XML2 formatted results.
+   */
+  public static final int NCBI_LOADER2 = 2;
 	/**
 	 * Loader to handle the native data.
 	 */
@@ -58,9 +63,12 @@ public class SerializerSystemFactory {
 	public static SRLoader getLoaderInstance(int l){
 		SRLoader loader = null;
 		switch(l){
-		case NCBI_LOADER:
-			loader = new BlastLoader();
-			break;
+    case NCBI_LOADER:
+      loader = new BlastLoader();
+      break;
+    case NCBI_LOADER2:
+      loader = new BlastLoader2();
+      break;
 		case NATIVE_LOADER:
 			loader = new NativeBlastLoader();
 			break;

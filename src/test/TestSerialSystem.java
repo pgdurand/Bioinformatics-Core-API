@@ -40,8 +40,10 @@ import bzh.plealog.bioinfo.io.searchresult.SerializerSystemFactory;
 
 public class TestSerialSystem {
 	private static File            blastFile;
+  private static File            blastFile2;
 	private static File            tmpFile;
-	private static SRLoader         ncbiBlastLoader;
+  private static SRLoader         ncbiBlastLoader;
+  private static SRLoader         ncbiBlastLoader2;
 	private static SRWriter         ncbiBlastWriter;
 	private static SRWriter         nativeBlastWriter;
 	private static SRLoader         nativeBlastLoader;
@@ -55,11 +57,15 @@ public class TestSerialSystem {
 		CoreSystemConfigurator.initializeSystem();
 		// sample NCBI legacy Blast result
 		blastFile = new File("data/test/blastp.xml");
+    // sample NCBI Blast result XML2 single file
+    blastFile2 = new File("data/test/blastp.xml2");
 		// setup a temp file (will be deleted in tearDownAfterClass())
 		tmpFile = File.createTempFile("blastTest", ".xml");
 		System.out.println("Temp file is: "+ tmpFile.getAbsolutePath());
 		// setup an NCBI Blast Loader (XML)
 		ncbiBlastLoader = SerializerSystemFactory.getLoaderInstance(SerializerSystemFactory.NCBI_LOADER);
+    // setup an NCBI Blast Loader (XML2 single file)
+    ncbiBlastLoader2 = SerializerSystemFactory.getLoaderInstance(SerializerSystemFactory.NCBI_LOADER2);
 		// setup an NCBI Blast Writer (XML)
 		ncbiBlastWriter = SerializerSystemFactory.getWriterInstance(SerializerSystemFactory.NCBI_WRITER);
 		// setup a native BOutput writer
@@ -107,6 +113,11 @@ public class TestSerialSystem {
 	}
 
 	@Test
+  public void testCanRead2() {
+    assertTrue(ncbiBlastLoader2.canRead(blastFile2));
+  }
+
+	@Test
 	public void testRead() {
 		// read NCBI XML blast file
 		SROutput bo = ncbiBlastLoader.load(blastFile);
@@ -114,7 +125,13 @@ public class TestSerialSystem {
 		assertTrue(bo.getIteration(0).countHit()==19);
 	}
 	
-	private void checkContent(SROutput bo){
+  @Test
+  public void testRead2() {
+    // read NCBI XML2 blast file
+    SROutput bo = ncbiBlastLoader2.load(blastFile2);
+  }
+
+  private void checkContent(SROutput bo){
 		// check iterations
 		assertTrue(bo.countIteration()==1);
 		SRIteration iter = bo.getIteration(0);
