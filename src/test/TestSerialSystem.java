@@ -16,6 +16,7 @@
  */
 package test;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
@@ -34,6 +35,7 @@ import bzh.plealog.bioinfo.api.core.config.CoreSystemConfigurator;
 import bzh.plealog.bioinfo.api.data.searchresult.SRHit;
 import bzh.plealog.bioinfo.api.data.searchresult.SRIteration;
 import bzh.plealog.bioinfo.api.data.searchresult.SROutput;
+import bzh.plealog.bioinfo.api.data.searchresult.SRRequestInfo;
 import bzh.plealog.bioinfo.api.data.searchresult.io.SRLoader;
 import bzh.plealog.bioinfo.api.data.searchresult.io.SRWriter;
 import bzh.plealog.bioinfo.io.searchresult.SerializerSystemFactory;
@@ -46,9 +48,10 @@ public class TestSerialSystem {
   private static SRLoader         ncbiBlastLoader2;
 	private static SRWriter         ncbiBlastWriter;
 	private static SRWriter         nativeBlastWriter;
-	private static SRLoader         nativeBlastLoader;
+	private static SRLoader        nativeBlastLoader;
 	private static HashSet<String> hitIDs;
-	
+	private static String[]        hitIDsXML2;
+	   
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 		// init logger system
@@ -93,6 +96,8 @@ public class TestSerialSystem {
 		hitIDs.add("gi|56967161|pdb|1XMX|A");
 		hitIDs.add("gi|42543068|pdb|1NL0|L");
 		hitIDs.add("gi|13399662|pdb|1EVY|A");
+		hitIDsXML2 = new String[]{"1BHG_A","3K46_A","3K4A_A","5C71_A","4JHZ_A",
+		    "3LPF_A","5C70_A","6D4O_A","6BJQ_A","6BJW_A"};
 	}
 
 	@AfterClass
@@ -107,7 +112,7 @@ public class TestSerialSystem {
 	public void tearDown() throws Exception {
 	}
 
-	@Test
+	//@Test
 	public void testCanRead() {
 		assertTrue(ncbiBlastLoader.canRead(blastFile));
 	}
@@ -117,7 +122,7 @@ public class TestSerialSystem {
     assertTrue(ncbiBlastLoader2.canRead(blastFile2));
   }
 
-	@Test
+	//@Test
 	public void testRead() {
 		// read NCBI XML blast file
 		SROutput bo = ncbiBlastLoader.load(blastFile);
@@ -129,6 +134,46 @@ public class TestSerialSystem {
   public void testRead2() {
     // read NCBI XML2 blast file
     SROutput bo = ncbiBlastLoader2.load(blastFile2);
+    
+    assertNotNull(bo);
+    
+    assertEquals(bo.getRequestInfo().getValue(SRRequestInfo.PROGRAM_DESCRIPTOR_KEY),"blastp");
+    assertEquals(bo.getRequestInfo().getValue(SRRequestInfo.PRGM_VERSION_DESCRIPTOR_KEY),"BLASTP 2.10.0+");
+    assertEquals(bo.getRequestInfo().getValue(SRRequestInfo.DATABASE_DESCRIPTOR_KEY),"pdb_v5");
+    
+    assertTrue(bo.countIteration()==2);
+    assertTrue(bo.getIteration(0).countHit()==10);
+    assertTrue(bo.getIteration(1).countHit()==9);
+    
+    assertEquals(bo.getIteration(0).getIterationQueryID(), "Query_175978");
+    assertEquals(bo.getIteration(0).getIterationQueryDesc(), "seq1");
+    assertEquals(bo.getIteration(0).getIterationQueryLength(), 118);
+
+    assertEquals(bo.getIteration(1).getIterationQueryID(), "Query_175979");
+    assertEquals(bo.getIteration(1).getIterationQueryDesc(), "seq2");
+    assertEquals(bo.getIteration(1).getIterationQueryLength(), 129);
+
+    for(int i=0;i<10;i++) {
+      assertEquals(bo.getIteration(0).getHit(i).getHitAccession(), hitIDsXML2[i]);
+    }
+    
+    assertEquals(bo.getIteration(1).getHit(8).getHitLen(),614);
+    assertEquals(bo.getIteration(1).getHit(8).getHitNum(), 9);
+    assertEquals(bo.getIteration(1).getHit(8).getHitId(), "pdb|6D4O|A");
+    assertEquals(bo.getIteration(1).getHit(8).getHsp(0).getQuery().getFrom(),17);
+    assertEquals(bo.getIteration(1).getHit(8).getHsp(0).getQuery().getTo(),129);
+    assertEquals(bo.getIteration(1).getHit(8).getHsp(0).getHit().getFrom(),84);
+    assertEquals(bo.getIteration(1).getHit(8).getHsp(0).getHit().getTo(),198);
+    assertEquals(bo.getIteration(1).getHit(8).getHsp(0).getScores().getAlignLen(),118);
+    assertEquals(bo.getIteration(1).getHit(8).getHsp(0).getScores().getScore(),200.0, 0);
+    assertEquals(bo.getIteration(1).getHit(8).getHsp(0).getScores().getBitScore(),81.6481d, 0);
+    assertEquals(bo.getIteration(1).getHit(8).getHsp(0).getScores().getIdentity(),47);
+    assertEquals(bo.getIteration(1).getHit(8).getHsp(0).getScores().getPositive(),67);
+    
+    assertEquals(bo.getIteration(1).getHit(0).getSequenceInfo().getOrganism(),"Homo sapiens");
+    assertEquals(bo.getIteration(1).getHit(0).getSequenceInfo().getTaxonomy(),"9606");
+    assertEquals(bo.getIteration(1).getHit(8).getSequenceInfo().getOrganism(),"[Eubacterium] eligens");
+    assertEquals(bo.getIteration(1).getHit(8).getSequenceInfo().getTaxonomy(),"39485");
   }
 
   private void checkContent(SROutput bo){
@@ -147,7 +192,7 @@ public class TestSerialSystem {
 
 	}
 	
-	@Test
+	//@Test
 	public void testContent() {
 		// read NCBI XML blast file
 		SROutput bo = ncbiBlastLoader.load(blastFile);
@@ -156,7 +201,7 @@ public class TestSerialSystem {
 		checkContent(bo);
 	}
 	
-	@Test
+	//@Test
 	public void testWriteContent(){
 		// read NCBI XML blast file
 		SROutput bo = ncbiBlastLoader.load(blastFile);
@@ -167,7 +212,7 @@ public class TestSerialSystem {
 		nativeBlastWriter.write(tmpFile, bo);
 	}
 
-	@Test
+	//@Test
 	public void testReadWriteContent(){
 		// read NCBI XML blast file
 		SROutput bo = ncbiBlastLoader.load(blastFile);

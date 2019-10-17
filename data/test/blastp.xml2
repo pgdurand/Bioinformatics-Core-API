@@ -977,38 +977,6 @@
                     </Hsp>
                   </hsps>
                 </Hit>
-                <Hit>
-                  <num>10</num>
-                  <description>
-                    <HitDescr>
-                      <id>pdb|6BO6|A</id>
-                      <accession>6BO6_A</accession>
-                      <title>Chain A, Glycoside Hydrolase Family 2 candidate b-glucuronidase [[Eubacterium] eligens ATCC 27750]</title>
-                      <taxid>515620</taxid>
-                      <sciname>[Eubacterium] eligens ATCC 27750</sciname>
-                    </HitDescr>
-                  </description>
-                  <len>611</len>
-                  <hsps>
-                    <Hsp>
-                      <num>1</num>
-                      <bit-score>81.6481</bit-score>
-                      <score>200</score>
-                      <evalue>1.06062e-18</evalue>
-                      <identity>47</identity>
-                      <positive>67</positive>
-                      <query-from>17</query-from>
-                      <query-to>129</query-to>
-                      <hit-from>81</hit-from>
-                      <hit-to>195</hit-to>
-                      <align-len>118</align-len>
-                      <gaps>8</gaps>
-                      <qseq>MRVVLRINSAHYYAVVWVNGIHVVEHEGGHLPFEADISKLVQSGPLTTCRITIAINNTLTPHTLPPGTIVYKTDTSMYPKGYFVQDT-----SFDFFNYAGLHRSVVLYTTPTTYIDD</qseq>
-                      <hseq>QRIVLRCAAVTHYAMIYLNGKLICEHKGGFLPFEVELNDDLQDG---DNLLTIAVNNVIDYTTLPVGGKANMMSGMMGGMGAGASDKPQNNPNFDFFNYCGITRPVKIYTTPETYIND</hseq>
-                      <midline> R+VLR  +  +YA++++NG  + EH+GG LPFE +++  +Q G      +TIA+NN +   TLP G         M   G    D      +FDFFNY G+ R V +YTTP TYI+D</midline>
-                    </Hsp>
-                  </hsps>
-                </Hit>
               </hits>
               <stat>
                 <Statistics>
