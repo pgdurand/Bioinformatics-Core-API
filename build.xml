@@ -77,6 +77,7 @@
           debug="${compile.debug}"
           optimize="${compile.optimize}"
           >
+          <compilerarg line="--add-modules javax.xml.bind"/>
    </javac>
   <copy todir="${Dlib}/bzh/plealog/bioinfo/data/blast">
     <fileset dir="${Dsrc}/bzh/plealog/bioinfo/data/blast">
