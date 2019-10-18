@@ -333,7 +333,6 @@ public class BlastLoader2 implements SRLoader {
 
   private SRIteration initIteration(Search search, int num, boolean isProt, boolean isblastn) {
     SRIteration sri = new ISRIteration();
-    num++;
     sri.setIterationIterNum(num);//it is a one-base value
     sri.setIterationQueryID(search.getSearchQueryId());
     sri.setIterationQueryDesc(search.getSearchQueryTitle());

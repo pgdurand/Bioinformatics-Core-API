@@ -145,7 +145,7 @@ public class TestSerialSystem {
 	}
   @Test
   public void testReadPsi() {
-    // read NCBI XML2 blast file
+    // read NCBI XML2 psi-blast file
     SROutput bo = ncbiBlastLoader2.load(blastFile3);
     
     assertNotNull(bo);
@@ -153,6 +153,7 @@ public class TestSerialSystem {
     assertTrue(bo.getIteration(0).countHit()==180);
     for(int i=0;i<hitIDsPsiXML2idx.length;i++) {
       assertEquals(bo.getIteration(0).getHit(hitIDsPsiXML2idx[i]-1).getHitId(), hitIDsPsiXML2[i]);
+      assertEquals(bo.getIteration(0).getHit(hitIDsPsiXML2idx[i]-1).getHitNum(), hitIDsPsiXML2idx[i]);
     }
     
     int idx = hitIDsPsiXML2idx[0]-1;
@@ -192,6 +193,8 @@ public class TestSerialSystem {
     assertEquals(bo.getRequestInfo().getValue(SRRequestInfo.DATABASE_DESCRIPTOR_KEY),"pdb_v5");
     
     assertTrue(bo.countIteration()==2);
+    assertTrue(bo.getIteration(0).getIterationIterNum()==1);
+    assertTrue(bo.getIteration(1).getIterationIterNum()==2);
     assertTrue(bo.getIteration(0).countHit()==10);
     assertTrue(bo.getIteration(1).countHit()==9);
     
@@ -205,6 +208,7 @@ public class TestSerialSystem {
 
     for(int i=0;i<10;i++) {
       assertEquals(bo.getIteration(0).getHit(i).getHitAccession(), hitIDsXML2[i]);
+      assertEquals(bo.getIteration(0).getHit(i).getHitNum(), i+1);
     }
     
     assertEquals(bo.getIteration(1).getHit(8).getHitLen(),614);
