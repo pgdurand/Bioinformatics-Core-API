@@ -1,11 +1,25 @@
+/* Copyright (C) 2019 Patrick G. Durand
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU Affero General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  You may obtain a copy of the License at
+ *
+ *     https://www.gnu.org/licenses/agpl-3.0.txt
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU Affero General Public License for more details.
+ */
 package bzh.plealog.bioinfo.io.searchresult.ncbi;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileReader;
-import java.io.PipedInputStream;
-import java.io.PipedOutputStream;
 import java.util.List;
 
 import javax.xml.bind.JAXB;
@@ -500,37 +514,18 @@ public class BlastLoader2 implements SRLoader {
   public SROutput load(File f) throws SRLoaderException {
     BlastXML2 bo;
     SROutput boRet = null;
-    PipedInputStream writeIn;
-    PipedOutputStream readOut;
-    FileInputStream fis = null;
     File f2;
     boolean isZip = false;
 
-    try {
-      fis = new FileInputStream(f);
+    try (FileInputStream fis = new FileInputStream(f)){
       f2 = ZipUtil.extract(fis, f.getParent());
       isZip = true;
     } catch (Exception e) {
       f2 = f;
     }
-    if (fis != null) {
-      try {
-        fis.close();
-      } catch (Exception ex) {
-      }
-    }
     try {
-      /*writeIn = new PipedInputStream();
-      readOut = new PipedOutputStream(writeIn);
-      ReadThread rt = new ReadThread(new BufferedReader(new FileReader(f2)), readOut);
-      rt.start();*/
-
       bo = JAXB.unmarshal(f, BlastXML2.class);
       boRet = createIBoutput(bo);
-      
-      /*if (!rt.bError) {
-        boRet = createIBoutput(bo);
-      }*/
     } catch (Exception ex) {
       throw new SRLoaderException(ex.toString());
     } finally {
@@ -551,5 +546,4 @@ public class BlastLoader2 implements SRLoader {
   public SROutput[] multipleLoad(File f) throws SRLoaderException {
     return null;
   }
-
 }
