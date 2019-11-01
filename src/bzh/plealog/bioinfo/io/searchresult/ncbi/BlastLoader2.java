@@ -352,7 +352,7 @@ public class BlastLoader2 implements SRLoader {
           sri = initIteration(search, num, isProt, isblastn);
           sro.addIteration(sri);
         }
-        //we cannot handle multi-file with psi-blast results
+        //we cannot handle XML2 file with multiple psi-blast results
         break;
       }
       //bl2seq
