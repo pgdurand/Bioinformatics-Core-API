@@ -43,15 +43,18 @@ import bzh.plealog.bioinfo.io.searchresult.SerializerSystemFactory;
 public class TestSerialSystem {
 	private static File            blastFile;
   private static File            blastFile2;
+  private static File            blastFile3;
 	private static File            tmpFile;
-  private static SRLoader         ncbiBlastLoader;
-  private static SRLoader         ncbiBlastLoader2;
-	private static SRWriter         ncbiBlastWriter;
-	private static SRWriter         nativeBlastWriter;
+  private static SRLoader        ncbiBlastLoader;
+  private static SRLoader        ncbiBlastLoader2;
+	private static SRWriter        ncbiBlastWriter;
+	private static SRWriter        nativeBlastWriter;
 	private static SRLoader        nativeBlastLoader;
 	private static HashSet<String> hitIDs;
-	private static String[]        hitIDsXML2;
-	   
+  private static String[]        hitIDsXML2;
+  private static String[]        hitIDsPsiXML2;
+	private static int[]           hitIDsPsiXML2idx;
+	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 		// init logger system
@@ -62,6 +65,8 @@ public class TestSerialSystem {
 		blastFile = new File("data/test/blastp.xml");
     // sample NCBI Blast result XML2 single file
     blastFile2 = new File("data/test/blastp.xml2");
+    // sample NCBI Blast result XML2 single file
+    blastFile3 = new File("data/test/psi-blast-sw.xml2");
 		// setup a temp file (will be deleted in tearDownAfterClass())
 		tmpFile = File.createTempFile("blastTest", ".xml");
 		System.out.println("Temp file is: "+ tmpFile.getAbsolutePath());
@@ -75,7 +80,7 @@ public class TestSerialSystem {
 		nativeBlastWriter = SerializerSystemFactory.getWriterInstance(SerializerSystemFactory.NATIVE_WRITER);
 		// setup a native BOutput writer
 		nativeBlastLoader = SerializerSystemFactory.getLoaderInstance(SerializerSystemFactory.NATIVE_LOADER);
-		// control values
+		// control values to check blastFile
 		hitIDs = new HashSet<String>();
 		hitIDs.add("gi|11514550|pdb|1FQY|A");
 		hitIDs.add("gi|20150315|pdb|1J4N|A");
@@ -96,8 +101,12 @@ public class TestSerialSystem {
 		hitIDs.add("gi|56967161|pdb|1XMX|A");
 		hitIDs.add("gi|42543068|pdb|1NL0|L");
 		hitIDs.add("gi|13399662|pdb|1EVY|A");
+		// control values to check blastFile2
 		hitIDsXML2 = new String[]{"1BHG_A","3K46_A","3K4A_A","5C71_A","4JHZ_A",
 		    "3LPF_A","5C70_A","6D4O_A","6BJQ_A","6BJW_A"};
+		// control values to check blastFile3
+		hitIDsPsiXML2idx = new int[] {1,14,148,180};
+    hitIDsPsiXML2 = new String[]{"gi|6754098|ref|NP_034498.1|","sp|Q47077.1|","sp|Q9SCU9.1|","sp|B2B3C0.1|"};
 	}
 
 	@AfterClass
@@ -112,7 +121,7 @@ public class TestSerialSystem {
 	public void tearDown() throws Exception {
 	}
 
-	//@Test
+	@Test
 	public void testCanRead() {
 		assertTrue(ncbiBlastLoader.canRead(blastFile));
 	}
@@ -122,14 +131,56 @@ public class TestSerialSystem {
     assertTrue(ncbiBlastLoader2.canRead(blastFile2));
   }
 
-	//@Test
+	@Test
+  public void testCanReadPsi() {
+    assertTrue(ncbiBlastLoader2.canRead(blastFile3));
+  }
+
+	@Test
 	public void testRead() {
 		// read NCBI XML blast file
 		SROutput bo = ncbiBlastLoader.load(blastFile);
 		assertNotNull(bo);
 		assertTrue(bo.getIteration(0).countHit()==19);
 	}
-	
+  @Test
+  public void testReadPsi() {
+    // read NCBI XML2 psi-blast file
+    SROutput bo = ncbiBlastLoader2.load(blastFile3);
+    
+    assertNotNull(bo);
+    assertTrue(bo.countIteration()==1);
+    assertTrue(bo.getIteration(0).countHit()==180);
+    for(int i=0;i<hitIDsPsiXML2idx.length;i++) {
+      assertEquals(bo.getIteration(0).getHit(hitIDsPsiXML2idx[i]-1).getHitId(), hitIDsPsiXML2[i]);
+      assertEquals(bo.getIteration(0).getHit(hitIDsPsiXML2idx[i]-1).getHitNum(), hitIDsPsiXML2idx[i]);
+    }
+    
+    int idx = hitIDsPsiXML2idx[0]-1;
+    assertEquals(bo.getIteration(0).getHit(idx).getSequenceInfo().getOrganism(),"Mus musculus");
+    assertEquals(bo.getIteration(0).getHit(idx).getSequenceInfo().getTaxonomy(),"10090");
+    idx = hitIDsPsiXML2idx[1]-1;
+    assertEquals(bo.getIteration(0).getHit(idx).getSequenceInfo().getOrganism(),"Enterobacter cloacae");
+    assertEquals(bo.getIteration(0).getHit(idx).getSequenceInfo().getTaxonomy(),"550");
+    
+    idx = hitIDsPsiXML2idx[2]-1;
+    assertEquals(bo.getIteration(0).getHit(idx).getHitLen(),848);
+    assertEquals(bo.getIteration(0).getHit(idx).getHitNum(), hitIDsPsiXML2idx[2]);
+    assertEquals(bo.getIteration(0).getHit(idx).getHitId(), "sp|Q9SCU9.1|");
+    assertEquals(bo.getIteration(0).getHit(idx).getHitAccession(), "Q9SCU9");
+    assertEquals(bo.getIteration(0).getHit(idx).getHsp(0).getQuery().getFrom(),98);
+    assertEquals(bo.getIteration(0).getHit(idx).getHsp(0).getQuery().getTo(),146);
+    assertEquals(bo.getIteration(0).getHit(idx).getHsp(0).getHit().getFrom(),488);
+    assertEquals(bo.getIteration(0).getHit(idx).getHsp(0).getHit().getTo(),537);
+    assertEquals(bo.getIteration(0).getHit(idx).getHsp(0).getScores().getAlignLen(),50);
+    assertEquals(bo.getIteration(0).getHit(idx).getHsp(0).getScores().getScore(),86.0, 0);
+    assertEquals(bo.getIteration(0).getHit(idx).getHsp(0).getScores().getBitScore(),37.7196d, 0);
+    assertEquals(bo.getIteration(0).getHit(idx).getHsp(0).getScores().getIdentity(),12);
+    assertEquals(bo.getIteration(0).getHit(idx).getHsp(0).getScores().getPositive(),20);
+    assertEquals(bo.getIteration(0).getHit(idx).getSequenceInfo().getOrganism(),"Arabidopsis thaliana");
+    assertEquals(bo.getIteration(0).getHit(idx).getSequenceInfo().getTaxonomy(),"3702");
+  }
+  
   @Test
   public void testRead2() {
     // read NCBI XML2 blast file
@@ -142,6 +193,8 @@ public class TestSerialSystem {
     assertEquals(bo.getRequestInfo().getValue(SRRequestInfo.DATABASE_DESCRIPTOR_KEY),"pdb_v5");
     
     assertTrue(bo.countIteration()==2);
+    assertTrue(bo.getIteration(0).getIterationIterNum()==1);
+    assertTrue(bo.getIteration(1).getIterationIterNum()==2);
     assertTrue(bo.getIteration(0).countHit()==10);
     assertTrue(bo.getIteration(1).countHit()==9);
     
@@ -155,6 +208,7 @@ public class TestSerialSystem {
 
     for(int i=0;i<10;i++) {
       assertEquals(bo.getIteration(0).getHit(i).getHitAccession(), hitIDsXML2[i]);
+      assertEquals(bo.getIteration(0).getHit(i).getHitNum(), i+1);
     }
     
     assertEquals(bo.getIteration(1).getHit(8).getHitLen(),614);
@@ -201,7 +255,7 @@ public class TestSerialSystem {
 		checkContent(bo);
 	}
 	
-	//@Test
+	@Test
 	public void testWriteContent(){
 		// read NCBI XML blast file
 		SROutput bo = ncbiBlastLoader.load(blastFile);
@@ -212,7 +266,7 @@ public class TestSerialSystem {
 		nativeBlastWriter.write(tmpFile, bo);
 	}
 
-	//@Test
+	@Test
 	public void testReadWriteContent(){
 		// read NCBI XML blast file
 		SROutput bo = ncbiBlastLoader.load(blastFile);
