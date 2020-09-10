@@ -1,3 +1,5 @@
+A/ NCBI BLAST Results XML2
+--------------------------
 XSD file from:
 https://www.ncbi.nlm.nih.gov/data_specs/schema/
 
@@ -14,3 +16,13 @@ in XSD (and so forth in Java classes) do not match XML elements reported in XML 
 
 So generated classes where edited accordingly ; I did not edit XSD, since class generation 
 afterward produced strange results; and I'm not so fluent with XSD, class generation, JaxB...
+
+--
+
+NCBI Taxonomy
+-------------
+
+DTD from: https://www.ncbi.nlm.nih.gov/entrez/query/DTD/taxon.dtd
+cd <core-api-home>
+mkdir -p src/bzh/plealog/bioinfo/data/taxonomy/loader/ncbi
+xjc -dtd -d src -p bzh.plealog.bioinfo.data.taxonomy.loader.ncbi schema/taxon.dtd

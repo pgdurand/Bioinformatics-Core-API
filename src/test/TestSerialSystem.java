@@ -23,6 +23,7 @@ import static org.junit.Assert.assertTrue;
 import java.io.File;
 import java.util.Enumeration;
 import java.util.HashSet;
+import java.util.List;
 
 import org.apache.log4j.BasicConfigurator;
 import org.junit.After;
@@ -38,12 +39,17 @@ import bzh.plealog.bioinfo.api.data.searchresult.SROutput;
 import bzh.plealog.bioinfo.api.data.searchresult.SRRequestInfo;
 import bzh.plealog.bioinfo.api.data.searchresult.io.SRLoader;
 import bzh.plealog.bioinfo.api.data.searchresult.io.SRWriter;
+import bzh.plealog.bioinfo.data.taxonomy.core.TaxonomyLoader;
+import bzh.plealog.bioinfo.data.taxonomy.core.TaxonomyTerm;
+import bzh.plealog.bioinfo.data.taxonomy.loader.ncbi.TaxaSet;
 import bzh.plealog.bioinfo.io.searchresult.SerializerSystemFactory;
+import bzh.plealog.bioinfo.io.xml.XmlUtils;
 
 public class TestSerialSystem {
 	private static File            blastFile;
   private static File            blastFile2;
   private static File            blastFile3;
+  private static File            taxFile;
 	private static File            tmpFile;
   private static SRLoader        ncbiBlastLoader;
   private static SRLoader        ncbiBlastLoader2;
@@ -67,8 +73,11 @@ public class TestSerialSystem {
     blastFile2 = new File("data/test/blastp.xml2");
     // sample NCBI Blast result XML2 single file
     blastFile3 = new File("data/test/psi-blast-sw.xml2");
+    // sample eFetch/Taxonomy data file
+    taxFile = new File("data/test/ncbi-taxonomy-efetch.xml");
 		// setup a temp file (will be deleted in tearDownAfterClass())
-		tmpFile = File.createTempFile("blastTest", ".xml");
+    tmpFile = File.createTempFile("blastTest", ".xml");
+		//dump tmp file to help debugging
 		System.out.println("Temp file is: "+ tmpFile.getAbsolutePath());
 		// setup an NCBI Blast Loader (XML)
 		ncbiBlastLoader = SerializerSystemFactory.getLoaderInstance(SerializerSystemFactory.NCBI_LOADER);
@@ -121,29 +130,29 @@ public class TestSerialSystem {
 	public void tearDown() throws Exception {
 	}
 
-	@Test
+	//@Test
 	public void testCanRead() {
 		assertTrue(ncbiBlastLoader.canRead(blastFile));
 	}
 
-	@Test
+	//@Test
   public void testCanRead2() {
     assertTrue(ncbiBlastLoader2.canRead(blastFile2));
   }
 
-	@Test
+	//@Test
   public void testCanReadPsi() {
     assertTrue(ncbiBlastLoader2.canRead(blastFile3));
   }
 
-	@Test
+	//@Test
 	public void testRead() {
 		// read NCBI XML blast file
 		SROutput bo = ncbiBlastLoader.load(blastFile);
 		assertNotNull(bo);
 		assertTrue(bo.getIteration(0).countHit()==19);
 	}
-  @Test
+  //@Test
   public void testReadPsi() {
     // read NCBI XML2 psi-blast file
     SROutput bo = ncbiBlastLoader2.load(blastFile3);
@@ -181,7 +190,7 @@ public class TestSerialSystem {
     assertEquals(bo.getIteration(0).getHit(idx).getSequenceInfo().getTaxonomy(),"3702");
   }
   
-  @Test
+  //@Test
   public void testRead2() {
     // read NCBI XML2 blast file
     SROutput bo = ncbiBlastLoader2.load(blastFile2);
@@ -246,7 +255,7 @@ public class TestSerialSystem {
 
 	}
 	
-	//@Test
+	@Test
 	public void testContent() {
 		// read NCBI XML blast file
 		SROutput bo = ncbiBlastLoader.load(blastFile);
@@ -284,4 +293,39 @@ public class TestSerialSystem {
 		// check content
 		checkContent(newBO);
 	}
+	
+	
+	@Test
+	public void testTaxonomyLoaderCanonical() {
+	  TaxaSet tSet = (TaxaSet) XmlUtils.loadXmlFile(taxFile, TaxaSet.class);//JAXB.unmarshal(f, TaxaSet.class);
+	  assertNotNull(tSet);
+	  assertEquals(2, tSet.getTaxon().size());
+    List<TaxonomyTerm> tTerms = TaxonomyLoader.loadCanonical(tSet.getTaxon().get(0));
+    assertEquals(8, tTerms.size());
+    assertEquals(TaxonomyLoader.getPathNames(tTerms), "Eukaryota;Metazoa;Chordata;Mammalia;Primates;Hominidae;Homo;Homo sapiens");
+    assertEquals(TaxonomyLoader.getPathRanks(tTerms), "d__;k__;p__;c__;o__;f__;g__;s__");
+    assertEquals(TaxonomyLoader.getPathIds(tTerms), "2759;33208;7711;40674;9443;9604;9605;9606");
+	  tTerms = TaxonomyLoader.loadCanonical(tSet.getTaxon().get(1));
+	  assertNotNull(tTerms);
+	  assertEquals(8, tTerms.size());
+    assertEquals(TaxonomyLoader.getPathNames(tTerms), "Eukaryota;Metazoa;Chordata;Mammalia;Rodentia;Muridae;Mus;Mus musculus");
+    assertEquals(TaxonomyLoader.getPathRanks(tTerms), "d__;k__;p__;c__;o__;f__;g__;s__");
+    assertEquals(TaxonomyLoader.getPathIds(tTerms), "2759;33208;7711;40674;9989;10066;10088;10090");
+	}
+  @Test
+  public void testTaxonomyLoaderFull() {
+    TaxaSet tSet = (TaxaSet) XmlUtils.loadXmlFile(taxFile, TaxaSet.class);//JAXB.unmarshal(f, TaxaSet.class);
+    assertNotNull(tSet);
+    assertEquals(2, tSet.getTaxon().size());
+    List<TaxonomyTerm> tTerms = TaxonomyLoader.loadFull(tSet.getTaxon().get(0));
+    assertEquals(16, tTerms.size());
+    assertEquals(TaxonomyLoader.getPathNames(tTerms), "Eukaryota;Metazoa;Chordata;Craniata;Sarcopterygii;Mammalia;Euarchontoglires;Primates;Haplorrhini;Simiiformes;Catarrhini;Hominoidea;Hominidae;Homininae;Homo;Homo sapiens");
+    assertEquals(TaxonomyLoader.getPathIds(tTerms), "2759;33208;7711;89593;8287;40674;314146;9443;376913;314293;9526;314295;9604;207598;9605;9606");
+    tTerms = TaxonomyLoader.loadFull(tSet.getTaxon().get(1));
+    assertNotNull(tTerms);
+    assertEquals(14, tTerms.size());
+    assertEquals(TaxonomyLoader.getPathNames(tTerms), "Eukaryota;Metazoa;Chordata;Craniata;Sarcopterygii;Mammalia;Euarchontoglires;Rodentia;Myomorpha;Muridae;Murinae;Mus;Mus;Mus musculus");
+    assertEquals(TaxonomyLoader.getPathIds(tTerms), "2759;33208;7711;89593;8287;40674;314146;9989;1963758;10066;39107;10088;862507;10090");
+  }
+
 }

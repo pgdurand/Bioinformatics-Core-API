@@ -16,6 +16,9 @@
  */
 package bzh.plealog.bioinfo.util;
 
+import java.io.Closeable;
+import java.io.File;
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.StringTokenizer;
 
@@ -153,5 +156,26 @@ public class CoreUtil {
 
 		return str;
 	}
+	
+	public static void closeQuietly(final Closeable closeable) {
+    try {
+        if (closeable != null) {
+            closeable.close();
+        }
+    } catch (final IOException ioe) {
+        // ignore
+    }
+	}
+	
+	public static boolean deleteQuietly(final File file) {
+    if (file == null) {
+        return false;
+    }
 
+    try {
+        return file.delete();
+    } catch (final Exception ignored) {
+        return false;
+    }
+	}
 }
