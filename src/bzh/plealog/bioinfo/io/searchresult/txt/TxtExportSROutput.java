@@ -32,7 +32,6 @@ import java.util.StringTokenizer;
 import java.util.TreeMap;
 
 import bzh.plealog.bioinfo.api.data.feature.AnnotationDataModelConstants;
-import bzh.plealog.bioinfo.api.data.feature.AnnotationDataModelConstants.ANNOTATION_CATEGORY;
 import bzh.plealog.bioinfo.api.data.feature.Feature;
 import bzh.plealog.bioinfo.api.data.feature.FeatureTable;
 import bzh.plealog.bioinfo.api.data.feature.Qualifier;
