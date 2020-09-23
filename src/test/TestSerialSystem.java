@@ -31,6 +31,8 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -74,6 +76,8 @@ public class TestSerialSystem {
 	public static void setUpBeforeClass() throws Exception {
 		// init logger system
 		BasicConfigurator.configure();
+		//switch off debug messages from Castor framework
+		Logger.getLogger("org.exolab.castor").setLevel(Level.WARN);
 		// init API factories
 		CoreSystemConfigurator.initializeSystem();
 		// sample NCBI legacy Blast result
