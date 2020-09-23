@@ -112,7 +112,7 @@ public class IprPrediction {
 
   /**
    * Returns the identifier of this object. It is mostly used to get
-   * distinct (unique) domain prediction.
+   * distinct (unique) domain predictions.
    * 
    * @return object key
    * */
@@ -123,7 +123,7 @@ public class IprPrediction {
   /**
    * Convert this object to a Feature.
    * 
-   * @return a Feature instance. It is worth noting that Feature key maybe equal to
+   * @return a Feature instance. It is worth noting that value for Feature key maybe equal to
    * UNK constant if IprGffObject type is not supported by Feature data model. See
    * IprGffObject.XXX_TYPE constants.
    */

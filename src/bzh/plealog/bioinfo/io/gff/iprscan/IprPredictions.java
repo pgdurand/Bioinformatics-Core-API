@@ -26,7 +26,7 @@ import bzh.plealog.bioinfo.api.data.feature.FeatureTable;
 import test.TestSerialSystem;
 
 /**
- * Utility class to model IPRscan domains prediction. It is used to convert list
+ * Utility class to model IPRscan domain predictions. It is used to convert list
  * of IprGffObjects to a FeatureTable instance suitable to be used by all other
  * Core APIs in this library.
  * 
@@ -51,9 +51,9 @@ public class IprPredictions {
   }
 
   /**
-   * Return number of prediction domains.
+   * Return number of domain predictions.
    * 
-   * @return number of prediction domains.
+   * @return number of domain predictions.
    */
   public int size() {
     return gffObjs.size();
@@ -62,7 +62,7 @@ public class IprPredictions {
   /**
    * Returns all domains.
    * 
-   * @return all domain predcitions
+   * @return all domain predictions
    */
   public List<IprPrediction> getAllDomains(){
     return gffObjs;
@@ -72,16 +72,16 @@ public class IprPredictions {
    * Returns unique domain predictions. Rely upon the use of equal method from
    * IprPrediciton class.
    * 
-   * @return list of unique domain predicitons.
+   * @return list of unique domain predictions.
    */
   public List<IprPrediction> filterUniqueDomains(){
     return gffObjs.stream().distinct().collect(Collectors.toList());
   }
 
   /**
-   * Return a FeatureTable representation of list of domain predicitons.
+   * Return a FeatureTable representation of list of domain predictions.
    * 
-   * @param uniqueDomainId figure out whther or not return unique domains. 
+   * @param uniqueDomainId figure out whether or not return unique domains. 
    * 
    * @see IprPredictions#filterUniqueDomains()
    * 
@@ -107,8 +107,6 @@ public class IprPredictions {
         ft.addFeature(feat);
       }
     }
-    
-    //TODO: adjust protein predictions seq location for blastx
     
     return ft;
   }
