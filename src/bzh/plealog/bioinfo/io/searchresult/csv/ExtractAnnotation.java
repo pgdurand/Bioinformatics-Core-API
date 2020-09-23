@@ -476,6 +476,9 @@ public class ExtractAnnotation {
     case EC:
       label = AnnotationDataModelConstants.FEATURE_CODE_ENZYME;
       break;
+      default:
+        label = category.getType();
+        break;
     /*
      * case ORGANISM: label = CONSTANTS_KEYWORDS.FEATURE_CODE_ORGANISM; break;
      */
@@ -494,6 +497,10 @@ public class ExtractAnnotation {
       return AnnotationDataModelConstants.ANNOTATION_CATEGORY.IPR;
     } else if (AnnotationDataModelConstants.ANNOTATION_CATEGORY.EC.toString().equals(cat)) {
       return AnnotationDataModelConstants.ANNOTATION_CATEGORY.EC;
+    } else if (AnnotationDataModelConstants.ANNOTATION_CATEGORY.PS.toString().equals(cat)) {
+      return AnnotationDataModelConstants.ANNOTATION_CATEGORY.PS;
+    } else if (AnnotationDataModelConstants.ANNOTATION_CATEGORY.PFM.toString().equals(cat)) {
+      return AnnotationDataModelConstants.ANNOTATION_CATEGORY.PFM;
     } else {
       return null;
     }

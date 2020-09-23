@@ -17,12 +17,12 @@
 package bzh.plealog.bioinfo.io.gff.iprscan;
 
 import java.util.Arrays;
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import bzh.plealog.bioinfo.api.core.config.CoreSystemConfigurator;
+import bzh.plealog.bioinfo.api.data.feature.AnnotationDataModelConstants;
 import bzh.plealog.bioinfo.api.data.feature.Feature;
 import test.TestSerialSystem;
 
@@ -44,11 +44,17 @@ public class IprPrediction {
   public static final String NAME_QUAL = "name";
   public static final String SIGNATURE_QUAL = "description";
   public static final String DBXREF_QUAL = "dbxref";
+  public static final String SCORE_QUAL = "score";
 
   //These are the attributes to look for supported protein domains
   // in GFF3 attributes as reported by IprScan.
-  public static final Set<String> ACCEPTED_DOMAINS = new HashSet<>(Arrays.asList("Pfam", "ProSiteProfiles"));
-
+  @SuppressWarnings("serial")
+  public static final HashMap<String, AnnotationDataModelConstants.ANNOTATION_CATEGORY> ACCEPTED_DOMAINS = 
+      new HashMap<String, AnnotationDataModelConstants.ANNOTATION_CATEGORY>() {{ 
+        put("Pfam", AnnotationDataModelConstants.ANNOTATION_CATEGORY.PFM); 
+        put("ProSiteProfiles", AnnotationDataModelConstants.ANNOTATION_CATEGORY.PS); 
+        }};
+  
   //This is the Feature type used to create Feature objects containing IPR domain predictions
   public static final String DOMAIN = "domain";
   public static final String SOURCE = "source";
@@ -132,7 +138,7 @@ public class IprPrediction {
     
     Feature feat = CoreSystemConfigurator.getFeatureTableFactory().getFInstance();
 
-    if (!ACCEPTED_DOMAINS.contains(gffObject.getSource())) {
+    if (ACCEPTED_DOMAINS.containsKey(gffObject.getSource()) == false) {
       //handle source of this prediction, which is user provided prot/nuc sequence
       feat.setFrom(Integer.valueOf(gffObject.getStart()));
       feat.setTo(Integer.valueOf(gffObject.getEnd()));
@@ -152,38 +158,48 @@ public class IprPrediction {
     }
     else {
       //handle domain predictions
+      
+      //basic info: location, type, score
       feat.setFrom(Integer.valueOf(gffObject.getStart()));
       feat.setTo(Integer.valueOf(gffObject.getEnd()));
       feat.setKey(DOMAIN);
       feat.setStrand(Feature.PLUS_STRAND);
-      String str=gffObject.getAttributeValue(IprGffObject.NAME_ATTR);
-      if(str != null) {
-        feat.addQualifier(NAME_QUAL, str);
-      }
-      str = gffObject.getAttributeValue(IprGffObject.SIGNATURE_ATTR);
-      if (str != null) {
-        feat.addQualifier(SIGNATURE_QUAL, str);
-      }
-      //Collect IPR ids and add separate dbxref qualifier for each
-      str = gffObject.getAttributeValue(IprGffObject.DBXREF_ATTR);
+      feat.addQualifier(SCORE_QUAL, gffObject.getScore());
+      
+      //main domain prediction data; see ACCEPTED_DOMAINS
+      feat.addQualifier(
+          DBXREF_QUAL, 
+          AnnotationDataModelConstants.formatDbxrefForQualifier(
+              ACCEPTED_DOMAINS.get(gffObject.getSource()), 
+              gffObject.getAttributeValue(IprGffObject.NAME_ATTR), 
+              gffObject.getAttributeValue(IprGffObject.SIGNATURE_ATTR)));
+
+      //then, collect IPR ids and add separate dbxref qualifier for each
+      String str = gffObject.getAttributeValue(IprGffObject.DBXREF_ATTR);
       if (str != null) {
         List<String> iprs = 
             Arrays.asList(str.split(","))
             .stream()
-            .filter(s -> s.startsWith("InterPro"))
+            .filter(s -> s.startsWith(AnnotationDataModelConstants.ANNOTATION_CATEGORY.IPR.getEncoding()))
             .map(s -> s.split(":")[1])
             .collect(Collectors.toList());
-        iprs.stream().forEach(ipr -> feat.addQualifier(DBXREF_QUAL, ipr));  
+        iprs.stream().forEach(ipr -> feat.addQualifier(
+            DBXREF_QUAL, 
+            AnnotationDataModelConstants.formatDbxrefForQualifier(
+                AnnotationDataModelConstants.ANNOTATION_CATEGORY.IPR, ipr, null)));  
       }
-      //do the same for GO
+      //finally, do the same for GO
       str = gffObject.getAttributeValue(IprGffObject.ONTOLOGY_ATTR);
       if (str != null) {
         List<String> gos = 
             Arrays.asList(str.split(","))
             .stream()
-            .filter(s -> s.startsWith("GO"))
+            .filter(s -> s.startsWith(AnnotationDataModelConstants.ANNOTATION_CATEGORY.GO.getEncoding()))
             .collect(Collectors.toList());
-        gos.stream().forEach(go -> feat.addQualifier(DBXREF_QUAL, go)); 
+        gos.stream().forEach(go -> feat.addQualifier(
+            DBXREF_QUAL, 
+            AnnotationDataModelConstants.formatDbxrefForQualifier(
+                AnnotationDataModelConstants.ANNOTATION_CATEGORY.GO, go, null)));
       }
     }
     return feat;

@@ -1,5 +1,7 @@
 package bzh.plealog.bioinfo.api.data.feature;
 
+import org.apache.commons.lang.StringUtils;
+
 /* Copyright (C) 2006-2018 Patrick G. Durand
 *
 *  This program is free software: you can redistribute it and/or modify
@@ -21,17 +23,21 @@ public class AnnotationDataModelConstants {
   //Special keys to get information about Classifications
   //Format for values associated to these keys is free
   public static enum ANNOTATION_CATEGORY {
-    TAX ("TAX","NCBI Taxonomy"),
-    GO ("GO", "Gene Ontology"),
-    IPR ("IPR", "InterPro"),
-    EC ("EC", "Enzyme Commission"),
-    LCA ("LCA", "Least Common Ancestor");
+    TAX ("TAX","NCBI Taxonomy", "taxon"),
+    GO ("GO", "Gene Ontology", "GO"),
+    IPR ("IPR", "InterPro", "InterPro"),
+    PFM ("PFM", "PFAM", "Pfam"),
+    EC ("EC", "Enzyme Commission", "EC"),
+    PS ("PS", "Prosite", "PROSITE"),
+    LCA ("LCA", "Least Common Ancestor", "LCA");
     
     private String type;
     private String description;
-    ANNOTATION_CATEGORY(String type, String description){
+    private String encoding;
+    ANNOTATION_CATEGORY(String type, String description, String encoding){
       this.type = type;
       this.description = description;
+      this.encoding = encoding;
     }
     
     public String getType() {
@@ -39,6 +45,9 @@ public class AnnotationDataModelConstants {
     }
     public String getDescription() {
       return description;
+    }
+    public String getEncoding() {
+      return encoding;
     }
   }
   //Special keys to get information about GO sub-classifications
@@ -83,10 +92,10 @@ public class AnnotationDataModelConstants {
   public static final String FEATURE_LABEL_ENZYME = "Enzyme";
   public static final String FEATURE_LABEL_ORGANISM = "Organism";
   public static final String FEATURE_LABEL_PUBMED = "pubmed";
-  public static final String FEATURE_CODE_TAXON = "TAX";
-  public static final String FEATURE_CODE_GO = "GO";
-  public static final String FEATURE_CODE_INTERPRO = "IPR";
-  public static final String FEATURE_CODE_ENZYME = "EC";
+  public static final String FEATURE_CODE_TAXON = ANNOTATION_CATEGORY.TAX.getType();
+  public static final String FEATURE_CODE_GO = ANNOTATION_CATEGORY.GO.getType();
+  public static final String FEATURE_CODE_INTERPRO = ANNOTATION_CATEGORY.IPR.getType();
+  public static final String FEATURE_CODE_ENZYME = ANNOTATION_CATEGORY.EC.getType();
   public static final String FEATURE_CODE_ORGANISM = "ORG";
   public static final String FEATURE_QUALIFIER_XREF = "db_xref";
   public static final String FEATURE_QUALIFIER_ENZYME = "EC_number";
@@ -94,12 +103,41 @@ public class AnnotationDataModelConstants {
   public static final String FEATURE_QUALIFIER_ANNOTATION_SEPARATOR_NCBI = ":";
   public static final String FEATURE_QUALIFIER_ANNOTATION_SEPARATOR_SWISSPROT = ";";
   public static final String FEATURE_QUALIFIER_ANNOTATION_SEPARATOR_GO = ":";
-  public static final String FEATURE_QUALIFIER_ANNOTATION_KEYWORD_TAXON = "taxon";
-  public static final String FEATURE_QUALIFIER_ANNOTATION_KEYWORD_GO = "GO";
-  public static final String FEATURE_QUALIFIER_ANNOTATION_KEYWORD_INTERPRO = "InterPro";
-  public static final String FEATURE_QUALIFIER_ANNOTATION_KEYWORD_ENZYME = "EC";
+  public static final String FEATURE_QUALIFIER_ANNOTATION_SEPARATOR_XREF = ";";
+  public static final String FEATURE_QUALIFIER_ANNOTATION_KEYWORD_TAXON = ANNOTATION_CATEGORY.TAX.getEncoding();
+  public static final String FEATURE_QUALIFIER_ANNOTATION_KEYWORD_GO = ANNOTATION_CATEGORY.GO.getEncoding();
+  public static final String FEATURE_QUALIFIER_ANNOTATION_KEYWORD_INTERPRO = ANNOTATION_CATEGORY.IPR.getEncoding();
+  public static final String FEATURE_QUALIFIER_ANNOTATION_KEYWORD_ENZYME = ANNOTATION_CATEGORY.EC.getEncoding();
   public static final String FEATURE_QUALIFIER_ANNOTATION_KEYWORD_PUBMED = "pubmed";
   public static final String FEATURE_QUALIFIER_ANNOTATION_KEYWORD_NIL = "";
   public static final String FEATURE_PROTEIN_KEYWORD = "protein";
   public static final String FEATURE_SOURCE_KEYWORD = "source";
+  
+ private static void formatDataLine(StringBuffer buf, ANNOTATION_CATEGORY cat, String id, String description) {
+   buf.append(cat.getEncoding());
+   buf.append(FEATURE_QUALIFIER_ANNOTATION_SEPARATOR_XREF);
+   buf.append(" ");
+   buf.append(id);
+   if (StringUtils.isNotBlank(description)) {
+     buf.append(FEATURE_QUALIFIER_ANNOTATION_SEPARATOR_XREF);
+     buf.append(" ");
+     buf.append(description);
+     buf.append(".");
+   }
+ }
+ public static String formatDbxrefForQualifier(ANNOTATION_CATEGORY cat, String id, String description) {
+   StringBuffer buf = new StringBuffer();
+   switch(cat) {
+   case TAX:
+     buf.append(ANNOTATION_CATEGORY.TAX.getEncoding());
+     buf.append(FEATURE_QUALIFIER_ANNOTATION_SEPARATOR_NCBI);
+     buf.append(id);
+     break;
+     default:
+       buf.append(cat.getEncoding());
+       formatDataLine(buf, cat, id, description);
+       break;
+   }
+   return buf.toString();
+ }
 }
