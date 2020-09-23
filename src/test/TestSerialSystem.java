@@ -21,9 +21,14 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.HashSet;
+import java.util.Hashtable;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.apache.log4j.BasicConfigurator;
 import org.junit.After;
@@ -42,6 +47,10 @@ import bzh.plealog.bioinfo.api.data.searchresult.io.SRWriter;
 import bzh.plealog.bioinfo.data.taxonomy.core.TaxonomyLoader;
 import bzh.plealog.bioinfo.data.taxonomy.core.TaxonomyTerm;
 import bzh.plealog.bioinfo.data.taxonomy.loader.ncbi.TaxaSet;
+import bzh.plealog.bioinfo.io.gff.iprscan.IprGffObject;
+import bzh.plealog.bioinfo.io.gff.iprscan.IprGffReader;
+import bzh.plealog.bioinfo.io.gff.iprscan.IprPrediction;
+import bzh.plealog.bioinfo.io.gff.iprscan.IprPredictions;
 import bzh.plealog.bioinfo.io.searchresult.SerializerSystemFactory;
 import bzh.plealog.bioinfo.io.xml.XmlUtils;
 
@@ -255,7 +264,7 @@ public class TestSerialSystem {
 
 	}
 	
-	@Test
+  @Test
 	public void testContent() {
 		// read NCBI XML blast file
 		SROutput bo = ncbiBlastLoader.load(blastFile);
@@ -328,4 +337,107 @@ public class TestSerialSystem {
     assertEquals(TaxonomyLoader.getPathIds(tTerms), "2759;33208;7711;89593;8287;40674;314146;9989;1963758;10066;39107;10088;862507;10090");
   }
 
+  @Test
+  public void testIprGffReader() {
+    String gff_file="data/test/iprscan.gff";
+    IprGffReader gr = new IprGffReader();
+    Map<String, List<IprGffObject>> gffMap = gr.processFileToMap(gff_file);
+    assertNotNull(gffMap);
+    assertEquals(1, gffMap.size());
+    gffMap.forEach((k,v) -> assertTrue(k.equals("AACH01000027 1 1347")));
+    ArrayList<String> types = new ArrayList<>();
+    gffMap.forEach((k,v) -> types.addAll(v.stream().map(IprGffObject::getSource).collect(Collectors.toList())));
+    List<String> typesRef = Arrays.asList("provided_by_user", "getorf", "getorf", "Pfam");
+    assertTrue(types.containsAll(typesRef));
+  }
+  
+  @Test
+  public void testIprGffReader2() {
+    String gff_file="data/test/iprscan2.gff";
+    IprGffReader gr = new IprGffReader();
+    Map<String, List<IprGffObject>> gffMap = gr.processFileToMap(gff_file);
+    assertNotNull(gffMap);
+    assertEquals(4, gffMap.size());
+    ArrayList<String> regionIds = new ArrayList<>();
+    gffMap.forEach((k,v) -> regionIds.add(k));
+    List<String> typesRef = Arrays.asList("GAAA01000103.1 1 7532", "GAAA01000204.1 1 2015", "GAAA01000404.1 1 433", "GAAA01000403.1 1 634");
+    int[] counts = {20, 10, 3, 4};
+    assertTrue(regionIds.containsAll(typesRef));
+    int idx=0;
+    for (String key : typesRef) {
+      assertEquals(gffMap.get(key).size(), counts[idx]);
+      idx++;
+    }
+  }
+  @Test
+  public void testFilterUniqueDomains() {
+    String gff_file="data/test/iprscan2.gff";
+    IprGffReader gr = new IprGffReader();
+    Map<String, List<IprGffObject>> gffMap = gr.processFileToMap(gff_file);
+    assertNotNull(gffMap);
+    assertEquals(4, gffMap.size());
+    
+    IprPredictions iprs = new IprPredictions(gffMap.get("GAAA01000103.1 1 7532"));
+    
+    List<IprPrediction> prs = iprs.getAllDomains();
+    assertEquals(20, prs.size());
+    Hashtable<String, Long> refValues= new Hashtable<>();
+    refValues.put("nucleic_acid", 1l);
+    refValues.put("ORF", 1l);
+    refValues.put("polypeptide", 1l);
+    refValues.put("protein_match", 17l);
+    Map<String, Long> nameCount = prs
+        .stream()
+        .map(i -> i.getIprGffObject().getType())
+        .collect(Collectors.groupingBy(string -> string, Collectors.counting()));
+    nameCount.forEach((name, count) -> {
+      assertEquals(count, refValues.get(name));
+    });
+
+    prs = iprs.filterUniqueDomains();
+    assertEquals(6, prs.size());
+    Hashtable<String, Long> refValues2= new Hashtable<>();
+    refValues2.put("nucleic_acid", 1l);
+    refValues2.put("ORF", 1l);
+    refValues2.put("polypeptide", 1l);
+    refValues2.put("protein_match", 3l);
+    Map<String, Long> nameCount2 = prs
+        .stream()
+        .map(i -> i.getIprGffObject().getType())
+        .collect(Collectors.groupingBy(string -> string, Collectors.counting()));
+    nameCount2.forEach((name, count) -> {
+      assertEquals(count, refValues2.get(name));
+    });
+  }
+    
+  @Test
+  public void testGffAttributeSplitting() {
+    String attr="Name=PF00696;signature_desc=Amino acid kinase family;Target=null 84 314;status=T;ID=match$8_84_314;Ontology_term=\"GO:0008652\";date=15-04-2013;Dbxref=\"InterPro:IPR001048\",\"Reactome:REACT_13\",\"InterPro:IPR00725\"";
+    
+    IprGffObject obj = new IprGffObject();
+    
+    obj.setAttributes(attr);
+    assertEquals(obj.getAttributeValue(IprGffObject.NAME_ATTR),"PF00696");
+    assertEquals(obj.getAttributeValue(IprGffObject.SIGNATURE_ATTR),"Amino acid kinase family");
+
+    List<String> gos = 
+        Arrays.asList(obj.getAttributeValue(IprGffObject.ONTOLOGY_ATTR).split(","))
+        .stream()
+        .filter(s -> s.startsWith("GO"))
+        .collect(Collectors.toList());
+    assertEquals(gos.size(), 1);
+    assertEquals(gos.get(0), "GO:0008652");
+    
+    List<String> iprs = 
+        Arrays.asList(obj.getAttributeValue(IprGffObject.DBXREF_ATTR).split(","))
+        .stream()
+        .filter(s -> s.startsWith("InterPro"))
+        .map(s -> s.split(":")[1])
+        .collect(Collectors.toList());
+    assertEquals(iprs.size(), 2);
+    assertEquals(iprs.get(0), "IPR001048");
+    assertEquals(iprs.get(1), "IPR00725");
+  }
+
+  
 }

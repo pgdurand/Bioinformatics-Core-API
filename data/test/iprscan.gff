@@ -1,0 +1,11 @@
+##gff-version 3
+##feature-ontology http://song.cvs.sourceforge.net/viewvc/song/ontology/sofa.obo?revision=1.269
+##interproscan-version 5.26-65.0
+##sequence-region AACH01000027 1 1347
+##seqid|source|type|start|end|score|strand|phase|attributes
+AACH01000027	provided_by_user	nucleic_acid	1	1347	.	+	.	Name=AACH01000027;md5=b2a7416cb92565c004becb7510f46840;ID=AACH01000027
+AACH01000027	getorf	ORF	1	1347	.	+	.	Name=AACH01000027.2_21;Target=pep_AACH01000027_1_1347 1 449;md5=b2a7416cb92565c004becb7510f46840;ID=orf_AACH01000027_1_1347
+AACH01000027	getorf	polypeptide	1	449	.	+	.	md5=fd0743a673ac69fb6e5c67a48f264dd5;ID=pep_AACH01000027_1_1347
+AACH01000027	Pfam	protein_match	84	314	1.2E-45	+	.	Name=PF00696;signature_desc=Amino acid kinase family;Target=null 84 314;status=T;ID=match$8_84_314;Ontology_term="GO:0008652";date=15-04-2013;Dbxref="InterPro:IPR001048","Reactome:REACT_13"
+##sequence-region 2
+

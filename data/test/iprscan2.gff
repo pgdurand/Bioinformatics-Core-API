@@ -1,0 +1,53 @@
+##gff-version 3
+##feature-ontology http://song.cvs.sourceforge.net/viewvc/song/ontology/sofa.obo?revision=1.269
+##interproscan-version 5.28-67.0
+##sequence-region GAAA01000204.1 1 2015
+GAAA01000204.1	provided_by_user	nucleic_acid	1	2015	.	+	.	ID=GAAA01000204.1;Name=GAAA01000204.1;md5=c7d2f6080c2dad5dec5de6ae2898e514
+GAAA01000204.1	getorf	ORF	243	2015	.	-	.	Target=pep_GAAA01000204.1_243_2015_r 1 591;ID=orf_GAAA01000204.1_243_2015_r;Name=GAAA01000204.1_34;md5=c7d2f6080c2dad5dec5de6ae2898e514
+GAAA01000204.1	getorf	polypeptide	1	591	.	+	.	ID=pep_GAAA01000204.1_243_2015_r;md5=5cec6d4f885665aa3536db9e2b829316
+GAAA01000204.1	SignalP_EUK	protein_match	1	15	.	+	.	date=11-09-2020;Target=null 1 15;ID=match$1_1_15;Name=SignalP-noTM;status=T
+GAAA01000204.1	ProSiteProfiles	protein_match	199	221	8.328	+	.	date=11-09-2020;Target=null 199 221;ID=match$2_199_221;signature_desc=Leucine-rich repeat profile.;Name=PS51450;status=T;Dbxref="InterPro:IPR001611"
+GAAA01000204.1	Pfam	protein_match	198	234	2.4E-6	+	.	date=11-09-2020;Target=null 198 234;ID=match$3_198_234;signature_desc=Leucine Rich repeats (2 copies);Name=PF12799;status=T;Dbxref="InterPro:IPR025875"
+GAAA01000204.1	ProSiteProfiles	protein_match	151	173	5.225	+	.	date=11-09-2020;Target=null 151 173;ID=match$4_151_173;signature_desc=Leucine-rich repeat profile.;Name=PS51450;status=T;Dbxref="InterPro:IPR001611"
+GAAA01000204.1	ProSiteProfiles	protein_match	128	149	5.902	+	.	date=11-09-2020;Target=null 128 149;ID=match$5_128_149;signature_desc=Leucine-rich repeat profile.;Name=PS51450;status=T;Dbxref="InterPro:IPR001611"
+GAAA01000204.1	ProSiteProfiles	protein_match	105	127	6.526	+	.	date=11-09-2020;Target=null 105 127;ID=match$6_105_127;signature_desc=Leucine-rich repeat profile.;Name=PS51450;status=T;Dbxref="InterPro:IPR001611"
+GAAA01000204.1	Pfam	protein_match	378	495	5.3E-8	+	.	date=11-09-2020;Target=null 378 495;ID=match$7_378_495;signature_desc=B3/4 domain;Name=PF03483;status=T;Dbxref="InterPro:IPR005146"
+##sequence-region GAAA01000103.1 1 7532
+GAAA01000103.1	provided_by_user	nucleic_acid	1	7532	.	+	.	ID=GAAA01000103.1;Name=GAAA01000103.1;md5=5bfd95db9bb2cfc753820a28b8506c06
+GAAA01000103.1	getorf	ORF	3	7457	.	-	.	Target=pep_GAAA01000103.1_3_7457_r 1 2485;ID=orf_GAAA01000103.1_3_7457_r;Name=GAAA01000103.1_166;md5=5bfd95db9bb2cfc753820a28b8506c06
+GAAA01000103.1	getorf	polypeptide	1	2485	.	+	.	ID=pep_GAAA01000103.1_3_7457_r;md5=53bcb2d2aef66c34d34b8d9bdbbe13f0
+GAAA01000103.1	Pfam	protein_match	17	120	3.6E-20	+	.	date=11-09-2020;Target=null 17 120;ID=match$8_17_120;signature_desc=Calponin homology (CH) domain;Name=PF00307;status=T;Dbxref="InterPro:IPR001715"
+GAAA01000103.1	Pfam	protein_match	1893	1982	3.9E-7	+	.	date=11-09-2020;Target=null 1893 1982;ID=match$9_1893_1982;signature_desc=Spectrin repeat;Name=PF00435;status=T;Dbxref="InterPro:IPR002017"
+GAAA01000103.1	Pfam	protein_match	828	929	1.3E-5	+	.	date=11-09-2020;Target=null 828 929;ID=match$9_828_929;signature_desc=Spectrin repeat;Name=PF00435;status=T;Dbxref="InterPro:IPR002017"
+GAAA01000103.1	Pfam	protein_match	1564	1659	1.2E-12	+	.	date=11-09-2020;Target=null 1564 1659;ID=match$9_1564_1659;signature_desc=Spectrin repeat;Name=PF00435;status=T;Dbxref="InterPro:IPR002017"
+GAAA01000103.1	Pfam	protein_match	2353	2457	1.7E-8	+	.	date=11-09-2020;Target=null 2353 2457;ID=match$9_2353_2457;signature_desc=Spectrin repeat;Name=PF00435;status=T;Dbxref="InterPro:IPR002017"
+GAAA01000103.1	Pfam	protein_match	605	711	3.3E-7	+	.	date=11-09-2020;Target=null 605 711;ID=match$9_605_711;signature_desc=Spectrin repeat;Name=PF00435;status=T;Dbxref="InterPro:IPR002017"
+GAAA01000103.1	Pfam	protein_match	225	329	3.1E-17	+	.	date=11-09-2020;Target=null 225 329;ID=match$9_225_329;signature_desc=Spectrin repeat;Name=PF00435;status=T;Dbxref="InterPro:IPR002017"
+GAAA01000103.1	Pfam	protein_match	1761	1848	2.6E-7	+	.	date=11-09-2020;Target=null 1761 1848;ID=match$9_1761_1848;signature_desc=Spectrin repeat;Name=PF00435;status=T;Dbxref="InterPro:IPR002017"
+GAAA01000103.1	Pfam	protein_match	1047	1146	8.4E-11	+	.	date=11-09-2020;Target=null 1047 1146;ID=match$9_1047_1146;signature_desc=Spectrin repeat;Name=PF00435;status=T;Dbxref="InterPro:IPR002017"
+GAAA01000103.1	Pfam	protein_match	716	817	9.5E-6	+	.	date=11-09-2020;Target=null 716 817;ID=match$9_716_817;signature_desc=Spectrin repeat;Name=PF00435;status=T;Dbxref="InterPro:IPR002017"
+GAAA01000103.1	Pfam	protein_match	1159	1251	8.5E-6	+	.	date=11-09-2020;Target=null 1159 1251;ID=match$9_1159_1251;signature_desc=Spectrin repeat;Name=PF00435;status=T;Dbxref="InterPro:IPR002017"
+GAAA01000103.1	Pfam	protein_match	1456	1559	9.1E-9	+	.	date=11-09-2020;Target=null 1456 1559;ID=match$9_1456_1559;signature_desc=Spectrin repeat;Name=PF00435;status=T;Dbxref="InterPro:IPR002017"
+GAAA01000103.1	Pfam	protein_match	933	1037	1.3E-18	+	.	date=11-09-2020;Target=null 933 1037;ID=match$9_933_1037;signature_desc=Spectrin repeat;Name=PF00435;status=T;Dbxref="InterPro:IPR002017"
+GAAA01000103.1	Pfam	protein_match	1989	2093	5.4E-11	+	.	date=11-09-2020;Target=null 1989 2093;ID=match$9_1989_2093;signature_desc=Spectrin repeat;Name=PF00435;status=T;Dbxref="InterPro:IPR002017"
+GAAA01000103.1	Pfam	protein_match	2099	2202	2.8E-8	+	.	date=11-09-2020;Target=null 2099 2202;ID=match$9_2099_2202;signature_desc=Spectrin repeat;Name=PF00435;status=T;Dbxref="InterPro:IPR002017"
+GAAA01000103.1	Pfam	protein_match	333	440	9.2E-14	+	.	date=11-09-2020;Target=null 333 440;ID=match$9_333_440;signature_desc=Spectrin repeat;Name=PF00435;status=T;Dbxref="InterPro:IPR002017"
+GAAA01000103.1	ProSiteProfiles	protein_match	15	118	15.166	+	.	date=11-09-2020;Target=null 15 118;ID=match$10_15_118;signature_desc=Calponin homology domain profile.;Name=PS50021;status=T;Dbxref="InterPro:IPR001715"
+##sequence-region GAAA01000404.1 1 433
+GAAA01000404.1	provided_by_user	nucleic_acid	1	433	.	+	.	ID=GAAA01000404.1;Name=GAAA01000404.1;md5=183d56e5912d608f0612f779b208df0f
+GAAA01000404.1	getorf	ORF	232	348	.	+	.	Target=pep_GAAA01000404.1_232_348 1 39;ID=orf_GAAA01000404.1_232_348;Name=GAAA01000403.1_7;md5=183d56e5912d608f0612f779b208df0f
+GAAA01000404.1	getorf	polypeptide	1	39	.	+	.	ID=pep_GAAA01000404.1_232_348;md5=274d7d393c0724f6fbfe558da2689dca
+##sequence-region GAAA01000403.1 1 634
+GAAA01000403.1	provided_by_user	nucleic_acid	1	634	.	+	.	ID=GAAA01000403.1;Name=GAAA01000403.1;md5=eb66e8e33fd4a5bf039bc1bf95275f0d
+GAAA01000403.1	getorf	ORF	433	549	.	+	.	Target=pep_GAAA01000403.1_433_549 1 39;ID=orf_GAAA01000403.1_433_549;Name=GAAA01000403.1_7;md5=eb66e8e33fd4a5bf039bc1bf95275f0d
+GAAA01000403.1	getorf	polypeptide	1	39	.	+	.	ID=pep_GAAA01000403.1_433_549;md5=274d7d393c0724f6fbfe558da2689dca
+GAAA01000403.1	SignalP_EUK	protein_match	1	18	.	+	.	date=11-09-2020;Target=null 1 18;ID=match$11_1_18;Name=SignalP-noTM;status=T
+##sequence-region GAAA01000404.1 1 433
+GAAA01000404.1	provided_by_user	nucleic_acid	1	433	.	+	.	ID=GAAA01000404.1;Name=GAAA01000404.1;md5=183d56e5912d608f0612f779b208df0f
+GAAA01000404.1	getorf	ORF	232	348	.	+	.	Target=pep_GAAA01000404.1_232_348 1 39;ID=orf_GAAA01000404.1_232_348;Name=GAAA01000404.1_4;md5=183d56e5912d608f0612f779b208df0f
+GAAA01000404.1	getorf	polypeptide	1	39	.	+	.	ID=pep_GAAA01000404.1_232_348;md5=274d7d393c0724f6fbfe558da2689dca
+##sequence-region GAAA01000403.1 1 634
+GAAA01000403.1	provided_by_user	nucleic_acid	1	634	.	+	.	ID=GAAA01000403.1;Name=GAAA01000403.1;md5=eb66e8e33fd4a5bf039bc1bf95275f0d
+GAAA01000403.1	getorf	ORF	433	549	.	+	.	Target=pep_GAAA01000403.1_433_549 1 39;ID=orf_GAAA01000403.1_433_549;Name=GAAA01000404.1_4;md5=eb66e8e33fd4a5bf039bc1bf95275f0d
+GAAA01000403.1	getorf	polypeptide	1	39	.	+	.	ID=pep_GAAA01000403.1_433_549;md5=274d7d393c0724f6fbfe558da2689dca
+GAAA01000403.1	SignalP_EUK	protein_match	1	18	.	+	.	date=11-09-2020;Target=null 1 18;ID=match$12_1_18;Name=SignalP-noTM;status=T
