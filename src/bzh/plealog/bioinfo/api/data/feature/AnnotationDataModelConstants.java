@@ -21,19 +21,20 @@ import org.apache.commons.lang.StringUtils;
 public class AnnotationDataModelConstants {
 
   //Special keys to get information about Classifications
-  //Format for values associated to these keys is free
+  //Format for values associated to these keys is free, except encoding= do not modify!
   public static enum ANNOTATION_CATEGORY {
-    TAX ("TAX","NCBI Taxonomy", "taxon"),
-    GO ("GO", "Gene Ontology", "GO"),
-    IPR ("IPR", "InterPro", "InterPro"),
-    PFM ("PFM", "PFAM", "Pfam"),
-    EC ("EC", "Enzyme Commission", "EC"),
-    PS ("PS", "Prosite", "PROSITE"),
+    TAX ("TAX", "NCBI Taxonomy",         "taxon"),
+    GO  ("GO",  "Gene Ontology",         "GO"),
+    IPR ("IPR", "InterPro",              "InterPro"),
+    PFM ("PFM", "PFAM",                  "Pfam"),
+    EC  ("EC",  "Enzyme Commission",     "EC"),
+    PS  ("PS",  "Prosite",               "PROSITE"),
     LCA ("LCA", "Least Common Ancestor", "LCA");
     
     private String type;
     private String description;
     private String encoding;
+    
     ANNOTATION_CATEGORY(String type, String description, String encoding){
       this.type = type;
       this.description = description;
@@ -92,10 +93,13 @@ public class AnnotationDataModelConstants {
   public static final String FEATURE_LABEL_ENZYME = "Enzyme";
   public static final String FEATURE_LABEL_ORGANISM = "Organism";
   public static final String FEATURE_LABEL_PUBMED = "pubmed";
+  // /begin-note/ these keywords are now in ANNOTATION_CATEGORY (type data field). To the following
+  // to ensure backward compatibility.
   public static final String FEATURE_CODE_TAXON = ANNOTATION_CATEGORY.TAX.getType();
   public static final String FEATURE_CODE_GO = ANNOTATION_CATEGORY.GO.getType();
   public static final String FEATURE_CODE_INTERPRO = ANNOTATION_CATEGORY.IPR.getType();
   public static final String FEATURE_CODE_ENZYME = ANNOTATION_CATEGORY.EC.getType();
+  // /end-note/
   public static final String FEATURE_CODE_ORGANISM = "ORG";
   public static final String FEATURE_QUALIFIER_XREF = "db_xref";
   public static final String FEATURE_QUALIFIER_ENZYME = "EC_number";
@@ -104,10 +108,13 @@ public class AnnotationDataModelConstants {
   public static final String FEATURE_QUALIFIER_ANNOTATION_SEPARATOR_SWISSPROT = ";";
   public static final String FEATURE_QUALIFIER_ANNOTATION_SEPARATOR_GO = ":";
   public static final String FEATURE_QUALIFIER_ANNOTATION_SEPARATOR_XREF = ";";
+  // /begin-note/ these keywords are now in ANNOTATION_CATEGORY (encoding data field). To the following
+  // to ensure backward compatibility.
   public static final String FEATURE_QUALIFIER_ANNOTATION_KEYWORD_TAXON = ANNOTATION_CATEGORY.TAX.getEncoding();
   public static final String FEATURE_QUALIFIER_ANNOTATION_KEYWORD_GO = ANNOTATION_CATEGORY.GO.getEncoding();
   public static final String FEATURE_QUALIFIER_ANNOTATION_KEYWORD_INTERPRO = ANNOTATION_CATEGORY.IPR.getEncoding();
   public static final String FEATURE_QUALIFIER_ANNOTATION_KEYWORD_ENZYME = ANNOTATION_CATEGORY.EC.getEncoding();
+  // /end-note/
   public static final String FEATURE_QUALIFIER_ANNOTATION_KEYWORD_PUBMED = "pubmed";
   public static final String FEATURE_QUALIFIER_ANNOTATION_KEYWORD_NIL = "";
   public static final String FEATURE_PROTEIN_KEYWORD = "protein";

@@ -75,7 +75,7 @@ public interface SRHsp extends Serializable{
      * Sets a FeatureTable on this HSP. If the FeatureTable contains data spanning outside HSP's hit
      * sequence coordinates, please consider using the cut(from, to) method of FeatureTable. 
      * It is worth noting that FeatureTable is attached on the Hit Sequence. To attach a FeatureTable
-     * to the query, please use the setFeature method available on query SHHspSequence.
+     * to the query, please use the setFeature method available on query SRHspSequence.
      */
     public void setFeatures(FeatureTable ft);
     /**

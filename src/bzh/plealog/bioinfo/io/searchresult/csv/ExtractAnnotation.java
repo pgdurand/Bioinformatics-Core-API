@@ -329,7 +329,7 @@ public class ExtractAnnotation {
   private static void extractFeatureFromHitHsp(SRHit hit, int file_index, int query_index, int hit_index,
       String qualifierKeyWord, String annotationKeyWord, boolean getFirstHspOnly, boolean useInternalAnnotationKey,
       HashMap<String, AnnotationDataModel> hspAnnotationHashMap) {
-    FeatureTable featureTable = null;
+    FeatureTable ft = null, featureTable = null;
     Feature feature = null;
     Enumeration<Feature> enumFeatures = null;
     Enumeration<Qualifier> enumQualifiers = null;
@@ -347,12 +347,30 @@ public class ExtractAnnotation {
 
     // loop on SRHsps
     nb_hsp = hit.countHsp();
+    
     for (hsp_index = 0; hsp_index < nb_hsp; hsp_index++) {
       annotation_index = 0;
-      // get features
+
+      // get features from hit and query
+      featureTable = CoreSystemConfigurator.getFeatureTableFactory().getFTInstance();
       hsp = hit.getHsp(hsp_index);
-      featureTable = hsp.getFeatures();
-      if (featureTable == null) {
+      ft = hsp.getFeatures();
+      if (ft!=null) {
+        enumFeatures = ft.enumFeatures();
+        while (enumFeatures.hasMoreElements()) {
+          featureTable.addFeature((Feature) enumFeatures.nextElement());
+        }
+      }
+      
+      ft = hsp.getQuery().getFeatures();
+      if (ft!=null) {
+        enumFeatures = ft.enumFeatures();
+        while (enumFeatures.hasMoreElements()) {
+          featureTable.addFeature((Feature) enumFeatures.nextElement());
+        }
+      }
+
+      if (featureTable.features()==0) {
         // LOG.warn ("No feature table for hsp index [" + hsp_index + "], hit index [" +
         // hit_index +"], iteration index [" +query_index+"] skipping ...");
         continue;
@@ -592,7 +610,7 @@ public class ExtractAnnotation {
    * Utility method to prepare an instance of SRClassification filled from an annotatedHitsHashMap object.
    * SRClassification contains SRCTerms where only Type if appropriately set.
    * 
-   * Before calling this method, SRClassification must be created to en empty instance.
+   * Before calling this method, SRClassification must be created to an empty instance.
    * */
   private static void buildClassificationDataSet(
       SRClassification refClassification,
