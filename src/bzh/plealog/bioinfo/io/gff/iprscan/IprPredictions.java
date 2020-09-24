@@ -17,6 +17,7 @@
 package bzh.plealog.bioinfo.io.gff.iprscan;
 
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -90,6 +91,7 @@ public class IprPredictions {
     List<IprPrediction> filtered_objs;
     FeatureTable ft;
     Feature feat;
+    int protStartOnNuc=0, protStopOnNuc=0, strand=0;
     
     ft = CoreSystemConfigurator.getFeatureTableFactory().getFTInstance();
     
@@ -104,9 +106,38 @@ public class IprPredictions {
       feat = pred.getFeature();
       if (feat.getKey().equals(IprPrediction.UNK)==false) {
         ft.addFeature(feat);
+        //the following enables to detect nucleotide sequence provided by user
+        if (feat.getKey().equals(IprPrediction.PROTEIN)) {
+          protStartOnNuc = feat.getFrom();
+          protStopOnNuc = feat.getTo();
+          strand = feat.getStrand();
+        }
       }
     }
     
+    //now, we may have to adjust domain location with regard to user provided
+    //sequence. In case of protein: nothing to do. In case of nucleotide: remap
+    // Iprscan predicted domains to user_provided nucleotide one.
+    if (protStartOnNuc==0 && protStopOnNuc==0 && strand==0){
+      //we have protein sequences, no remap do to
+      return ft;
+    }
+    //remap protein domain location to nucleotide sequence coordinate system
+    boolean reverseLocation = strand==Feature.MINUS_STRAND;
+    Enumeration<Feature> enumFeats = ft.enumFeatures();
+    while(enumFeats.hasMoreElements()) {
+      feat = enumFeats.nextElement();
+      if (reverseLocation){
+        //in Feature data model, 'from' must be less than 'to'... as Iprscan does
+        feat.setFrom(protStopOnNuc - (feat.getTo()-1)*3);
+        feat.setTo(protStopOnNuc - (feat.getFrom()-1)*3);
+        feat.setStrand(Feature.MINUS_STRAND);
+      }
+      else {
+        feat.setFrom(protStartOnNuc + (feat.getFrom()-1)*3);
+        feat.setTo(protStartOnNuc + (feat.getTo()-1)*3);
+      }
+    }
     return ft;
   }
 }
