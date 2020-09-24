@@ -27,12 +27,10 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import test.TestSerialSystem;
-
 /**
  * IprScan ggf3 file reader.
  * 
- * @see TestSerialSystem for sample use case
+ * @see test.TestSerialSystem for sample use case
  * 
  * @author Patrick G. Durand
  * */

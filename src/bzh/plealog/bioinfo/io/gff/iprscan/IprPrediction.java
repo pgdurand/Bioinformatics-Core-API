@@ -24,14 +24,13 @@ import java.util.stream.Collectors;
 import bzh.plealog.bioinfo.api.core.config.CoreSystemConfigurator;
 import bzh.plealog.bioinfo.api.data.feature.AnnotationDataModelConstants;
 import bzh.plealog.bioinfo.api.data.feature.Feature;
-import test.TestSerialSystem;
 
 /**
  * Utility class to model a single IPRscan domain prediction. It is used to convert 
  * an IprGffObject to a FeatureT instance suitable to be used by all other
  * Core APIs in this library.
 
- * @see TestSerialSystem for sample use case
+ * @see test.TestSerialSystem for sample use case
  * 
  * @author Patrick G. Durand
  */

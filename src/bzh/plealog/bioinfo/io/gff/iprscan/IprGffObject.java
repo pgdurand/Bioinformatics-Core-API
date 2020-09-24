@@ -20,12 +20,10 @@ import java.util.Arrays;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import test.TestSerialSystem;
-
 /**
  * Model class representing an IPRscan prediction line as read in a gff3 data file.
  * 
- * @see TestSerialSystem for sample use case
+ * @see test.TestSerialSystem for sample use case
  * 
  * @author Patrick G. Durand
  */
