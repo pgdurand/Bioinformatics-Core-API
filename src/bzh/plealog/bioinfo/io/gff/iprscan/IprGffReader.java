@@ -90,8 +90,10 @@ public class IprGffReader {
   private Function<String, IprGffObject> mapToItem = (line) -> {
     if (line.startsWith("#")) {
       if(line.contains("sequence-region")) {
-        int idx = line.indexOf(' ');
-        currentSeqRegion = line.substring(idx+1).trim();
+        //hope there is no exception in the IPRscan format...
+        //  we always expect ##sequence-region ID from to
+        //  so we get ID as second string in the result of split!
+        currentSeqRegion = line.split(" ")[1];
       }
       return null;
     }

@@ -44,6 +44,8 @@ public class IprPrediction {
   public static final String SIGNATURE_QUAL = "description";
   public static final String DBXREF_QUAL = "dbxref";
   public static final String SCORE_QUAL = "score";
+  public static final String STATUS_QUAL = "status";
+  public static final String STRAND_QUAL = "strand";
 
   //These are the attributes to look for supported protein domains
   // in GFF3 attributes as reported by IprScan.
@@ -142,14 +144,18 @@ public class IprPrediction {
       feat.setFrom(Integer.valueOf(gffObject.getStart()));
       feat.setTo(Integer.valueOf(gffObject.getEnd()));
       feat.setStrand(Feature.PLUS_STRAND);
-      switch (gffObject.getSource()) {
+      switch (gffObject.getType()) {
       case IprGffObject.NUC_TYPE:
         feat.setKey(SOURCE);
         feat.addQualifier(ID_QUAL, gffObject.getAttributeValue(IprGffObject.ID_ATTR));
+        feat.addQualifier(STATUS_QUAL, gffObject.getSource());
         break;
       case IprGffObject.ORF_TYPE:
         feat.setKey(PROTEIN);
         feat.addQualifier(ID_QUAL, gffObject.getAttributeValue(IprGffObject.ID_ATTR));
+        feat.setStrand("+".equals(gffObject.getStrand()) ? Feature.PLUS_STRAND : Feature.MINUS_STRAND);
+        feat.addQualifier(STRAND_QUAL, gffObject.getStrand());
+        feat.addQualifier(STATUS_QUAL, "predicted");
         break;
         default:
           feat.setKey(UNK);

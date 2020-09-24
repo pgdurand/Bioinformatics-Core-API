@@ -1,0 +1,738 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<nucleotide-sequence-matches xmlns="http://www.ebi.ac.uk/interpro/resources/schemas/interproscan5" interproscan-version="5.28-67.0">
+    <nucleotide-sequence>
+        <sequence md5="694d1ef0db56c5d2e890e05ccf6a0407">tggatggacttgtggcaaagtcccttgacaatggaggacctgatctgctacagcttccaggtagcacgtggcatggagttcctggcgtcccgaaagtgcatccacagagacctagcagctcgcaacatcctgctgtctgagaacaatgtggtaaagatctgtgacttcggcttggcccgagacatctacaaggaccctgactatgtcaggaaaggcagtgcccgtctcccactgaagtggatggctccagagagcatctttgacaaggtttacactacccagagtgacgtctggtccttgggggtcctcctctgggaaatcttctcactgggggcatctccataccctggagtccagatcaacgaggagttctgccaaaggttcaaagacggtaccaggatgagagctccagagtatactactgcagaaatttaccgtataatgctgagctgctggcatggtgatcccaaggagagaccaactttctcagacctggtggagatactggggaacctccttcaggaaaatgtccaacaggaagggaaggattacatcccactgaatgactctcacagctcagaagatgatggtttctcccaggtgccttcctctgcccagcaaaattcagatgaagaagactttgacatgaggatacgttgtcacagcctagcagcaagatattacaactgcgtctcgttccctggttgtttgacgggaggaaatcagatcaggtgttcatccaggataaagacattcgaagagtttcccatgacacatacaatgtacaaggcacacccggacaatcagacagacagtgggatggttttggcatctgaggaatttgagaggatagaaaaccgacacagaaaagaaggtggattcagcagcaaagggcccaaccgaactgcggagctgtcagcagaacagtcagacctgcggggcagatgtcggccgtcatacggatcccaggtcggaggccagactttttacaacagtgaatacggggagctgtcagaacactctgaggaccgcagctgcaccccacccgcagagggggccagtccccccgctctccacgcttccttcttctccgagcagtactaatggcaccaggccctggaggcacccttgcgaggcatcccctccctcactgagcacatcatcagggtcactcagagcttccccttcaacctacgcccgaccccagcagcgaacccaccccaaacagatcgggaaacaccagtgtcctcggaaccacagcacgatggtccacgcaagatctccagctgcagcttctctgtgctgggactggagagagtgccttgctgattccttgggatcttttatttctgtggctcaaacagattcattctgctggcaattgtgtgcccgtgttcagcactagagcaccttctgcctagcatccagcctccgctcagatcagcttcccattcagaaagcctgtttcaggttcagatataaatagatctgtcttagtctcgagtttcttcctggtgtgcagcctgaatgtttt</sequence>
+        <xref id="S65207.1" name="S65207.1 endothelial kinase Quek2=vascular endothelial growth factor receptor homolog [Coturnix coturnix=quails, ssp. japonica, E4 embryo, mRNA Partial, 1534 nt]"/>
+        <orf end="1101" start="1" strand="SENSE">
+            <protein>
+                <sequence md5="7bdff826f0ce29f97b1412b736244be2">WMDLWQSPLTMEDLICYSFQVARGMEFLASRKCIHRDLAARNILLSENNVVKICDFGLARDIYKDPDYVRKGSARLPLKWMAPESIFDKVYTTQSDVWSLGVLLWEIFSLGASPYPGVQINEEFCQRFKDGTRMRAPEYTTAEIYRIMLSCWHGDPKERPTFSDLVEILGNLLQENVQQEGKDYIPLNDSHSSEDDGFSQVPSSAQQNSDEEDFDMRIRCHSLAARYYNCVSFPGCLTGGNQIRCSSRIKTFEEFPMTHTMYKAHPDNQTDSGMVLASEEFERIENRHRKEGGFSSKGPNRTAELSAEQSDLRGRCRPSYGSQVGGQTFYNSEYGELSEHSEDRSCTPPAEGASPPALHASFFSEQY</sequence>
+                <xref id="S65207.1_11" name="S65207.1_11 [1 - 1101] endothelial kinase Quek2=vascular endothelial growth factor receptor homolog [Coturnix coturnix=quails, ssp. japonica, E4 embryo, mRNA Partial, 1534 nt]"/>
+                <matches>
+                    <hmmer3-match evalue="1.0E-71" score="241.2">
+                        <signature ac="PF07714" desc="Protein tyrosine kinase" name="Pkinase_Tyr">
+                            <entry ac="IPR001245" desc="Serine-threonine/tyrosine-protein kinase, catalytic domain" name="Ser-Thr/Tyr_kinase_cat_dom" type="DOMAIN">
+<go-xref category="MOLECULAR_FUNCTION" db="GO" id="GO:0004672" name="protein kinase activity"/>
+<go-xref category="BIOLOGICAL_PROCESS" db="GO" id="GO:0006468" name="protein phosphorylation"/>
+                            </entry>
+                            <signature-library-release library="PFAM" version="31.0"/>
+                        </signature>
+                        <model-ac>PF07714</model-ac>
+                        <locations>
+                            <hmmer3-location env-end="169" env-start="3" score="240.8" evalue="1.4E-71" hmm-start="99" hmm-end="260" hmm-length="260" hmm-bounds="C_TERMINAL_COMPLETE" start="7" end="169"/>
+                        </locations>
+                    </hmmer3-match>
+                    <profilescan-match>
+                        <signature ac="PS50011" desc="Protein kinase domain profile." name="PROTEIN_KINASE_DOM">
+                            <entry ac="IPR000719" desc="Protein kinase domain" name="Prot_kinase_dom" type="DOMAIN">
+<go-xref category="BIOLOGICAL_PROCESS" db="GO" id="GO:0006468" name="protein phosphorylation"/>
+<go-xref category="MOLECULAR_FUNCTION" db="GO" id="GO:0004672" name="protein kinase activity"/>
+<go-xref category="MOLECULAR_FUNCTION" db="GO" id="GO:0005524" name="ATP binding"/>
+                            </entry>
+                            <signature-library-release library="PROSITE_PROFILES" version="2017_09"/>
+                        </signature>
+                        <model-ac>PS50011</model-ac>
+                        <locations>
+                            <profilescan-location score="29.036" start="1" end="173">
+<alignment>----------------------------------------------------------------------------------------------WmdlwqspLTMEDLICYSFQVARGMEFLASRKCIHRDLAARNILLSENNVVKICDFGLARDIYKDPDyvRKGSARLPLKWMAPESIF-DKVYTTQSDVWSLGVLLWEIFSlGASPYPGVQINEEFCQRFKDGTRMraP------EyTTAEIYRIMLSCWHGDPKERPTFSDLVEilGNLL</alignment>
+                            </profilescan-location>
+                        </locations>
+                    </profilescan-match>
+                </matches>
+            </protein>
+        </orf>
+        <orf end="324" start="115" strand="ANTISENSE">
+            <protein>
+                <sequence md5="af98d88f1a94f3bb28274eb86374d762">EDFPEEDPQGPDVTLGSVNLVKDALWSHPLQWETGTAFPDIVRVLVDVSGQAEVTDLYHIVLRQQDVASC</sequence>
+                <xref id="S65207.1_39" name="S65207.1_39 [324 - 115] (REVERSE SENSE) endothelial kinase Quek2=vascular endothelial growth factor receptor homolog [Coturnix coturnix=quails, ssp. japonica, E4 embryo, mRNA Partial, 1534 nt]"/>
+                <matches/>
+            </protein>
+        </orf>
+        <orf end="1147" start="884" strand="ANTISENSE">
+            <protein>
+                <sequence md5="2a36ac075e8e068471e7b00d813269f6">GRGCLARVPPGPGAISTARRRRKRGERGDWPPLRVGCSCGPQSVLTAPRIHCCKKSGLRPGIRMTADICPAGLTVLLTAPQFGWALCC</sequence>
+                <xref id="S65207.1_27" name="S65207.1_27 [1147 - 884] (REVERSE SENSE) endothelial kinase Quek2=vascular endothelial growth factor receptor homolog [Coturnix coturnix=quails, ssp. japonica, E4 embryo, mRNA Partial, 1534 nt]"/>
+                <matches/>
+            </protein>
+        </orf>
+        <orf end="986" start="807" strand="ANTISENSE">
+            <protein>
+                <sequence md5="2c173da15ba6a636b9a58cb6da00a05b">KVWPPTWDPYDGRHLPRRSDCSADSSAVRLGPLLLNPPSFLCRFSILSNSSDAKTIPLSV</sequence>
+                <xref id="S65207.1_28" name="S65207.1_28 [986 - 807] (REVERSE SENSE) endothelial kinase Quek2=vascular endothelial growth factor receptor homolog [Coturnix coturnix=quails, ssp. japonica, E4 embryo, mRNA Partial, 1534 nt]"/>
+                <matches/>
+            </protein>
+        </orf>
+        <orf end="915" start="739" strand="ANTISENSE">
+            <protein>
+                <sequence md5="f2f3e850a2a06e197434ed9d594afa7e">QLRSSVGPFAAESTFFSVSVFYPLKFLRCQNHPTVCLIVRVCLVHCMCHGKLFECLYPG</sequence>
+                <xref id="S65207.1_29" name="S65207.1_29 [915 - 739] (REVERSE SENSE) endothelial kinase Quek2=vascular endothelial growth factor receptor homolog [Coturnix coturnix=quails, ssp. japonica, E4 embryo, mRNA Partial, 1534 nt]"/>
+                <matches/>
+            </protein>
+        </orf>
+        <orf end="1402" start="854" strand="SENSE">
+            <protein>
+                <sequence md5="6a459c86c21106961a593ced8ae1672a">KTDTEKKVDSAAKGPTELRSCQQNSQTCGADVGRHTDPRSEARLFTTVNTGSCQNTLRTAAAPHPQRGPVPPLSTLPSSPSSTNGTRPWRHPCEASPPSLSTSSGSLRASPSTYARPQQRTHPKQIGKHQCPRNHSTMVHARSPAAASLCWDWRECLADSLGSFISVAQTDSFCWQLCARVQH</sequence>
+                <xref id="S65207.1_14" name="S65207.1_14 [854 - 1402] endothelial kinase Quek2=vascular endothelial growth factor receptor homolog [Coturnix coturnix=quails, ssp. japonica, E4 embryo, mRNA Partial, 1534 nt]"/>
+                <matches/>
+            </protein>
+        </orf>
+        <orf end="1326" start="1105" strand="SENSE">
+            <protein>
+                <sequence md5="d28bf68c9465ada2a8f70b33452f43cf">WHQALEAPLRGIPSLTEHIIRVTQSFPFNLRPTPAANPPQTDRETPVSSEPQHDGPRKISSCSFSVLGLERVPC</sequence>
+                <xref id="S65207.1_13" name="S65207.1_13 [1105 - 1326] endothelial kinase Quek2=vascular endothelial growth factor receptor homolog [Coturnix coturnix=quails, ssp. japonica, E4 embryo, mRNA Partial, 1534 nt]"/>
+                <matches/>
+            </protein>
+        </orf>
+        <orf end="727" start="422" strand="ANTISENSE">
+            <protein>
+                <sequence md5="2e05e142b8c199644c0a89dc6ca17f29">SDFLPSNNQGTRRSCNILLLGCDNVSSCQSLLHLNFAGQRKAPGRNHHLLSCESHSVGCNPSLPVGHFPEGGSPVSPPGLRKLVSPWDHHASSSALYGKFLQ</sequence>
+                <xref id="S65207.1_35" name="S65207.1_35 [727 - 422] (REVERSE SENSE) endothelial kinase Quek2=vascular endothelial growth factor receptor homolog [Coturnix coturnix=quails, ssp. japonica, E4 embryo, mRNA Partial, 1534 nt]"/>
+                <matches/>
+            </protein>
+        </orf>
+        <orf end="1418" start="1155" strand="SENSE">
+            <protein>
+                <sequence md5="987201d92900ed2905e82f25848c2edd">AHHQGHSELPLQPTPDPSSEPTPNRSGNTSVLGTTARWSTQDLQLQLLCAGTGESALLIPWDLLFLWLKQIHSAGNCVPVFSTRAPSA</sequence>
+                <xref id="S65207.1_15" name="S65207.1_15 [1155 - 1418] endothelial kinase Quek2=vascular endothelial growth factor receptor homolog [Coturnix coturnix=quails, ssp. japonica, E4 embryo, mRNA Partial, 1534 nt]"/>
+                <matches/>
+            </protein>
+        </orf>
+        <orf end="205" start="2" strand="ANTISENSE">
+            <protein>
+                <sequence md5="ea72736959ad694fc35acd945b17822f">HSQGPCRCLGPSRSHRSLPHCSQTAGCCELLGLCGCTFGTPGTPCHVLPGSCSRSGPPLSRDFATSPS</sequence>
+                <xref id="S65207.1_41" name="S65207.1_41 [205 - 2] (REVERSE SENSE) endothelial kinase Quek2=vascular endothelial growth factor receptor homolog [Coturnix coturnix=quails, ssp. japonica, E4 embryo, mRNA Partial, 1534 nt]"/>
+                <matches/>
+            </protein>
+        </orf>
+        <orf end="833" start="645" strand="SENSE">
+            <protein>
+                <sequence md5="253fe1b65726c812faf6f0fd094c6460">HEDTLSQPSSKILQLRLVPWLFDGRKSDQVFIQDKDIRRVSHDTYNVQGTPGQSDRQWDGFGI</sequence>
+                <xref id="S65207.1_8" name="S65207.1_8 [645 - 833] endothelial kinase Quek2=vascular endothelial growth factor receptor homolog [Coturnix coturnix=quails, ssp. japonica, E4 embryo, mRNA Partial, 1534 nt]"/>
+                <matches/>
+            </protein>
+        </orf>
+        <orf end="1191" start="1015" strand="ANTISENSE">
+            <protein>
+                <sequence md5="ce8c945bbd87fa8ebdbd86556197890f">VEGEALSDPDDVLSEGGDASQGCLQGLVPLVLLGEEGSVESGGTGPLCGWGAAAVLRVF</sequence>
+                <xref id="S65207.1_25" name="S65207.1_25 [1191 - 1015] (REVERSE SENSE) endothelial kinase Quek2=vascular endothelial growth factor receptor homolog [Coturnix coturnix=quails, ssp. japonica, E4 embryo, mRNA Partial, 1534 nt]"/>
+                <matches/>
+            </protein>
+        </orf>
+    </nucleotide-sequence>
+    <nucleotide-sequence>
+        <sequence md5="7d40845143a684f3a5f916b79db58ec7">cagagccacgggcgcccgccccgccccgcgccgccccgcgccggctccgcagctcgcgcccgcccgcctgccggcccgcccggcgccgggccatggcgctgctgcgggatgtgtcgctgcaggacccgcgggaccgcttcgagctgctgcagcgcgtgggggccgggacctatggcgacgtctacaaggcccgcgacacggtcacgtccgaactggccgccgtgaagatagtcaagctagacccaggggacgacatcagctccctccagcaggaaatcaccatcctgcgtgagtgccgccaccccaatgtggtggcctacattggcagctacctcaggaatgaccgcttgtggatctgcatggagttctgcggagggggctccctgcaggagatttaccatgccactgggcccctggaggagcggcagattgcctacgtctgccgagaggcactgaaggggctccaccacctgcattctcaggggaagatccacagagacatcaagggagccaaccttctcctcactctccagggagatgtcaaactggctgactttggggtgtcaggcgagctgacagcgtctgtggccaagaggaggtctttcattgggactccctactggatggctcccgaggtggctgctgtggagcgcaaaggtggctacaatgagctatgtgacgtctgggccctgggcatcactgccattgagctgggcgagctgcagccccctctgttccacctgcaccccatgagggccctgatgctcatgtcgaagagcagcttccagccgcccaaactgagagataagactcgctggacccagaatttccaccactttctcaaactggccctgaccaagaatcctaagaagaggccgacagcagagaagctcctgcagcacccgttcacgactcagcagctccctcgggccctcctcacacagctgctggacaaagccagtgaccctcatctggggaccccctcccctgaggactgtgagctggagacctatgacatgtttccagacaccattcactcccgggggcagcacggcccagccgagaggaccccctcggagatccagtttcaccaggtgaaatttggcgccccacgcaggaaggaaactgacccactgaatgagccgtgggaggaagagtggacactactgggaaaggaagagttgagtgggagcctgctgcagtcggtccaggaggccctggaggaaaggagtctgactattcggtcagcctcagaattccaggagctggactccccagacgataccatgggaaccatcaagcgggccccgttcctagggccactccccactgaccctccagcagaggagcctctgtccagtcccccaggccccaacagctccccactgctgcccacggcctgggccaccatgaagcagcgggaggatcctgagaggtcatcctgccacgggctccccccaactcccaaggtgcatatgggcgcctgcttctccaaggtcttcaatggctgccccctgcggatccacgctgctgtcacctggattcaccctgttactcgggaccagttcctggtggtaggggccgaggaaggcatctacacactcaacctgcatgaactgcatgaggatacgctggagaagctgatttcacatcgctgctcctggctctactgcgtgaacaacgtgctgctgtcactctcagggaaatccacgcacatctgggcccatgacctcccaggcctgtttgagcagcggaggctacagcaacaggttcccctctccatccccaccaaccgcctcacccagcgcatcatccccaggcgctttgctctgtccaccaagattcctgacaccaaaggctgcttgcagtgtcgtgtggtgcggaatccctacacgggtgccaccttcctgctggccgccctgcccaccagcctgctcctgctgcagtggtatgagccgctgcagaagtttctgctgctgaagaacttctccagccctctgcccagcccagctgggatgctggagccgctggtgctggatgggaaggagctgccgcaggtgtgtgttggggccgaggggcctgaggggcccggctgccgcgtcctgttccatgtcctgcccctggaggctggcctgacgcccgacatcctcatcccacctgaggggatcccaggctcggcccagcaggtgatccaggtggacagggacacaatcctagtcagctttgaacgctgtgtgaggattgtcaacatgcagggcgagcccacggccacactggcacctgagctgacctttgatttccccatcgagactgtggtgtgcctgcaggacagtgtgctggccttctggagccatgggatgcaaggccgaagcctggataccaatgaggtgacccaggagatcacagatgaaacaaggatcttccgagtgcttggggcccacagagacatcatcctggagagcattcccactgacaacccagaggcgcacagcaacctctacatcctcacgggccaccagagcacctactaagagcagcgggcctgtccaggggctccccgccccaccccacgccttagctgcaggcccttttgggcaaaggggcccatcctagaccagaggagcccaggccctggccctgctggggctgaaggtcagaagtaatcctgagaaatgtttcaggcctggggagggaggggagcccccgacgcctctgcaataactggaccagggggagctgctgtcactcccccatccccgaggcagcccagtccctagtgcccaaggcagggaccctgggcctgggccatccattccattttgttccacatttcctttctactctttctgccaagagcctgcccctgcatttgtcctgggaaacacggtatttaagagagaaaaaaaaaaaaaaaaaaaaaa</sequence>
+        <xref id="BC047865.1" name="BC047865.1 Homo sapiens mitogen-activated protein kinase kinase kinase kinase 2, mRNA (cDNA clone MGC:57497 IMAGE:5530523), complete cds"/>
+        <orf end="1236" start="940" strand="ANTISENSE">
+            <protein>
+                <sequence md5="ffd1229895cfcb01b69385b10dae680c">SDSFPPGPPGPTAAGSHSTLPFPVVSTLPPTAHSVGQFPSCVGRQISPGETGSPRGSSRLGRAAPGSEWCLETCHRSPAHSPQGRGSPDEGHWLCPAAV</sequence>
+                <xref id="BC047865.1_55" name="BC047865.1_55 [1236 - 940] (REVERSE SENSE) Homo sapiens mitogen-activated protein kinase kinase kinase kinase 2, mRNA (cDNA clone MGC:57497 IMAGE:5530523), complete cds"/>
+                <matches/>
+            </protein>
+        </orf>
+        <orf end="2213" start="1761" strand="ANTISENSE">
+            <protein>
+                <sequence md5="f8bb8214dc0b0bfc36acfb7a5179388c">DCVPVHLDHLLGRAWDPLRWDEDVGRQASLQGQDMEQDAAAGPLRPLGPNTHLRQLLPIQHQRLQHPSWAGQRAGEVLQQQKLLQRLIPLQQEQAGGQGGQQEGGTRVGIPHHTTLQAAFGVRNLGGQSKAPGDDALGEAVGGDGEGNLLL</sequence>
+                <xref id="BC047865.1_47" name="BC047865.1_47 [2213 - 1761] (REVERSE SENSE) Homo sapiens mitogen-activated protein kinase kinase kinase kinase 2, mRNA (cDNA clone MGC:57497 IMAGE:5530523), complete cds"/>
+                <matches/>
+            </protein>
+        </orf>
+        <orf end="1163" start="675" strand="ANTISENSE">
+            <protein>
+                <sequence md5="e642217668c9434709a5453618b75ec1">CPLFLPRLIQWVSFLPAWGAKFHLVKLDLRGGPLGWAVLPPGVNGVWKHVIGLQLTVLRGGGPQMRVTGFVQQLCEEGPRELLSRERVLQELLCCRPLLRILGQGQFEKVVEILGPASLISQFGRLEAALRHEHQGPHGVQVEQRGLQLAQLNGSDAQGPDVT</sequence>
+                <xref id="BC047865.1_56" name="BC047865.1_56 [1163 - 675] (REVERSE SENSE) Homo sapiens mitogen-activated protein kinase kinase kinase kinase 2, mRNA (cDNA clone MGC:57497 IMAGE:5530523), complete cds"/>
+                <matches/>
+            </protein>
+        </orf>
+        <orf end="2528" start="3" strand="SENSE">
+            <protein>
+                <sequence md5="872593619c7d2b585e517959820be27f">EPRAPAPPRAAPRRLRSSRPPACRPARRRAMALLRDVSLQDPRDRFELLQRVGAGTYGDVYKARDTVTSELAAVKIVKLDPGDDISSLQQEITILRECRHPNVVAYIGSYLRNDRLWICMEFCGGGSLQEIYHATGPLEERQIAYVCREALKGLHHLHSQGKIHRDIKGANLLLTLQGDVKLADFGVSGELTASVAKRRSFIGTPYWMAPEVAAVERKGGYNELCDVWALGITAIELGELQPPLFHLHPMRALMLMSKSSFQPPKLRDKTRWTQNFHHFLKLALTKNPKKRPTAEKLLQHPFTTQQLPRALLTQLLDKASDPHLGTPSPEDCELETYDMFPDTIHSRGQHGPAERTPSEIQFHQVKFGAPRRKETDPLNEPWEEEWTLLGKEELSGSLLQSVQEALEERSLTIRSASEFQELDSPDDTMGTIKRAPFLGPLPTDPPAEEPLSSPPGPNSSPLLPTAWATMKQREDPERSSCHGLPPTPKVHMGACFSKVFNGCPLRIHAAVTWIHPVTRDQFLVVGAEEGIYTLNLHELHEDTLEKLISHRCSWLYCVNNVLLSLSGKSTHIWAHDLPGLFEQRRLQQQVPLSIPTNRLTQRIIPRRFALSTKIPDTKGCLQCRVVRNPYTGATFLLAALPTSLLLLQWYEPLQKFLLLKNFSSPLPSPAGMLEPLVLDGKELPQVCVGAEGPEGPGCRVLFHVLPLEAGLTPDILIPPEGIPGSAQQVIQVDRDTILVSFERCVRIVNMQGEPTATLAPELTFDFPIETVVCLQDSVLAFWSHGMQGRSLDTNEVTQEITDETRIFRVLGAHRDIILESIPTDNPEAHSNLYILTGHQSTY</sequence>
+                <xref id="BC047865.1_27" name="BC047865.1_27 [3 - 2528] Homo sapiens mitogen-activated protein kinase kinase kinase kinase 2, mRNA (cDNA clone MGC:57497 IMAGE:5530523), complete cds"/>
+                <matches>
+                    <hmmer3-match evalue="7.2E-62" score="209.4">
+                        <signature ac="PF00780" desc="CNH domain" name="CNH">
+                            <entry ac="IPR001180" desc="Citron homology (CNH) domain" name="CNH_dom" type="DOMAIN"/>
+                            <signature-library-release library="PFAM" version="31.0"/>
+                        </signature>
+                        <model-ac>PF00780</model-ac>
+                        <locations>
+                            <hmmer3-location env-end="812" env-start="514" score="208.9" evalue="1.0E-61" hmm-start="1" hmm-end="274" hmm-length="275" hmm-bounds="N_TERMINAL_COMPLETE" start="514" end="811"/>
+                        </locations>
+                    </hmmer3-match>
+                    <hmmer3-match evalue="2.9E-61" score="207.0">
+                        <signature ac="PF00069" desc="Protein kinase domain" name="Pkinase">
+                            <entry ac="IPR000719" desc="Protein kinase domain" name="Prot_kinase_dom" type="DOMAIN">
+<go-xref category="BIOLOGICAL_PROCESS" db="GO" id="GO:0006468" name="protein phosphorylation"/>
+<go-xref category="MOLECULAR_FUNCTION" db="GO" id="GO:0004672" name="protein kinase activity"/>
+<go-xref category="MOLECULAR_FUNCTION" db="GO" id="GO:0005524" name="ATP binding"/>
+                            </entry>
+                            <signature-library-release library="PFAM" version="31.0"/>
+                        </signature>
+                        <model-ac>PF00069</model-ac>
+                        <locations>
+                            <hmmer3-location env-end="303" env-start="46" score="206.5" evalue="4.4E-61" hmm-start="1" hmm-end="263" hmm-length="264" hmm-bounds="N_TERMINAL_COMPLETE" start="46" end="302"/>
+                        </locations>
+                    </hmmer3-match>
+                    <profilescan-match>
+                        <signature ac="PS50219" desc="Citron homology (CNH) domain profile." name="CNH">
+                            <entry ac="IPR001180" desc="Citron homology (CNH) domain" name="CNH_dom" type="DOMAIN"/>
+                            <signature-library-release library="PROSITE_PROFILES" version="2017_09"/>
+                        </signature>
+                        <model-ac>PS50219</model-ac>
+                        <locations>
+                            <profilescan-location score="22.973" start="504" end="815">
+<alignment>PLRIHAAVTWIhpvtrDQFLVVGAEEGIYTL----NLHELHEDTLEKLISHR-CSWLYCVN--NVLLSLSgkSTHIWAHDLPGLFEqrrlqqqvplsiptnrltqriipRRFALSTKIPDTKGCLQCRVVRNPYTGATFLLAALPTSLLLLQWYE-PLQKFLLLKNFssPLPSPAGMLEPLVldgkeLPQVCVgAEGPEgpgcrvlFHVLPLEAGLTPDILIPP-----EGIPGSAQQVIQVDRDTILVSFERCVRIVNMQGEPTATLaPELTFDFPIETVVCLQDSVLAFWSHGMQGRSLDTNEVTQEITDETRIFRVLGAHRD</alignment>
+                            </profilescan-location>
+                        </locations>
+                    </profilescan-match>
+                    <profilescan-match>
+                        <signature ac="PS50011" desc="Protein kinase domain profile." name="PROTEIN_KINASE_DOM">
+                            <entry ac="IPR000719" desc="Protein kinase domain" name="Prot_kinase_dom" type="DOMAIN">
+<go-xref category="BIOLOGICAL_PROCESS" db="GO" id="GO:0006468" name="protein phosphorylation"/>
+<go-xref category="MOLECULAR_FUNCTION" db="GO" id="GO:0004672" name="protein kinase activity"/>
+<go-xref category="MOLECULAR_FUNCTION" db="GO" id="GO:0005524" name="ATP binding"/>
+                            </entry>
+                            <signature-library-release library="PROSITE_PROFILES" version="2017_09"/>
+                        </signature>
+                        <model-ac>PS50011</model-ac>
+                        <locations>
+                            <profilescan-location score="47.637" start="46" end="303">
+<alignment>FELLQRVGAGTYGDVYKARDTVTSELAAVKIVKLD----PgdDISSLQQEITILRECRHPNVVAYIGSYLRNDRLWICMEFCGGGSLQEIYHA---TgpLEERQIAYVCREALKGLHHLHSQGKIHRDIKGANLLLTLQGDVKLADFGVSGELTASVAKRRSFIGTPYWMAPEVAAveRKGGYNELCDVWALGITAIELGELQPPLFHLHPMRALMLMSKSS-FQP--PKLRDktrWTQNFHHFLKLALTKNPKKRPTAEKLLQHPFT</alignment>
+                            </profilescan-location>
+                        </locations>
+                    </profilescan-match>
+                </matches>
+            </protein>
+        </orf>
+        <orf end="2148" start="1813" strand="ANTISENSE">
+            <protein>
+                <sequence md5="94e96284db5e3650398eb792bce6f9df">GCRASGQPPGAGHGTGRGSRAPQAPRPQHTPAAAPSHPAPAAPASQLGWAEGWRSSSAAETSAAAHTTAAGAGWWAGRPAGRWHPCRDSAPHDTASSLWCQESWWTEQSAWG</sequence>
+                <xref id="BC047865.1_46" name="BC047865.1_46 [2148 - 1813] (REVERSE SENSE) Homo sapiens mitogen-activated protein kinase kinase kinase kinase 2, mRNA (cDNA clone MGC:57497 IMAGE:5530523), complete cds"/>
+                <matches/>
+            </protein>
+        </orf>
+        <orf end="563" start="240" strand="ANTISENSE">
+            <protein>
+                <sequence md5="8eb61acfe6cfd626c3861d0e3c4bd6d1">HPKVSQFDISLESEEKVGSLDVSVDLPLRMQVVEPLQCLSADVGNLPLLQGPSGMVNLLQGAPSAELHADPQAVIPEVAANVGHHIGVAALTQDGDFLLEGADVVPWV</sequence>
+                <xref id="BC047865.1_62" name="BC047865.1_62 [563 - 240] (REVERSE SENSE) Homo sapiens mitogen-activated protein kinase kinase kinase kinase 2, mRNA (cDNA clone MGC:57497 IMAGE:5530523), complete cds"/>
+                <matches/>
+            </protein>
+        </orf>
+        <orf end="289" start="2" strand="SENSE">
+            <protein>
+                <sequence md5="c3421edaea009d0154ecad625c49281c">RATGARPAPRRPAPAPQLAPARLPARPAPGHGAAAGCVAAGPAGPLRAAAARGGRDLWRRLQGPRHGHVRTGRREDSQARPRGRHQLPPAGNHHPA</sequence>
+                <xref id="BC047865.1_2" name="BC047865.1_2 [2 - 289] Homo sapiens mitogen-activated protein kinase kinase kinase kinase 2, mRNA (cDNA clone MGC:57497 IMAGE:5530523), complete cds"/>
+                <matches/>
+            </protein>
+        </orf>
+        <orf end="2497" start="1892" strand="ANTISENSE">
+            <protein>
+                <sequence md5="e692c91aff782794e2be9f5799d791f8">RLLCASGLSVGMLSRMMSLWAPSTRKILVSSVISWVTSLVSRLRPCIPWLQKASTLSCRHTTVSMGKSKVSSGASVAVGSPCMLTILTQRSKLTRIVSLSTWITCWAEPGIPSGGMRMSGVRPASRGRTWNRTRQPGPSGPSAPTHTCGSSFPSSTSGSSIPAGLGRGLEKFFSSRNFCSGSYHCSRSRLVGRAASRKVAPV</sequence>
+                <xref id="BC047865.1_45" name="BC047865.1_45 [2497 - 1892] (REVERSE SENSE) Homo sapiens mitogen-activated protein kinase kinase kinase kinase 2, mRNA (cDNA clone MGC:57497 IMAGE:5530523), complete cds"/>
+                <matches/>
+            </protein>
+        </orf>
+        <orf end="2609" start="2217" strand="ANTISENSE">
+            <protein>
+                <sequence md5="6eb16f0b1cdac7672a89d343d0ed684c">DGPLCPKGPAAKAWGGAGSPWTGPLLLVGALVAREDVEVAVRLWVVSGNALQDDVSVGPKHSEDPCFICDLLGHLIGIQASALHPMAPEGQHTVLQAHHSLDGEIKGQLRCQCGRGLALHVDNPHTAFKAD</sequence>
+                <xref id="BC047865.1_44" name="BC047865.1_44 [2609 - 2217] (REVERSE SENSE) Homo sapiens mitogen-activated protein kinase kinase kinase kinase 2, mRNA (cDNA clone MGC:57497 IMAGE:5530523), complete cds"/>
+                <matches/>
+            </protein>
+        </orf>
+        <orf end="1543" start="1091" strand="ANTISENSE">
+            <protein>
+                <sequence md5="9f035019c5afeb9227adadc5e6c4f257">IQVTAAWIRRGQPLKTLEKQAPICTLGVGGSPWQDDLSGSSRCFMVAQAVGSSGELLGPGGLDRGSSAGGSVGSGPRNGARLMVPMVSSGESSSWNSEADRIVRLLSSRASWTDCSRLPLNSSFPSSVHSSSHGSFSGSVSFLRGAPNFTW</sequence>
+                <xref id="BC047865.1_54" name="BC047865.1_54 [1543 - 1091] (REVERSE SENSE) Homo sapiens mitogen-activated protein kinase kinase kinase kinase 2, mRNA (cDNA clone MGC:57497 IMAGE:5530523), complete cds"/>
+                <matches/>
+            </protein>
+        </orf>
+        <orf end="1977" start="1678" strand="SENSE">
+            <protein>
+                <sequence md5="3fa9c26bcbb117e568ee7e7284fdd69a">TTCCCHSQGNPRTSGPMTSQACLSSGGYSNRFPSPSPPTASPSASSPGALLCPPRFLTPKAACSVVWCGIPTRVPPSCWPPCPPACSCCSGMSRCRSFCC</sequence>
+                <xref id="BC047865.1_21" name="BC047865.1_21 [1678 - 1977] Homo sapiens mitogen-activated protein kinase kinase kinase kinase 2, mRNA (cDNA clone MGC:57497 IMAGE:5530523), complete cds"/>
+                <matches/>
+            </protein>
+        </orf>
+        <orf end="2920" start="2651" strand="SENSE">
+            <protein>
+                <sequence md5="6fdf7690b1efdad5b0d9d4bf25fbbd20">RSEVILRNVSGLGREGSPRRLCNNWTRGSCCHSPIPEAAQSLVPKAGTLGLGHPFHFVPHFLSTLSAKSLPLHLSWETRYLREKKKKKKK</sequence>
+                <xref id="BC047865.1_35" name="BC047865.1_35 [2651 - 2920] Homo sapiens mitogen-activated protein kinase kinase kinase kinase 2, mRNA (cDNA clone MGC:57497 IMAGE:5530523), complete cds"/>
+                <matches/>
+            </protein>
+        </orf>
+    </nucleotide-sequence>
+    <nucleotide-sequence>
+        <sequence md5="41fcf64f4d6c0726d0d982a51545c7d3">ctcgagatccattgtgcctaaagcaacaatggcggctccgagcccgagcggcggcggcggctccgggggcggtggcggcaccccggggcccatcggacctccagcttctggccacccggcggtcagcagcatgcagggtaagcgcaaagcactgaagttgaattttgcaaatccacctgtcaaatcgacagcacggtttaccctgaatcctaatactacaggagtccagaacccacacatagagagactgagaacacacagcattgagtcatcaggaaaactgaagatctcccctgaacaacactgggatttcactgcagaggacttgaaagaccttggagaaattggacgaggagcttatggttctgtcaacaaaatggtccacaaaccaagtgggcagataatggcagttaaaagaattcggtcaactgtggatgaaaaagaacaaaaacaacttctcatggatttggatgtagtaatgcggagtagtgattgcccatacattgttcagttctatggtgcactcttcagagagggcgactgttggatctgtatggagctcatgtctacctcgttcgataagttttacaaatatgtatatagtgtgttagatgacgttattccggaagagatcttaggcaaaatcactttagcaactgtgaaagcactaaaccacttaaaagaaaacttgaaaattattcacagagacatcaaaccttccaatattcttctggacagaagtggaaatataaagctctgtgatttcggcatcagtggacagcttgtggactctattgccaagacaagagatgctgggtgtaggccgtatatggcacctgaaagaatagacccaagtgcatcaagacaagggtatgatgtccgctctgatgtctggagtttggggatcacattgtacgagttggccacaggccgatttccttatccaaagtggaatagtgtatttgatcagctaacacaagtggtgaaaggagaccctccgcagctgagtaattctgaagaaagggagttctcccccagtttcatcaactttgtcaacttgtgccttacgaaggatgaatccaaaaggccaaagtataaagagcttctgaaacatccctttattttgatgtatgaagaacgtactgtagaggtcgcatgctatgtttgtaaaatcctggatcagatgccagccactcccagctcgcccatgtatgtcgactgataccgctgctacatcagactctagaaaaaagggctgaggggaagcaagacgtaaagagttttcatcctgtatcacagtgtttttattgctcgcccagacaccatgtgcaataagactggtgttcgtttccatcatgtctgtatacttctgtcatctagactgtgcatccctgtaatacctgactgatcacagtgttagtgctggtcagagagacctcatcctgctcttttgtgatgaacatattcatgacgcgtggaagtcagtacgatcaagttgttgactgtgattagatcacaccttaattcatttctagactcaaaacctggagacgcagctactggaatggtgttttgtgagacttccaaggctggaaagacacagtcatggatgtactgtctgagcatagagaacccgggcttgagtgagaagagcttcacagccagtgagacacattgccttctgcagctgggagacagaggaaggattccctttcttcacccaaggtggcaatagatttcctcatctgataggctgttgctttaccgtcacacgcgatgtgcacagccaaattccctactcaaaatatcatgttaaattagaatttatctttaccaaaaaccatgttgctttcagagaggtcaacattaaaatactgagacaggacagaatgtgttctttcgtccttttccagcctgctcttctctgggaagatacaggagtctgccacctgtcatagaagggtgctgccaacttgatgctctacctgccaccaaccaccaggactgaaggaaggaaacagtactgagggcaaagtttacagatgtttttgattctggcattttgtccagaacagcttgtagcagctatagattcccccttggccccaagcctgggacttgagccatcgtaactcactaacagggagaattagctagtagcaatgtgccttgatgaagatttcctgcaggcagcaaaacaccaatcacaacgctttgcttctcgacatcatgggccaggtcctcagtttctaactctttcccttccccctttagagcacaatggatctcgag</sequence>
+        <xref id="U18310.1" name="U18310.1 Mus musculus protein kinase (SEK1) mRNA, complete cds"/>
+        <orf end="1732" start="1472" strand="SENSE">
+            <protein>
+                <sequence md5="5a1e70357a09ece1e41e48e50b2c6e02">RVEVSTIKLLTVIRSHLNSFLDSKPGDAATGMVFCETSKAGKTQSWMYCLSIENPGLSEKSFTASETHCLLQLGDRGRIPFLHPRWQ</sequence>
+                <xref id="U18310.1_18" name="U18310.1_18 [1472 - 1732] Mus musculus protein kinase (SEK1) mRNA, complete cds"/>
+                <matches/>
+            </protein>
+        </orf>
+        <orf end="1955" start="1644" strand="SENSE">
+            <protein>
+                <sequence md5="dddeac2956c23af1befdd1611e5a0391">VRRASQPVRHIAFCSWETEEGFPFFTQGGNRFPHLIGCCFTVTRDVHSQIPYSKYHVKLEFIFTKNHVAFREVNIKILRQDRMCSFVLFQPALLWEDTGVCHLS</sequence>
+                <xref id="U18310.1_21" name="U18310.1_21 [1644 - 1955] Mus musculus protein kinase (SEK1) mRNA, complete cds"/>
+                <matches/>
+            </protein>
+        </orf>
+        <orf end="2085" start="1870" strand="ANTISENSE">
+            <protein>
+                <sequence md5="fc14efa2252441c602e7922e80081f51">LLQAVLDKMPESKTSVNFALSTVSFLQSWWLVAGRASSWQHPSMTGGRLLYLPREEQAGKGRKNTFCPVSVF</sequence>
+                <xref id="U18310.1_34" name="U18310.1_34 [2085 - 1870] (REVERSE SENSE) Mus musculus protein kinase (SEK1) mRNA, complete cds"/>
+                <matches/>
+            </protein>
+        </orf>
+        <orf end="1158" start="970" strand="ANTISENSE">
+            <protein>
+                <sequence md5="c294ee85bef7686ccf62d4cd5bbb2ac0">HATSTVRSSYIKIKGCFRSSLYFGLLDSSFVRHKLTKLMKLGENSLSSELLSCGGSPFTTCVS</sequence>
+                <xref id="U18310.1_44" name="U18310.1_44 [1158 - 970] (REVERSE SENSE) Mus musculus protein kinase (SEK1) mRNA, complete cds"/>
+                <matches/>
+            </protein>
+        </orf>
+        <orf end="1372" start="974" strand="ANTISENSE">
+            <protein>
+                <sequence md5="5ada76ec85e8afc35cc51b85a76f374f">QKYTDMMETNTSLIAHGVWASNKNTVIQDENSLRLASPQPFFLESDVAAVSVDIHGRAGSGWHLIQDFTNIACDLYSTFFIHQNKGMFQKLFILWPFGFILRKAQVDKVDETGGELPFFRITQLRRVSFHHLC</sequence>
+                <xref id="U18310.1_43" name="U18310.1_43 [1372 - 974] (REVERSE SENSE) Mus musculus protein kinase (SEK1) mRNA, complete cds"/>
+                <matches/>
+            </protein>
+        </orf>
+        <orf end="939" start="703" strand="ANTISENSE">
+            <protein>
+                <sequence md5="460078c9ab2903c06c133b0f719d8822">GNRPVANSYNVIPKLQTSERTSYPCLDALGSILSGAIYGLHPASLVLAIESTSCPLMPKSQSFIFPLLSRRILEGLMSL</sequence>
+                <xref id="U18310.1_48" name="U18310.1_48 [939 - 703] (REVERSE SENSE) Mus musculus protein kinase (SEK1) mRNA, complete cds"/>
+                <matches/>
+            </protein>
+        </orf>
+        <orf end="607" start="428" strand="ANTISENSE">
+            <protein>
+                <sequence md5="aef02c4464e224f9d899c42804743016">HTIYIFVKLIERGRHELHTDPTVALSEECTIELNNVWAITTPHYYIQIHEKLFLFFFIHS</sequence>
+                <xref id="U18310.1_51" name="U18310.1_51 [607 - 428] (REVERSE SENSE) Mus musculus protein kinase (SEK1) mRNA, complete cds"/>
+                <matches/>
+            </protein>
+        </orf>
+        <orf end="357" start="1" strand="ANTISENSE">
+            <protein>
+                <sequence md5="0ff08057dd777c3d0704183bdd62b191">APRPISPRSFKSSAVKSQCCSGEIFSFPDDSMLCVLSLSMCGFWTPVVLGFRVNRAVDLTGGFAKFNFSALRLPCMLLTAGWPEAGGPMGPGVPPPPPEPPPPLGLGAAIVALGTMDLE</sequence>
+                <xref id="U18310.1_57" name="U18310.1_57 [357 - 1] (REVERSE SENSE) Mus musculus protein kinase (SEK1) mRNA, complete cds"/>
+                <matches/>
+            </protein>
+        </orf>
+        <orf end="859" start="680" strand="ANTISENSE">
+            <protein>
+                <sequence md5="f238cebf67cad26e490e1b693b1eacbf">CTWVYSFRCHIRPTPSISCLGNRVHKLSTDAEITELYISTSVQKNIGRFDVSVNNFQVFF</sequence>
+                <xref id="U18310.1_49" name="U18310.1_49 [859 - 680] (REVERSE SENSE) Mus musculus protein kinase (SEK1) mRNA, complete cds"/>
+                <matches/>
+            </protein>
+        </orf>
+        <orf end="268" start="2" strand="ANTISENSE">
+            <protein>
+                <sequence md5="2b04c26a98935b6d7e207b5014c18b19">LNAVCSQSLYVWVLDSCSIRIQGKPCCRFDRWICKIQLQCFALTLHAADRRVARSWRSDGPRGAATAPGAAAAARARSRHCCFRHNGSR</sequence>
+                <xref id="U18310.1_56" name="U18310.1_56 [268 - 2] (REVERSE SENSE) Mus musculus protein kinase (SEK1) mRNA, complete cds"/>
+                <matches/>
+            </protein>
+        </orf>
+        <orf end="1219" start="2" strand="SENSE">
+            <protein>
+                <sequence md5="4b55e4f7eeceda27f22952a55c34ac5c">SRSIVPKATMAAPSPSGGGGSGGGGGTPGPIGPPASGHPAVSSMQGKRKALKLNFANPPVKSTARFTLNPNTTGVQNPHIERLRTHSIESSGKLKISPEQHWDFTAEDLKDLGEIGRGAYGSVNKMVHKPSGQIMAVKRIRSTVDEKEQKQLLMDLDVVMRSSDCPYIVQFYGALFREGDCWICMELMSTSFDKFYKYVYSVLDDVIPEEILGKITLATVKALNHLKENLKIIHRDIKPSNILLDRSGNIKLCDFGISGQLVDSIAKTRDAGCRPYMAPERIDPSASRQGYDVRSDVWSLGITLYELATGRFPYPKWNSVFDQLTQVVKGDPPQLSNSEEREFSPSFINFVNLCLTKDESKRPKYKELLKHPFILMYEERTVEVACYVCKILDQMPATPSSPMYVD</sequence>
+                <xref id="U18310.1_10" name="U18310.1_10 [2 - 1219] Mus musculus protein kinase (SEK1) mRNA, complete cds"/>
+                <matches>
+                    <hmmer3-match evalue="1.7E-60" score="204.6">
+                        <signature ac="PF00069" desc="Protein kinase domain" name="Pkinase">
+                            <entry ac="IPR000719" desc="Protein kinase domain" name="Prot_kinase_dom" type="DOMAIN">
+<go-xref category="BIOLOGICAL_PROCESS" db="GO" id="GO:0006468" name="protein phosphorylation"/>
+<go-xref category="MOLECULAR_FUNCTION" db="GO" id="GO:0004672" name="protein kinase activity"/>
+<go-xref category="MOLECULAR_FUNCTION" db="GO" id="GO:0005524" name="ATP binding"/>
+                            </entry>
+                            <signature-library-release library="PFAM" version="31.0"/>
+                        </signature>
+                        <model-ac>PF00069</model-ac>
+                        <locations>
+                            <hmmer3-location env-end="374" env-start="109" score="204.3" evalue="2.0E-60" hmm-start="3" hmm-end="264" hmm-length="264" hmm-bounds="C_TERMINAL_COMPLETE" start="111" end="374"/>
+                        </locations>
+                    </hmmer3-match>
+                    <profilescan-match>
+                        <signature ac="PS50011" desc="Protein kinase domain profile." name="PROTEIN_KINASE_DOM">
+                            <entry ac="IPR000719" desc="Protein kinase domain" name="Prot_kinase_dom" type="DOMAIN">
+<go-xref category="BIOLOGICAL_PROCESS" db="GO" id="GO:0006468" name="protein phosphorylation"/>
+<go-xref category="MOLECULAR_FUNCTION" db="GO" id="GO:0004672" name="protein kinase activity"/>
+<go-xref category="MOLECULAR_FUNCTION" db="GO" id="GO:0005524" name="ATP binding"/>
+                            </entry>
+                            <signature-library-release library="PROSITE_PROFILES" version="2017_09"/>
+                        </signature>
+                        <model-ac>PS50011</model-ac>
+                        <locations>
+                            <profilescan-location score="43.651" start="109" end="374">
+<alignment>LKDLGEIGRGAYGSVNKMVHKPSGQIMAVKRIRS-TVDEKEQKQLLMDLDVVMRSsDCPYIVQFYGALFREGDCWICMELMSTsfDKFYKYVYS---VlddvIPEEILGKITLATVKALNHLKENlKIIHRDIKPSNILLDRSGNIKLCDFGISGQLVD--SiAKTRDAGCRPYMAPERIDpsaSRQGYDVRSDVWSLGITLYELATGRFPYPKWNSVFDQLTQVVKG----DPPQLSNseereFSPSFINFVNLCLTKDESKRPKYKELLKHPFI</alignment>
+                            </profilescan-location>
+                        </locations>
+                    </profilescan-match>
+                </matches>
+            </protein>
+        </orf>
+        <orf end="1716" start="1441" strand="ANTISENSE">
+            <protein>
+                <sequence md5="dc2932fa1d7cee105832631b51ed13d7">RKGILPLSPSCRRQCVSLAVKLFSLKPGFSMLRQYIHDCVFPALEVSQNTIPVAASPGFESRNELRCDLITVNNLIVLTSTRHEYVHHKRAG</sequence>
+                <xref id="U18310.1_40" name="U18310.1_40 [1716 - 1441] (REVERSE SENSE) Mus musculus protein kinase (SEK1) mRNA, complete cds"/>
+                <matches/>
+            </protein>
+        </orf>
+    </nucleotide-sequence>
+    <nucleotide-sequence>
+        <sequence md5="e9b1d8587ec26ed9622f806944c29834">gacacaactgtcggaccagtgttcagatcaagtcgaacagtctcgtcgtatcttctgacaatttgtccattagaactttaacttatttagtttaaagaggtgaaagcaaactatattgcattgtgtcatttaaaagtttgttcaacccattattatggatcgcgatatagaaatggaagagaaccactgccgcatagcacagcggctagaattcccattgagtgacgaagaagatttgcatgaagcatctacgggtaacaaccgaacttctagcaactcatcgtcagaccgtctagattcatctggaagtgatgaaggccttggaatgaccattcggataaccagtcctagaaagccaaggtttattcgctccagagctcgagaacccatgtcacctccatatagtggtgttcgagctctgaggttgtttgattccccagcaactcccaagacacttctagaaaatagttctgccatcatgactccagttttagctacgcctgcacccaggaacagaatgaggacattattcaccatgagttctacaaaatcatctgacaaaaaagataacatgaatactccacctgccgccaatgtcaacccatttacaccaactggaatgctattgactagcaaaaagagaaccagatctaagcgaagtctcaatgggtcgttagtgaattcctttgacgaagaggtccatgaagcaaccgacgaatcagacgaggagatgcccccaaaaagaattgctctgcatcaaactagcgtccccagataccacaaggaatttcatgagatctgtctgattggtaaaggcgaatttggatcagtgcacaaatgccttaacaggctagatggatgtacctatgcagtcaagaaaagtttaatgccagtagcaggatctccgaatgaacgatctgctcttaacgaagtatgggcacacgcagtccttggccagcacccgcatgctgttcgctactattcggcctgggctgaaaatggtcacatgataattcagaacgaattttgcaattccggtaccttggaagaattgattcgcactaatcagctaaacaatgttacagtcaatgagccgcagttaaaatctacgttgttacagattgcagaaggattgcattacatccactcaaagcagttggcccatatggatattaagccgggtaacatttttatctgtcgagagaacagcgacgattgttcggttcatcacgacagcgacgatggttttgatgaacttgatgacgattacggctcggtgacgtataaaattggagatttgggtcacgtgacgtctgttgtccagccaatcgtcgaagaaggagattgtcgttatctgcccgtcgaaattttacgggagaattacgaacatctgactaaggcggacattttttctcttggtctcacaatttacgagatggctggtggtggtcagcttccaaagaatggtgacgagtggcacgcgattcgtcagggtcgtttgccatacaacggccgatactcgatcgagctacacaatcttttggagctgatgatccatcctgacccaacgttgaggccgtcgacccaagtgttgacacagcaccctgttctaggtccaaacggtgccaagtctaaag</sequence>
+        <xref id="AJ292557.1" name="AJ292557.1 Daphnia magna partial mRNA for wee1-like CDK tyrosine kinase"/>
+        <orf end="1636" start="134" strand="SENSE">
+            <protein>
+                <sequence md5="fc6395446a36eca6072208b18d34950a">KFVQPIIMDRDIEMEENHCRIAQRLEFPLSDEEDLHEASTGNNRTSSNSSSDRLDSSGSDEGLGMTIRITSPRKPRFIRSRAREPMSPPYSGVRALRLFDSPATPKTLLENSSAIMTPVLATPAPRNRMRTLFTMSSTKSSDKKDNMNTPPAANVNPFTPTGMLLTSKKRTRSKRSLNGSLVNSFDEEVHEATDESDEEMPPKRIALHQTSVPRYHKEFHEICLIGKGEFGSVHKCLNRLDGCTYAVKKSLMPVAGSPNERSALNEVWAHAVLGQHPHAVRYYSAWAENGHMIIQNEFCNSGTLEELIRTNQLNNVTVNEPQLKSTLLQIAEGLHYIHSKQLAHMDIKPGNIFICRENSDDCSVHHDSDDGFDELDDDYGSVTYKIGDLGHVTSVVQPIVEEGDCRYLPVEILRENYEHLTKADIFSLGLTIYEMAGGGQLPKNGDEWHAIRQGRLPYNGRYSIELHNLLELMIHPDPTLRPSTQVLTQHPVLGPNGAKSK</sequence>
+                <xref id="AJ292557.1_14" name="AJ292557.1_14 [134 - 1636] Daphnia magna partial mRNA for wee1-like CDK tyrosine kinase"/>
+                <matches>
+                    <hmmer3-match evalue="3.9E-46" score="157.5">
+                        <signature ac="PF00069" desc="Protein kinase domain" name="Pkinase">
+                            <entry ac="IPR000719" desc="Protein kinase domain" name="Prot_kinase_dom" type="DOMAIN">
+<go-xref category="BIOLOGICAL_PROCESS" db="GO" id="GO:0006468" name="protein phosphorylation"/>
+<go-xref category="MOLECULAR_FUNCTION" db="GO" id="GO:0004672" name="protein kinase activity"/>
+<go-xref category="MOLECULAR_FUNCTION" db="GO" id="GO:0005524" name="ATP binding"/>
+                            </entry>
+                            <signature-library-release library="PFAM" version="31.0"/>
+                        </signature>
+                        <model-ac>PF00069</model-ac>
+                        <locations>
+                            <hmmer3-location env-end="493" env-start="219" score="157.1" evalue="5.1E-46" hmm-start="2" hmm-end="264" hmm-length="264" hmm-bounds="C_TERMINAL_COMPLETE" start="220" end="493"/>
+                        </locations>
+                    </hmmer3-match>
+                    <profilescan-match>
+                        <signature ac="PS50011" desc="Protein kinase domain profile." name="PROTEIN_KINASE_DOM">
+                            <entry ac="IPR000719" desc="Protein kinase domain" name="Prot_kinase_dom" type="DOMAIN">
+<go-xref category="BIOLOGICAL_PROCESS" db="GO" id="GO:0006468" name="protein phosphorylation"/>
+<go-xref category="MOLECULAR_FUNCTION" db="GO" id="GO:0004672" name="protein kinase activity"/>
+<go-xref category="MOLECULAR_FUNCTION" db="GO" id="GO:0005524" name="ATP binding"/>
+                            </entry>
+                            <signature-library-release library="PROSITE_PROFILES" version="2017_09"/>
+                        </signature>
+                        <model-ac>PS50011</model-ac>
+                        <locations>
+                            <profilescan-location score="36.16" start="219" end="493">
+<alignment>FHEICLIGKGEFGSVHKCLNRLDGCTYAVKKSLMPVAGSPNERSALNEVWAHAVLgQHPHAVRYYSAWAENGHMIIQNEFCNSGTLEELIRTNQLNnvtVNEPQLKSTLLQIAEGLHYIHSKQLAHMDIKPGNIFICREnsddcsvhhdsddgfdeldddygsVTYKIGDLGHVTSV----VQPIVEEGDCRYLPVEILRENYEHLTKADIFSLGLTIYEMAGgGQLPK--NGDEWHAIRQGRLP--------YNGrYSIELHNLLELMIHPDPTLRPSTQVLTQHPVL</alignment>
+                            </profilescan-location>
+                        </locations>
+                    </profilescan-match>
+                </matches>
+            </protein>
+        </orf>
+        <orf end="1528" start="1373" strand="ANTISENSE">
+            <protein>
+                <sequence md5="2fac88b138b0359ee40b2b0f6f18405e">LDRVSAVVWQTTLTNRVPLVTILWKLTTTSHLVNCETKRKNVRLSQMFVILP</sequence>
+                <xref id="AJ292557.1_18" name="AJ292557.1_18 [1528 - 1373] (REVERSE SENSE) Daphnia magna partial mRNA for wee1-like CDK tyrosine kinase"/>
+                <matches/>
+            </protein>
+        </orf>
+        <orf end="1635" start="1492" strand="ANTISENSE">
+            <protein>
+                <sequence md5="408078f1d6b3e285f9edf7c0abba5888">LDLAPFGPRTGCCVNTWVDGLNVGSGWIISSKRLCSSIEYRPLYGKRP</sequence>
+                <xref id="AJ292557.1_16" name="AJ292557.1_16 [1635 - 1492] (REVERSE SENSE) Daphnia magna partial mRNA for wee1-like CDK tyrosine kinase"/>
+                <matches/>
+            </protein>
+        </orf>
+        <orf end="1547" start="1395" strand="SENSE">
+            <protein>
+                <sequence md5="5e05d6e8559373f1a11ccfa398751462">LRRTFFLLVSQFTRWLVVVSFQRMVTSGTRFVRVVCHTTADTRSSYTIFWS</sequence>
+                <xref id="AJ292557.1_12" name="AJ292557.1_12 [1395 - 1547] Daphnia magna partial mRNA for wee1-like CDK tyrosine kinase"/>
+                <matches/>
+            </protein>
+        </orf>
+        <orf end="222" start="91" strand="SENSE">
+            <protein>
+                <sequence md5="10e5c0c39dc2c724d37f3773a3caa62c">FKEVKANYIALCHLKVCSTHYYGSRYRNGREPLPHSTAARIPIE</sequence>
+                <xref id="AJ292557.1_3" name="AJ292557.1_3 [91 - 222] Daphnia magna partial mRNA for wee1-like CDK tyrosine kinase"/>
+                <matches/>
+            </protein>
+        </orf>
+        <orf end="1369" start="1151" strand="ANTISENSE">
+            <protein>
+                <sequence md5="a7db1efd145843b3f0efce4214200e14">NFDGQITTISFFDDWLDNRRHVTQISNFIRHRAVIVIKFIKTIVAVVMNRTIVAVLSTDKNVTRLNIHMGQLL</sequence>
+                <xref id="AJ292557.1_20" name="AJ292557.1_20 [1369 - 1151] (REVERSE SENSE) Daphnia magna partial mRNA for wee1-like CDK tyrosine kinase"/>
+                <matches/>
+            </protein>
+        </orf>
+        <orf end="1061" start="927" strand="ANTISENSE">
+            <protein>
+                <sequence md5="f6a2ecad662d6d006ab0f6ca398b8bf3">CESILPRYRNCKIRSELSCDHFQPRPNSSEQHAGAGQGLRVPILR</sequence>
+                <xref id="AJ292557.1_22" name="AJ292557.1_22 [1061 - 927] (REVERSE SENSE) Daphnia magna partial mRNA for wee1-like CDK tyrosine kinase"/>
+                <matches/>
+            </protein>
+        </orf>
+        <orf end="1394" start="1194" strand="ANTISENSE">
+            <protein>
+                <sequence md5="f0d1c0dbd612557596228e0ed5730009">SDVRNSPVKFRRADNDNLLLRRLAGQQTSRDPNLQFYTSPSRNRHQVHQNHRRCRDEPNNRRCSLDR</sequence>
+                <xref id="AJ292557.1_19" name="AJ292557.1_19 [1394 - 1194] (REVERSE SENSE) Daphnia magna partial mRNA for wee1-like CDK tyrosine kinase"/>
+                <matches/>
+            </protein>
+        </orf>
+        <orf end="1631" start="1425" strand="ANTISENSE">
+            <protein>
+                <sequence md5="0176fb2b045ab22096542a9e43fcbc26">TWHRLDLEQGAVSTLGSTASTLGQDGSSAPKDCVARSSIGRCMANDPDESRATRHHSLEADHHQPSRKL</sequence>
+                <xref id="AJ292557.1_17" name="AJ292557.1_17 [1631 - 1425] (REVERSE SENSE) Daphnia magna partial mRNA for wee1-like CDK tyrosine kinase"/>
+                <matches/>
+            </protein>
+        </orf>
+        <orf end="756" start="145" strand="ANTISENSE">
+            <protein>
+                <sequence md5="03965a8bcea2e231d243f4625aa41d18">CRAILFGGISSSDSSVASWTSSSKEFTNDPLRLRLDLVLFLLVNSIPVGVNGLTLAAGGVFMLSFLSDDFVELMVNNVLILFLGAGVAKTGVMMAELFSRSVLGVAGESNNLRARTPLYGGDMGSRALERINLGFLGLVIRMVIPRPSSLPDESRRSDDELLEVRLLPVDASCKSSSSLNGNSSRCAMRQWFSSISISRSIIMG</sequence>
+                <xref id="AJ292557.1_32" name="AJ292557.1_32 [756 - 145] (REVERSE SENSE) Daphnia magna partial mRNA for wee1-like CDK tyrosine kinase"/>
+                <matches/>
+            </protein>
+        </orf>
+        <orf end="1069" start="887" strand="ANTISENSE">
+            <protein>
+                <sequence md5="4c00b7ece034ac36c9381059d081b862">LISANQFFQGTGIAKFVLNYHVTIFSPGRIVANSMRVLAKDCVCPYFVKSRSFIRRSCYWH</sequence>
+                <xref id="AJ292557.1_23" name="AJ292557.1_23 [1069 - 887] (REVERSE SENSE) Daphnia magna partial mRNA for wee1-like CDK tyrosine kinase"/>
+                <matches/>
+            </protein>
+        </orf>
+        <orf end="1277" start="1104" strand="SENSE">
+            <protein>
+                <sequence md5="1543cd8b33e5c668cdbb86d2c7cedb66">NLRCYRLQKDCITSTQSSWPIWILSRVTFLSVERTATIVRFITTATMVLMNLMTITAR</sequence>
+                <xref id="AJ292557.1_9" name="AJ292557.1_9 [1104 - 1277] Daphnia magna partial mRNA for wee1-like CDK tyrosine kinase"/>
+                <matches/>
+            </protein>
+        </orf>
+    </nucleotide-sequence>
+    <nucleotide-sequence>
+        <sequence md5="6d0e43261a8b2dec2129cf0d13f3cc13">atggcggcgtcctccctggaacagaagctgtcccgcctggaagcaaagctgaagcaggagaaccgggaggcccggcggaggatcgacctcaacctggatatcagcccccagcggcccaggcccaccctgcagctcccgctggccaacgatgggggcagccgctcgccatcctcagagagctccccgcagcaccccacgccccccgcccggccccgccacatgctggggctcccgtcaaccctgttcacaccccgcagcatggagagcattgagattgaccagaagctgcaggagatcatgaagcagacgggctacctgaccatcgggggccagcgctaccaggcagaaatcaacgacctggagaacttgggcgagatgggcagcggcacctgcggccaggtgtggaagatgcgcttccggaagaacggccacgtcattgccgttaagcaaatgcggcgctccgggaacaaggaagagaacaagcgcatcctcatggacctggatgtggtgctgaagagccacgactgcccctacatcgtgcagtgctttgggacgttcatcaccaacacggacgtcttcatcgccatggagctcatgggcacctgcgctgagaagctcaagaagcggatgcagggccccatccccgagcgcattttgggcaagatgacagtggcgattgtgaaggcgctgtactacctgaaggagaagcacggtgtcatccaccgcgacgtcaagccctccaacatcctgctggacgagcggggccagatcaagctctgcgacttcggcatcagcggccgcctggtggactccaaagccaagacgcggagcgccggctgtgccgcctacatggcacccgagcgcattgaccccccagaccccaccaagccggactatgacatccgggccgacgtatggagcctgggcatctcgttggtggagctggcaacaggacagtttccctacaagaactgcaagacggactttgaggtcctcaccaaagtcctacaggaagagcccccgcttctgcccggacacatgggcttctcgggggacttccagtccttcgtcaaagactgccttactaaagatcacaggaagagaccaaagtataataagctacttgaacacagcttcatcaagcgctacgagacgctggaggtggacgtggcgtcctggttcaaggatgtcatggcgaagactgagtcaccgcggactagcggcgtcctgagccagccccacctgcccttcttcaggtag</sequence>
+        <xref id="AF014401.1" name="AF014401.1 Homo sapiens JNK kinase 2 (JNKK2) mRNA, complete cds"/>
+        <orf end="269" start="3" strand="SENSE">
+            <protein>
+                <sequence md5="00f4a85a8f5c96b4636c3a0dc2c9fb1c">GGVLPGTEAVPPGSKAEAGEPGGPAEDRPQPGYQPPAAQAHPAAPAGQRWGQPLAILRELPAAPHAPRPAPPHAGAPVNPVHTPQHGEH</sequence>
+                <xref id="AF014401.1_1" name="AF014401.1_1 [3 - 269] Homo sapiens JNK kinase 2 (JNKK2) mRNA, complete cds"/>
+                <matches/>
+            </protein>
+        </orf>
+        <orf end="1257" start="1" strand="SENSE">
+            <protein>
+                <sequence md5="cd03213502ace716491fe4861bafbc7c">MAASSLEQKLSRLEAKLKQENREARRRIDLNLDISPQRPRPTLQLPLANDGGSRSPSSESSPQHPTPPARPRHMLGLPSTLFTPRSMESIEIDQKLQEIMKQTGYLTIGGQRYQAEINDLENLGEMGSGTCGQVWKMRFRKNGHVIAVKQMRRSGNKEENKRILMDLDVVLKSHDCPYIVQCFGTFITNTDVFIAMELMGTCAEKLKKRMQGPIPERILGKMTVAIVKALYYLKEKHGVIHRDVKPSNILLDERGQIKLCDFGISGRLVDSKAKTRSAGCAAYMAPERIDPPDPTKPDYDIRADVWSLGISLVELATGQFPYKNCKTDFEVLTKVLQEEPPLLPGHMGFSGDFQSFVKDCLTKDHRKRPKYNKLLEHSFIKRYETLEVDVASWFKDVMAKTESPRTSGVLSQPHLPFFR</sequence>
+                <xref id="AF014401.1_12" name="AF014401.1_12 [1 - 1257] Homo sapiens JNK kinase 2 (JNKK2) mRNA, complete cds"/>
+                <matches>
+                    <hmmer3-match evalue="5.6E-56" score="189.7">
+                        <signature ac="PF00069" desc="Protein kinase domain" name="Pkinase">
+                            <entry ac="IPR000719" desc="Protein kinase domain" name="Prot_kinase_dom" type="DOMAIN">
+<go-xref category="BIOLOGICAL_PROCESS" db="GO" id="GO:0006468" name="protein phosphorylation"/>
+<go-xref category="MOLECULAR_FUNCTION" db="GO" id="GO:0004672" name="protein kinase activity"/>
+<go-xref category="MOLECULAR_FUNCTION" db="GO" id="GO:0005524" name="ATP binding"/>
+                            </entry>
+                            <signature-library-release library="PFAM" version="31.0"/>
+                        </signature>
+                        <model-ac>PF00069</model-ac>
+                        <locations>
+                            <hmmer3-location env-end="380" env-start="120" score="189.4" evalue="7.0E-56" hmm-start="2" hmm-end="264" hmm-length="264" hmm-bounds="C_TERMINAL_COMPLETE" start="121" end="380"/>
+                        </locations>
+                    </hmmer3-match>
+                    <profilescan-match>
+                        <signature ac="PS50011" desc="Protein kinase domain profile." name="PROTEIN_KINASE_DOM">
+                            <entry ac="IPR000719" desc="Protein kinase domain" name="Prot_kinase_dom" type="DOMAIN">
+<go-xref category="BIOLOGICAL_PROCESS" db="GO" id="GO:0006468" name="protein phosphorylation"/>
+<go-xref category="MOLECULAR_FUNCTION" db="GO" id="GO:0004672" name="protein kinase activity"/>
+<go-xref category="MOLECULAR_FUNCTION" db="GO" id="GO:0005524" name="ATP binding"/>
+                            </entry>
+                            <signature-library-release library="PROSITE_PROFILES" version="2017_09"/>
+                        </signature>
+                        <model-ac>PS50011</model-ac>
+                        <locations>
+                            <profilescan-location score="41.601" start="120" end="380">
+<alignment>LENLGEMGSGTCGQVWKMRFRKNGHVIAVKQMRRS--GNKeENKRILMDLDVVLKShDCPYIVQCFGTFITNTDVFIAMELMGTcaEKLKKRMQG---PIPERILGKMTVAIVKALYYLKEKhGVIHRDVKPSNILLDERGQIKLCDFGISGRLVDS-KAKTRSAGCAAYMAPERIDppdpTKPDYDIRADVWSLGISLVELATGQFPYKNCKTDFEVLTKVLQE--EP--P---LlpghmgFSGDFQSFVKDCLTKDHRKRPKYNKLLEHSFI</alignment>
+                            </profilescan-location>
+                        </locations>
+                    </profilescan-match>
+                </matches>
+            </protein>
+        </orf>
+        <orf end="1005" start="238" strand="ANTISENSE">
+            <protein>
+                <sequence md5="c041bbc6bf1475f2447893d57f2f55b0">DFGEDLKVRLAVLVGKLSCCQLHQRDAQAPYVGPDVIVRLGGVWGVNALGCHVGGTAGAPRLGFGVHQAAADAEVAELDLAPLVQQDVGGLDVAVDDTVLLLQVVQRLHNRHCHLAQNALGDGALHPLLELLSAGAHELHGDEDVRVGDERPKALHDVGAVVALQHHIQVHEDALVLFLVPGAPHLLNGNDVAVLPEAHLPHLAAGAAAHLAQVLQVVDFCLVALAPDGQVARLLHDLLQLLVNLNALHAAGCEQG</sequence>
+                <xref id="AF014401.1_23" name="AF014401.1_23 [1005 - 238] (REVERSE SENSE) Homo sapiens JNK kinase 2 (JNKK2) mRNA, complete cds"/>
+                <matches/>
+            </protein>
+        </orf>
+        <orf end="311" start="3" strand="ANTISENSE">
+            <protein>
+                <sequence md5="8daece29b1866323065c6ba287ad40f0">PVCFMISCSFWSISMLSMLRGVNRVDGSPSMWRGRAGGVGCCGELSEDGERLPPSLASGSCRVGLGRWGLISRLRSILRRASRFSCFSFASRRDSFCSREDAA</sequence>
+                <xref id="AF014401.1_25" name="AF014401.1_25 [311 - 3] (REVERSE SENSE) Homo sapiens JNK kinase 2 (JNKK2) mRNA, complete cds"/>
+                <matches/>
+            </protein>
+        </orf>
+        <orf end="994" start="794" strand="ANTISENSE">
+            <protein>
+                <sequence md5="363d9eeb39119e84b5181effd6d879bf">GPQSPSCSSCRETVLLPAPPTRCPGSIRRPGCHSPAWWGLGGQCARVPCRRHSRRSASWLWSPPGGR</sequence>
+                <xref id="AF014401.1_17" name="AF014401.1_17 [994 - 794] (REVERSE SENSE) Homo sapiens JNK kinase 2 (JNKK2) mRNA, complete cds"/>
+                <matches/>
+            </protein>
+        </orf>
+        <orf end="866" start="612" strand="SENSE">
+            <protein>
+                <sequence md5="46e6aa75793b050c96b974e528200c30">EAQEADAGPHPRAHFGQDDSGDCEGAVLPEGEARCHPPRRQALQHPAGRAGPDQALRLRHQRPPGGLQSQDAERRLCRLHGTRAH</sequence>
+                <xref id="AF014401.1_7" name="AF014401.1_7 [612 - 866] Homo sapiens JNK kinase 2 (JNKK2) mRNA, complete cds"/>
+                <matches/>
+            </protein>
+        </orf>
+        <orf end="298" start="53" strand="SENSE">
+            <protein>
+                <sequence md5="e84620b9417f4e4f263c26a8f924fcc5">SRRTGRPGGGSTSTWISAPSGPGPPCSSRWPTMGAAARHPQRAPRSTPRPPPGPATCWGSRQPCSHPAAWRALRLTRSCRRS</sequence>
+                <xref id="AF014401.1_2" name="AF014401.1_2 [53 - 298] Homo sapiens JNK kinase 2 (JNKK2) mRNA, complete cds"/>
+                <matches/>
+            </protein>
+        </orf>
+        <orf end="1228" start="701" strand="SENSE">
+            <protein>
+                <sequence md5="f80528aa98447e976933ed3d2a59c6b2">RRSTVSSTATSSPPTSCWTSGARSSSATSASAAAWWTPKPRRGAPAVPPTWHPSALTPQTPPSRTMTSGPTYGAWASRWWSWQQDSFPTRTARRTLRSSPKSYRKSPRFCPDTWASRGTSSPSSKTALLKITGRDQSIISYLNTASSSATRRWRWTWRPGSRMSWRRLSHRGLAAS</sequence>
+                <xref id="AF014401.1_11" name="AF014401.1_11 [701 - 1228] Homo sapiens JNK kinase 2 (JNKK2) mRNA, complete cds"/>
+                <matches/>
+            </protein>
+        </orf>
+        <orf end="530" start="339" strand="ANTISENSE">
+            <protein>
+                <sequence md5="2d28c5fd3f1c8612f3820afc07e241ed">GQSWLFSTTSRSMRMRLFSSLFPERRICLTAMTWPFFRKRIFHTWPQVPLPISPKFSRSLISAW</sequence>
+                <xref id="AF014401.1_22" name="AF014401.1_22 [530 - 339] (REVERSE SENSE) Homo sapiens JNK kinase 2 (JNKK2) mRNA, complete cds"/>
+                <matches/>
+            </protein>
+        </orf>
+        <orf end="443" start="279" strand="SENSE">
+            <protein>
+                <sequence md5="c684861f7e9f9b93ba8a39d1655896f1">PEAAGDHEADGLPDHRGPALPGRNQRPGELGRDGQRHLRPGVEDALPEERPRHCR</sequence>
+                <xref id="AF014401.1_3" name="AF014401.1_3 [279 - 443] Homo sapiens JNK kinase 2 (JNKK2) mRNA, complete cds"/>
+                <matches/>
+            </protein>
+        </orf>
+        <orf end="511" start="320" strand="SENSE">
+            <protein>
+                <sequence md5="90194f4bde0f671ec1d9839400110de6">PSGASATRQKSTTWRTWARWAAAPAARCGRCASGRTATSLPLSKCGAPGTRKRTSASSWTWMWC</sequence>
+                <xref id="AF014401.1_4" name="AF014401.1_4 [320 - 511] Homo sapiens JNK kinase 2 (JNKK2) mRNA, complete cds"/>
+                <matches/>
+            </protein>
+        </orf>
+        <orf end="171" start="1" strand="ANTISENSE">
+            <protein>
+                <sequence md5="1c6129cef7298a5ae04429c3e5cfa3f8">GWRAAAPIVGQRELQGGPGPLGADIQVEVDPPPGLPVLLLQLCFQAGQLLFQGGRRH</sequence>
+                <xref id="AF014401.1_27" name="AF014401.1_27 [171 - 1] (REVERSE SENSE) Homo sapiens JNK kinase 2 (JNKK2) mRNA, complete cds"/>
+                <matches/>
+            </protein>
+        </orf>
+    </nucleotide-sequence>
+    <nucleotide-sequence>
+        <sequence md5="b08085df039f36b4429bd4cd21513d54">aagcgggcagggcggggcgcgcctagcgggagcgagcccggcgcccaccgcagagactgtcgcctggtgcctaggttcccaacaggaatatccacggactgaagtgatggagcgcagtccagccgtctgctgccaagaccctcgagcggaactggtagagcgggtggcagccatcagtgtggcccacctagaagaggcagaggagggcccagagcctgccagcaatggtgtggacccctcaccccgggccagagctgcctctgtgatccctggcagtgcttcaagacccacaccagtgcgtcccagcctctctgctagaaagttctccctgcaggaaagaccagcggaaagctgtctagaggctcaggttgggccttactctacaggacctgccagtcacatgtctcctcgggcttggcggagacccaccatcgagtcccaccatgtggccatctcagacacagaggactgtgtgcaactgaaccagtacaagctgcagagtgagattggcaagggtgcctatggtgtggtgaggctggcctacaatgaaagggaagacagacactatgcaatgaaagttctttccaaaaagaagttactgaagcagtatggctttcctcgccgtcctcccccgagagggtcccaagctcctcagggagggccagccaaacagctgctgcccctggagcgtgtataccaggagattgccattttaaagaaactggaccacgtgaatgtagtcaagttgatcgaggtcctggatgatcctgctgaagacaatctctatttggtgtttgacctcctgagaaagggaccagtcatggaagtgccctgcgacaagcccttcccagaggagcaagctcgcctctacctccgggacatcatcctgggcctcgagtacttgcactgccagaagattgtgcacagggacatcaagccgtccaatctgctccttggggacgatgggcacgtgaagatcgccgactttggtgtcagcaaccagtttgaggggaatgatgctcagctgtccagtacggcagggaccccagcattcatggccccggaggccatttctgacaccggccagagcttcagtgggaaggccttggatgtatgggccactggggttacactgtattgttttgtctacgggaagtgcccattcattgatgagtacatcctggccctgcacagaaagatcaagaatgaggccgtggtgttccctgaggagccggaggtcagcgaggaactcaaagacctgatcctgaagatgctagacaagaatcctgaaacaagaattggggtgtctgatatcaagttacacccttgggtgaccaagcatggagaggagcccctcccttcagaggaggaacactgcagtgtggtagaggtgactgaggaggaggtgaagaactcagtcaagctcatccccagctggaccactgtgatcctggtcaagtctatgctgagaaagcgttcctttggaaacccatttgagccccaagcacgcagggaagaaagatctatgtctgcgccaggaaacttactgttgaaagaaggatgtggagaagggggcaaaagcccagagcttcccggagtccaggaagatgaggctgcatcctgagtccctgcatgtgcccagggccatcggcagcatgctcattccgctcctccagaggcccaccgccctcatgcaatcatcgcccctgcaggcagggggctggggactgcagcccctctcctggcccccctcacccattgtgctgcatgacctgcgcacaggcatatccagggacaggattggaatgtgtatcatttggggctcgggggtcccggttggttctctctgttctgatctatcttgtggggaatattagaaaccctacctgactggctggtgaggcccagggcagaaggcaagagaccaaaatagcaggtggagacctggtgggctgcttctcagagaactcccatagtgatcggtggcctgcccagctgctgcacacgaggagtgattgtgtcacttctgtgtggaaggtgctgagtcctggagtcctcagatctctagtgtggatgctacaagtaatgaggcgtgcctgggagaagactgatcttggagaatccagattcctctcattgtcttttacctgagggcttgggtgggagcggctgttatggagagcatcttctggctttgggtagtccgtggtacactgtacggcagtcacgaggatctgacattcatagactgtgttttacacttggcacttgctggagaaaggaccaaagtgaatccgcattagagcatagacctgagcctggagcagtgtacttctcctgccaacctcccttcctctctcacggatctccagaatgaaggttacagaacaccaggagtgacaaggagggccacggactctcagcactgtggccctgcagatgtggaagtaactgggatctaggtctgagccgacactggcttactcactacatgctctgatggaggaggctcagccagatgagggaccgtacaagacgcactcctgtcaggctggtggcccttctgtcagttgcttcagtacaggacatcagacagtcagcccacacaggtcagagctgcacagttgggacacacgtggacactgccctttcagaacagatgtcagctctctggattctgtggtcgtctggctattctaatgtttactgataatgctcatagggattggtccccaaagggagatgagcaggactcaggtagccctctctgaaagcctcccataagagatcctggctgcccacatgggtttcaagaatgcaggagggctaggctagaaaagagagaggctgtgcgggagcgctggttcccactcttatctctgtgcccatgggagaacattgctccttcatgtgcacatgcgtgtgtgtgcccatctgctgtatacagcacacttgcatgtctcatactggcacatgcatctgtaatatagtttctatgtcaagttatgcctaggagcagaaggtagcccattgtccaagggctcccatttcaacccaactcctctgcactaaggcagccagtgtaacccagggcttgaaaacaaattatctaatcctatctctaagaatactttatagagtgataggaggcaattatgccaaccaataaacagcaaagagtcagggagcttcaccgatgggacccacacaggaaaagctcggagttgggtggctggctcattgtccccagcagagccaggaaggcatgctcactgtcacctgttgttgagagctttggttggctttggttttgaagtagcacaagtgaacaaactccataagagtgtttataaaaattaacttcttaggaagtgaattaaaaacaataaaagccctttgttgagtt</sequence>
+        <xref id="L42810.1" name="L42810.1 Rattus norvegicus Ca2+/calmodulin-dependent protein kinase kinase mRNA, complete cds"/>
+        <orf end="1874" start="1554" strand="SENSE">
+            <protein>
+                <sequence md5="4b5219e35cc72627424966aa3219293a">KKDVEKGAKAQSFPESRKMRLHPESLHVPRAIGSMLIPLLQRPTALMQSSPLQAGGWGLQPLSWPPSPIVLHDLRTGISRDRIGMCIIWGSGVPVGSLCSDLSCGEY</sequence>
+                <xref id="L42810.1_19" name="L42810.1_19 [1554 - 1874] Rattus norvegicus Ca2+/calmodulin-dependent protein kinase kinase mRNA, complete cds"/>
+                <matches/>
+            </protein>
+        </orf>
+        <orf end="1273" start="716" strand="ANTISENSE">
+            <protein>
+                <sequence md5="e69b11246c448c6f8d8d0eb951875a76">HLQDQVFEFLADLRLLREHHGLILDLSVQGQDVLINEWALPVDKTIQCNPSGPYIQGLPTEALAGVRNGLRGHECWGPCRTGQLSIIPLKLVADTKVGDLHVPIVPKEQIGRLDVPVHNLLAVQVLEAQDDVPEVEASLLLWEGLVAGHFHDWSLSQEVKHQIEIVFSRIIQDLDQLDYIHVVQFL</sequence>
+                <xref id="L42810.1_77" name="L42810.1_77 [1273 - 716] (REVERSE SENSE) Rattus norvegicus Ca2+/calmodulin-dependent protein kinase kinase mRNA, complete cds"/>
+                <matches/>
+            </protein>
+        </orf>
+        <orf end="1873" start="1547" strand="ANTISENSE">
+            <protein>
+                <sequence md5="bf2a75f5784ad9bf0f0265e000a20f86">YSPQDRSEQREPTGTPEPQMIHIPILSLDMPVRRSCSTMGEGGQERGCSPQPPACRGDDCMRAVGLWRSGMSMLPMALGTCRDSGCSLIFLDSGKLWAFAPFSTSFFQQ</sequence>
+                <xref id="L42810.1_68" name="L42810.1_68 [1873 - 1547] (REVERSE SENSE) Rattus norvegicus Ca2+/calmodulin-dependent protein kinase kinase mRNA, complete cds"/>
+                <matches/>
+            </protein>
+        </orf>
+        <orf end="1887" start="1612" strand="SENSE">
+            <protein>
+                <sequence md5="5d9daeb2ed803fc1992be4959ab03f64">GCILSPCMCPGPSAACSFRSSRGPPPSCNHRPCRQGAGDCSPSPGPPHPLCCMTCAQAYPGTGLECVSFGARGSRLVLSVLIYLVGNIRNPT</sequence>
+                <xref id="L42810.1_20" name="L42810.1_20 [1612 - 1887] Rattus norvegicus Ca2+/calmodulin-dependent protein kinase kinase mRNA, complete cds"/>
+                <matches/>
+            </protein>
+        </orf>
+        <orf end="363" start="1" strand="ANTISENSE">
+            <protein>
+                <sequence md5="73e00865aaf8bb0ad993a2fb1c290ec9">ASRQLSAGLSCRENFLAERLGRTGVGLEALPGITEAALARGEGSTPLLAGSGPSSASSRWATLMAATRSTSSARGSWQQTAGLRSITSVRGYSCWEPRHQATVSAVGAGLAPARRAPPCPL</sequence>
+                <xref id="L42810.1_88" name="L42810.1_88 [363 - 1] (REVERSE SENSE) Rattus norvegicus Ca2+/calmodulin-dependent protein kinase kinase mRNA, complete cds"/>
+                <matches/>
+            </protein>
+        </orf>
+        <orf end="1259" start="975" strand="SENSE">
+            <protein>
+                <sequence md5="721282de84cfcea39c1b7d0586b6096a">RSPTLVSATSLRGMMLSCPVRQGPQHSWPRRPFLTPARASVGRPWMYGPLGLHCIVLSTGSAHSLMSTSWPCTERSRMRPWCSLRSRRSARNSKT</sequence>
+                <xref id="L42810.1_11" name="L42810.1_11 [975 - 1259] Rattus norvegicus Ca2+/calmodulin-dependent protein kinase kinase mRNA, complete cds"/>
+                <matches/>
+            </protein>
+        </orf>
+        <orf end="2374" start="2090" strand="SENSE">
+            <protein>
+                <sequence md5="74b268bb131a95c49554516d0171ec51">GVPGRRLILENPDSSHCLLPEGLGGSGCYGEHLLALGSPWYTVRQSRGSDIHRLCFTLGTCWRKDQSESALEHRPEPGAVYFSCQPPFLSHGSPE</sequence>
+                <xref id="L42810.1_26" name="L42810.1_26 [2090 - 2374] Rattus norvegicus Ca2+/calmodulin-dependent protein kinase kinase mRNA, complete cds"/>
+                <matches/>
+            </protein>
+        </orf>
+        <orf end="2148" start="1891" strand="SENSE">
+            <protein>
+                <sequence md5="a84c21f0f9103149365b979bc06fc6b0">LAGEAQGRRQETKIAGGDLVGCFSENSHSDRWPAQLLHTRSDCVTSVWKVLSPGVLRSLVWMLQVMRRAWEKTDLGESRFLSLSFT</sequence>
+                <xref id="L42810.1_24" name="L42810.1_24 [1891 - 2148] Rattus norvegicus Ca2+/calmodulin-dependent protein kinase kinase mRNA, complete cds"/>
+                <matches/>
+            </protein>
+        </orf>
+        <orf end="1621" start="2" strand="SENSE">
+            <protein>
+                <sequence md5="bcc3f71231cd51cf22f9882806e0f58a">SGQGGARLAGASPAPTAETVAWCLGSQQEYPRTEVMERSPAVCCQDPRAELVERVAAISVAHLEEAEEGPEPASNGVDPSPRARAASVIPGSASRPTPVRPSLSARKFSLQERPAESCLEAQVGPYSTGPASHMSPRAWRRPTIESHHVAISDTEDCVQLNQYKLQSEIGKGAYGVVRLAYNEREDRHYAMKVLSKKKLLKQYGFPRRPPPRGSQAPQGGPAKQLLPLERVYQEIAILKKLDHVNVVKLIEVLDDPAEDNLYLVFDLLRKGPVMEVPCDKPFPEEQARLYLRDIILGLEYLHCQKIVHRDIKPSNLLLGDDGHVKIADFGVSNQFEGNDAQLSSTAGTPAFMAPEAISDTGQSFSGKALDVWATGVTLYCFVYGKCPFIDEYILALHRKIKNEAVVFPEEPEVSEELKDLILKMLDKNPETRIGVSDIKLHPWVTKHGEEPLPSEEEHCSVVEVTEEEVKNSVKLIPSWTTVILVKSMLRKRSFGNPFEPQARREERSMSAPGNLLLKEGCGEGGKSPELPGVQEDEAAS</sequence>
+                <xref id="L42810.1_16" name="L42810.1_16 [2 - 1621] Rattus norvegicus Ca2+/calmodulin-dependent protein kinase kinase mRNA, complete cds"/>
+                <matches>
+                    <hmmer3-match evalue="2.2E-62" score="210.7">
+                        <signature ac="PF00069" desc="Protein kinase domain" name="Pkinase">
+                            <entry ac="IPR000719" desc="Protein kinase domain" name="Prot_kinase_dom" type="DOMAIN">
+<go-xref category="BIOLOGICAL_PROCESS" db="GO" id="GO:0006468" name="protein phosphorylation"/>
+<go-xref category="MOLECULAR_FUNCTION" db="GO" id="GO:0004672" name="protein kinase activity"/>
+<go-xref category="MOLECULAR_FUNCTION" db="GO" id="GO:0005524" name="ATP binding"/>
+                            </entry>
+                            <signature-library-release library="PFAM" version="31.0"/>
+                        </signature>
+                        <model-ac>PF00069</model-ac>
+                        <locations>
+                            <hmmer3-location env-end="444" env-start="163" score="208.2" evalue="1.3E-61" hmm-start="1" hmm-end="264" hmm-length="264" hmm-bounds="COMPLETE" start="163" end="444"/>
+                        </locations>
+                    </hmmer3-match>
+                    <profilescan-match>
+                        <signature ac="PS50011" desc="Protein kinase domain profile." name="PROTEIN_KINASE_DOM">
+                            <entry ac="IPR000719" desc="Protein kinase domain" name="Prot_kinase_dom" type="DOMAIN">
+<go-xref category="BIOLOGICAL_PROCESS" db="GO" id="GO:0006468" name="protein phosphorylation"/>
+<go-xref category="MOLECULAR_FUNCTION" db="GO" id="GO:0004672" name="protein kinase activity"/>
+<go-xref category="MOLECULAR_FUNCTION" db="GO" id="GO:0005524" name="ATP binding"/>
+                            </entry>
+                            <signature-library-release library="PROSITE_PROFILES" version="2017_09"/>
+                        </signature>
+                        <model-ac>PS50011</model-ac>
+                        <locations>
+                            <profilescan-location score="48.117" start="163" end="444">
+<alignment>YKLQSEIGKGAYGVVRLAYNEREDRHYAMKVLSKKKLLKQygfprrppprgsqapqggpakqllPLERVYQEIAILKKLDHVNVVKLIEVLDDPaeDNLYLVFDLLRKGPVMEVPCD---KpFPEEQARLYLRDIILGLEYLHCQKIVHRDIKPSNLLLGDDGHVKIADFGVSNQFEGNDAQLSSTAGTPAFMAPEAISdTGQSFSGkALDVWATGVTLYCFVYGKCPF--IdEYILALHRKIKNEAVVfPEEP---EVSEELKDLILKMLDKNPETRIGVSDIKLHPWV</alignment>
+                            </profilescan-location>
+                        </locations>
+                    </profilescan-match>
+                </matches>
+            </protein>
+        </orf>
+        <orf end="2255" start="1860" strand="ANTISENSE">
+            <protein>
+                <sequence md5="795324d18cffcf1e11ba3d3d1756b2af">NTVYECQILVTAVQCTTDYPKPEDALHNSRSHPSPQVKDNERNLDSPRSVFSQARLITCSIHTRDLRTPGLSTFHTEVTQSLLVCSSWAGHRSLWEFSEKQPTRSPPAILVSCLLPWASPASQVGFLIFPTR</sequence>
+                <xref id="L42810.1_64" name="L42810.1_64 [2255 - 1860] (REVERSE SENSE) Rattus norvegicus Ca2+/calmodulin-dependent protein kinase kinase mRNA, complete cds"/>
+                <matches/>
+            </protein>
+        </orf>
+        <orf end="740" start="384" strand="ANTISENSE">
+            <protein>
+                <sequence md5="770cd60a9ba611932635a0b2fb7cfc6e">LHSRGPVSLKWQSPGIHAPGAAAVWLALPEELGTLSGEDGEESHTASVTSFWKELSLHSVCLPFHCRPASPHHRHPCQSHSAACTGSVAHSPLCLRWPHGGTRWWVSAKPEETCDWQVL</sequence>
+                <xref id="L42810.1_83" name="L42810.1_83 [740 - 384] (REVERSE SENSE) Rattus norvegicus Ca2+/calmodulin-dependent protein kinase kinase mRNA, complete cds"/>
+                <matches/>
+            </protein>
+        </orf>
+        <orf end="1659" start="1150" strand="ANTISENSE">
+            <protein>
+                <sequence md5="04463986d40df080907796d81cebda1f">ACCRWPWAHAGTQDAASSSWTPGSSGLLPPSPHPSFNSKFPGADIDLSSLRAWGSNGFPKERFLSIDLTRITVVQLGMSLTEFFTSSSVTSTTLQCSSSEGRGSSPCLVTQGCNLISDTPILVSGFLSSIFRIRSLSSSLTSGSSGNTTASFLIFLCRARMYSSMNGHFP</sequence>
+                <xref id="L42810.1_72" name="L42810.1_72 [1659 - 1150] (REVERSE SENSE) Rattus norvegicus Ca2+/calmodulin-dependent protein kinase kinase mRNA, complete cds"/>
+                <matches/>
+            </protein>
+        </orf>
+    </nucleotide-sequence>
+</nucleotide-sequence-matches>

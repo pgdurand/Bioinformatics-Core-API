@@ -129,7 +129,14 @@ public class AnnotationDataModelConstants {
      buf.append(FEATURE_QUALIFIER_ANNOTATION_SEPARATOR_XREF);
      buf.append(" ");
      buf.append(description);
-     buf.append(".");
+     //e.g. Iprscan may provide description with or without ending '.'!
+     if(description.charAt(description.length()-1)=='.' == false) {
+       buf.append(".");
+     }
+   }
+   else {
+     buf.append(FEATURE_QUALIFIER_ANNOTATION_SEPARATOR_XREF);
+     buf.append(" -.");
    }
  }
  public static String formatDbxrefForQualifier(ANNOTATION_CATEGORY cat, String id, String description) {
@@ -141,7 +148,6 @@ public class AnnotationDataModelConstants {
      buf.append(id);
      break;
      default:
-       buf.append(cat.getEncoding());
        formatDataLine(buf, cat, id, description);
        break;
    }

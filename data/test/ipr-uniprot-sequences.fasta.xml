@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<protein-matches xmlns="http://www.ebi.ac.uk/interpro/resources/schemas/interproscan5" interproscan-version="5.28-67.0">
+    <protein>
+        <sequence md5="7bdff826f0ce29f97b1412b736244be2">WMDLWQSPLTMEDLICYSFQVARGMEFLASRKCIHRDLAARNILLSENNVVKICDFGLARDIYKDPDYVRKGSARLPLKWMAPESIFDKVYTTQSDVWSLGVLLWEIFSLGASPYPGVQINEEFCQRFKDGTRMRAPEYTTAEIYRIMLSCWHGDPKERPTFSDLVEILGNLLQENVQQEGKDYIPLNDSHSSEDDGFSQVPSSAQQNSDEEDFDMRIRCHSLAARYYNCVSFPGCLTGGNQIRCSSRIKTFEEFPMTHTMYKAHPDNQTDSGMVLASEEFERIENRHRKEGGFSSKGPNRTAELSAEQSDLRGRCRPSYGSQVGGQTFYNSEYGELSEHSEDRSCTPPAEGASPPALHASFFSEQY</sequence>
+        <xref id="tr|Q91356|Q91356_COTCO" name="tr|Q91356|Q91356_COTCO Vascular endothelial growth factor receptor 3 (Fragment) OS=Coturnix coturnix OX=9091 GN=endothelial kinase Quek2 PE=2 SV=1 GB=S65207"/>
+        <matches>
+            <hmmer3-match evalue="1.0E-71" score="241.2">
+                <signature ac="PF07714" desc="Protein tyrosine kinase" name="Pkinase_Tyr">
+                    <entry ac="IPR001245" desc="Serine-threonine/tyrosine-protein kinase, catalytic domain" name="Ser-Thr/Tyr_kinase_cat_dom" type="DOMAIN">
+                        <go-xref category="BIOLOGICAL_PROCESS" db="GO" id="GO:0006468" name="protein phosphorylation"/>
+                        <go-xref category="MOLECULAR_FUNCTION" db="GO" id="GO:0004672" name="protein kinase activity"/>
+                    </entry>
+                    <signature-library-release library="PFAM" version="31.0"/>
+                </signature>
+                <model-ac>PF07714</model-ac>
+                <locations>
+                    <hmmer3-location env-end="169" env-start="3" score="240.8" evalue="1.4E-71" hmm-start="99" hmm-end="260" hmm-length="260" hmm-bounds="C_TERMINAL_COMPLETE" start="7" end="169"/>
+                </locations>
+            </hmmer3-match>
+            <profilescan-match>
+                <signature ac="PS50011" desc="Protein kinase domain profile." name="PROTEIN_KINASE_DOM">
+                    <entry ac="IPR000719" desc="Protein kinase domain" name="Prot_kinase_dom" type="DOMAIN">
+                        <go-xref category="BIOLOGICAL_PROCESS" db="GO" id="GO:0006468" name="protein phosphorylation"/>
+                        <go-xref category="MOLECULAR_FUNCTION" db="GO" id="GO:0004672" name="protein kinase activity"/>
+                        <go-xref category="MOLECULAR_FUNCTION" db="GO" id="GO:0005524" name="ATP binding"/>
+                    </entry>
+                    <signature-library-release library="PROSITE_PROFILES" version="2017_09"/>
+                </signature>
+                <model-ac>PS50011</model-ac>
+                <locations>
+                    <profilescan-location score="29.036" start="1" end="173">
+                        <alignment>----------------------------------------------------------------------------------------------WmdlwqspLTMEDLICYSFQVARGMEFLASRKCIHRDLAARNILLSENNVVKICDFGLARDIYKDPDyvRKGSARLPLKWMAPESIF-DKVYTTQSDVWSLGVLLWEIFSlGASPYPGVQINEEFCQRFKDGTRMraP------EyTTAEIYRIMLSCWHGDPKERPTFSDLVEilGNLL</alignment>
+                    </profilescan-location>
+                </locations>
+            </profilescan-match>
+        </matches>
+    </protein>
+    <protein>
+        <sequence md5="c0b30d3dabc4b59490d30d0c16118bf8">MAAPSPSGGGGSGGGGGTPGPIGPPASGHPAVSSMQGKRKALKLNFANPPVKSTARFTLNPNTTGVQNPHIERLRTHSIESSGKLKISPEQHWDFTAEDLKDLGEIGRGAYGSVNKMVHKPSGQIMAVKRIRSTVDEKEQKQLLMDLDVVMRSSDCPYIVQFYGALFREGDCWICMELMSTSFDKFYKYVYSVLDDVIPEEILGKITLATVKALNHLKENLKIIHRDIKPSNILLDRSGNIKLCDFGISGQLVDSIAKTRDAGCRPYMAPERIDPSASRQGYDVRSDVWSLGITLYELATGRFPYPKWNSVFDQLTQVVKGDPPQLSNSEEREFSPSFINFVNLCLTKDESKRPKYKELLKHPFILMYEERTVEVACYVCKILDQMPATPSSPMYVD</sequence>
+        <xref id="sp|P47809|MP2K4_MOUSE" name="sp|P47809|MP2K4_MOUSE Dual specificity mitogen-activated protein kinase kinase 4 OS=Mus musculus OX=10090 GN=Map2k4 PE=1 SV=2 GB=MMU18310"/>
+        <matches>
+            <hmmer3-match evalue="1.5E-60" score="204.7">
+                <signature ac="PF00069" desc="Protein kinase domain" name="Pkinase">
+                    <entry ac="IPR000719" desc="Protein kinase domain" name="Prot_kinase_dom" type="DOMAIN">
+                        <go-xref category="BIOLOGICAL_PROCESS" db="GO" id="GO:0006468" name="protein phosphorylation"/>
+                        <go-xref category="MOLECULAR_FUNCTION" db="GO" id="GO:0004672" name="protein kinase activity"/>
+                        <go-xref category="MOLECULAR_FUNCTION" db="GO" id="GO:0005524" name="ATP binding"/>
+                    </entry>
+                    <signature-library-release library="PFAM" version="31.0"/>
+                </signature>
+                <model-ac>PF00069</model-ac>
+                <locations>
+                    <hmmer3-location env-end="365" env-start="100" score="204.4" evalue="1.8E-60" hmm-start="3" hmm-end="264" hmm-length="264" hmm-bounds="C_TERMINAL_COMPLETE" start="102" end="365"/>
+                </locations>
+            </hmmer3-match>
+            <profilescan-match>
+                <signature ac="PS50011" desc="Protein kinase domain profile." name="PROTEIN_KINASE_DOM">
+                    <entry ac="IPR000719" desc="Protein kinase domain" name="Prot_kinase_dom" type="DOMAIN">
+                        <go-xref category="BIOLOGICAL_PROCESS" db="GO" id="GO:0006468" name="protein phosphorylation"/>
+                        <go-xref category="MOLECULAR_FUNCTION" db="GO" id="GO:0004672" name="protein kinase activity"/>
+                        <go-xref category="MOLECULAR_FUNCTION" db="GO" id="GO:0005524" name="ATP binding"/>
+                    </entry>
+                    <signature-library-release library="PROSITE_PROFILES" version="2017_09"/>
+                </signature>
+                <model-ac>PS50011</model-ac>
+                <locations>
+                    <profilescan-location score="43.651" start="100" end="365">
+                        <alignment>LKDLGEIGRGAYGSVNKMVHKPSGQIMAVKRIRS-TVDEKEQKQLLMDLDVVMRSsDCPYIVQFYGALFREGDCWICMELMSTsfDKFYKYVYS---VlddvIPEEILGKITLATVKALNHLKENlKIIHRDIKPSNILLDRSGNIKLCDFGISGQLVD--SiAKTRDAGCRPYMAPERIDpsaSRQGYDVRSDVWSLGITLYELATGRFPYPKWNSVFDQLTQVVKG----DPPQLSNseereFSPSFINFVNLCLTKDESKRPKYKELLKHPFI</alignment>
+                    </profilescan-location>
+                </locations>
+            </profilescan-match>
+        </matches>
+    </protein>
+    <protein>
+        <sequence md5="00de0feff498320550573a6f8414d690">MDRDIEMEENHCRIAQRLEFPLSDEEDLHEASTGNNRTSSNSSSDRLDSSGSDEGLGMTIRITSPRKPRFIRSRAREPMSPPYSGVRALRLFDSPATPKTLLENSSAIMTPVLATPAPRNRMRTLFTMSSTKSSDKKDNMNTPPAANVNPFTPTGMLLTSKKRTRSKRSLNGSLVNSFDEEVHEATDESDEEMPPKRIALHQTSVPRYHKEFHEICLIGKGEFGSVHKCLNRLDGCTYAVKKSLMPVAGSPNERSALNEVWAHAVLGQHPHAVRYYSAWAENGHMIIQNEFCNSGTLEELIRTNQLNNVTVNEPQLKSTLLQIAEGLHYIHSKQLAHMDIKPGNIFICRENSDDCSVHHDSDDGFDELDDDYGSVTYKIGDLGHVTSVVQPIVEEGDCRYLPVEILRENYEHLTKADIFSLGLTIYEMAGGGQLPKNGDEWHAIRQGRLPYNGRYSIELHNLLELMIHPDPTLRPSTQVLTQHPVLGPNGAKSK</sequence>
+        <xref id="tr|Q9NA00|Q9NA00_9CRUS" name="tr|Q9NA00|Q9NA00_9CRUS Non-specific protein-tyrosine kinase (Fragment) OS=Daphnia magna OX=35525 GN=wee1-like CDK tyrosine kinase PE=2 SV=1 GB=AJ292557"/>
+        <matches>
+            <hmmer3-match evalue="3.7E-46" score="157.5">
+                <signature ac="PF00069" desc="Protein kinase domain" name="Pkinase">
+                    <entry ac="IPR000719" desc="Protein kinase domain" name="Prot_kinase_dom" type="DOMAIN">
+                        <go-xref category="BIOLOGICAL_PROCESS" db="GO" id="GO:0006468" name="protein phosphorylation"/>
+                        <go-xref category="MOLECULAR_FUNCTION" db="GO" id="GO:0004672" name="protein kinase activity"/>
+                        <go-xref category="MOLECULAR_FUNCTION" db="GO" id="GO:0005524" name="ATP binding"/>
+                    </entry>
+                    <signature-library-release library="PFAM" version="31.0"/>
+                </signature>
+                <model-ac>PF00069</model-ac>
+                <locations>
+                    <hmmer3-location env-end="486" env-start="212" score="157.1" evalue="4.9E-46" hmm-start="2" hmm-end="264" hmm-length="264" hmm-bounds="C_TERMINAL_COMPLETE" start="213" end="486"/>
+                </locations>
+            </hmmer3-match>
+            <profilescan-match>
+                <signature ac="PS50011" desc="Protein kinase domain profile." name="PROTEIN_KINASE_DOM">
+                    <entry ac="IPR000719" desc="Protein kinase domain" name="Prot_kinase_dom" type="DOMAIN">
+                        <go-xref category="BIOLOGICAL_PROCESS" db="GO" id="GO:0006468" name="protein phosphorylation"/>
+                        <go-xref category="MOLECULAR_FUNCTION" db="GO" id="GO:0004672" name="protein kinase activity"/>
+                        <go-xref category="MOLECULAR_FUNCTION" db="GO" id="GO:0005524" name="ATP binding"/>
+                    </entry>
+                    <signature-library-release library="PROSITE_PROFILES" version="2017_09"/>
+                </signature>
+                <model-ac>PS50011</model-ac>
+                <locations>
+                    <profilescan-location score="36.16" start="212" end="486">
+                        <alignment>FHEICLIGKGEFGSVHKCLNRLDGCTYAVKKSLMPVAGSPNERSALNEVWAHAVLgQHPHAVRYYSAWAENGHMIIQNEFCNSGTLEELIRTNQLNnvtVNEPQLKSTLLQIAEGLHYIHSKQLAHMDIKPGNIFICREnsddcsvhhdsddgfdeldddygsVTYKIGDLGHVTSV----VQPIVEEGDCRYLPVEILRENYEHLTKADIFSLGLTIYEMAGgGQLPK--NGDEWHAIRQGRLP--------YNGrYSIELHNLLELMIHPDPTLRPSTQVLTQHPVL</alignment>
+                    </profilescan-location>
+                </locations>
+            </profilescan-match>
+        </matches>
+    </protein>
+    <protein>
+        <sequence md5="8580c0c660d37d9762c7359968fdc105">MAASSLEQKLSRLEAKLKQENREARRRIDLNLDISPQRPRPTLQLPLANDGGSRSPSSESSPQHPTPPARPRHMLGLPSTLFTPRSMESIEIDQKLQEIMKQTGYLTIGGQRYQAEINDLENLGEMGSGTCGQVWKMRFRKTGHVIAVKQMRRSGNKEENKRILMDLDVVLKSHDCPYIVQCFGTFITNTDVFIAMELMGTCAEKLKKRMQGPIPERILGKMTVAIVKALYYLKEKHGVIHRDVKPSNILLDERGQIKLCDFGISGRLVDSKAKTRSAGCAAYMAPERIDPPDPTKPDYDIRADVWSLGISLVELATGQFPYKNCKTDFEVLTKVLQEEPPLLPGHMGFSGDFQSFVKDCLTKDHRKRPKYNKLLEHSFIKRYETLEVDVASWFKDVMAKTESPRTSGVLSQPHLPFFR</sequence>
+        <xref id="sp|O14733|MP2K7_HUMAN" name="sp|O14733|MP2K7_HUMAN Dual specificity mitogen-activated protein kinase kinase 7 OS=Homo sapiens OX=9606 GN=MAP2K7 PE=1 SV=2 GB=AF014401"/>
+        <matches>
+            <hmmer3-match evalue="3.0E-56" score="190.6">
+                <signature ac="PF00069" desc="Protein kinase domain" name="Pkinase">
+                    <entry ac="IPR000719" desc="Protein kinase domain" name="Prot_kinase_dom" type="DOMAIN">
+                        <go-xref category="BIOLOGICAL_PROCESS" db="GO" id="GO:0006468" name="protein phosphorylation"/>
+                        <go-xref category="MOLECULAR_FUNCTION" db="GO" id="GO:0004672" name="protein kinase activity"/>
+                        <go-xref category="MOLECULAR_FUNCTION" db="GO" id="GO:0005524" name="ATP binding"/>
+                    </entry>
+                    <signature-library-release library="PFAM" version="31.0"/>
+                </signature>
+                <model-ac>PF00069</model-ac>
+                <locations>
+                    <hmmer3-location env-end="380" env-start="120" score="190.3" evalue="3.8E-56" hmm-start="2" hmm-end="264" hmm-length="264" hmm-bounds="C_TERMINAL_COMPLETE" start="121" end="380"/>
+                </locations>
+            </hmmer3-match>
+            <profilescan-match>
+                <signature ac="PS50011" desc="Protein kinase domain profile." name="PROTEIN_KINASE_DOM">
+                    <entry ac="IPR000719" desc="Protein kinase domain" name="Prot_kinase_dom" type="DOMAIN">
+                        <go-xref category="BIOLOGICAL_PROCESS" db="GO" id="GO:0006468" name="protein phosphorylation"/>
+                        <go-xref category="MOLECULAR_FUNCTION" db="GO" id="GO:0004672" name="protein kinase activity"/>
+                        <go-xref category="MOLECULAR_FUNCTION" db="GO" id="GO:0005524" name="ATP binding"/>
+                    </entry>
+                    <signature-library-release library="PROSITE_PROFILES" version="2017_09"/>
+                </signature>
+                <model-ac>PS50011</model-ac>
+                <locations>
+                    <profilescan-location score="41.601" start="120" end="380">
+                        <alignment>LENLGEMGSGTCGQVWKMRFRKTGHVIAVKQMRRS--GNKeENKRILMDLDVVLKShDCPYIVQCFGTFITNTDVFIAMELMGTcaEKLKKRMQG---PIPERILGKMTVAIVKALYYLKEKhGVIHRDVKPSNILLDERGQIKLCDFGISGRLVDS-KAKTRSAGCAAYMAPERIDppdpTKPDYDIRADVWSLGISLVELATGQFPYKNCKTDFEVLTKVLQE--EP--P---LlpghmgFSGDFQSFVKDCLTKDHRKRPKYNKLLEHSFI</alignment>
+                    </profilescan-location>
+                </locations>
+            </profilescan-match>
+        </matches>
+    </protein>
+    <protein>
+        <sequence md5="9425534f4b4170e638254ca9822cd2e2">MERSPAVCCQDPRAELVERVAAISVAHLEEAEEGPEPASNGVDPPPRARAASVIPGSASRPTPVRPSLSARKFSLQERPAGSCLEAQVGPYSTGPASHMSPRAWRRPTIESHHVAISDTEDCVQLNQYKLQSEIGKGAYGVVRLAYNEREDRHYAMKVLSKKKLLKQYGFPRRPPPRGSQAPQGGPAKQLLPLERVYQEIAILKKLDHVNVVKLIEVLDDPAEDNLYLVFDLLRKGPVMEVPCDKPFPEEQARLYLRDIILGLEYLHCQKIVHRDIKPSNLLLGDDGHVKIADFGVSNQFEGNDAQLSSTAGTPAFMAPEAISDTGQSFSGKALDVWATGVTLYCFVYGKCPFIDEYILALHRKIKNEAVVFPEEPEVSEELKDLILKMLDKNPETRIGVSDIKLHPWVTKHGEEPLPSEEEHCSVVEVTEEEVKNSVKLIPSWTTVILVKSMLRKRSFGNPFEPQARREERSMSAPGNLLLKEGCGEGGKSPELPGVQEDEAAS</sequence>
+        <xref id="sp|P97756|KKCC1_RAT" name="sp|P97756|KKCC1_RAT Calcium/calmodulin-dependent protein kinase kinase 1 OS=Rattus norvegicus OX=10116 GN=Camkk1 PE=1 SV=1 GB=L42810"/>
+        <matches>
+            <hmmer3-match evalue="1.8E-62" score="211.0">
+                <signature ac="PF00069" desc="Protein kinase domain" name="Pkinase">
+                    <entry ac="IPR000719" desc="Protein kinase domain" name="Prot_kinase_dom" type="DOMAIN">
+                        <go-xref category="BIOLOGICAL_PROCESS" db="GO" id="GO:0006468" name="protein phosphorylation"/>
+                        <go-xref category="MOLECULAR_FUNCTION" db="GO" id="GO:0004672" name="protein kinase activity"/>
+                        <go-xref category="MOLECULAR_FUNCTION" db="GO" id="GO:0005524" name="ATP binding"/>
+                    </entry>
+                    <signature-library-release library="PFAM" version="31.0"/>
+                </signature>
+                <model-ac>PF00069</model-ac>
+                <locations>
+                    <hmmer3-location env-end="409" env-start="128" score="208.5" evalue="1.1E-61" hmm-start="1" hmm-end="264" hmm-length="264" hmm-bounds="COMPLETE" start="128" end="409"/>
+                </locations>
+            </hmmer3-match>
+            <profilescan-match>
+                <signature ac="PS50011" desc="Protein kinase domain profile." name="PROTEIN_KINASE_DOM">
+                    <entry ac="IPR000719" desc="Protein kinase domain" name="Prot_kinase_dom" type="DOMAIN">
+                        <go-xref category="BIOLOGICAL_PROCESS" db="GO" id="GO:0006468" name="protein phosphorylation"/>
+                        <go-xref category="MOLECULAR_FUNCTION" db="GO" id="GO:0004672" name="protein kinase activity"/>
+                        <go-xref category="MOLECULAR_FUNCTION" db="GO" id="GO:0005524" name="ATP binding"/>
+                    </entry>
+                    <signature-library-release library="PROSITE_PROFILES" version="2017_09"/>
+                </signature>
+                <model-ac>PS50011</model-ac>
+                <locations>
+                    <profilescan-location score="48.117" start="128" end="409">
+                        <alignment>YKLQSEIGKGAYGVVRLAYNEREDRHYAMKVLSKKKLLKQygfprrppprgsqapqggpakqllPLERVYQEIAILKKLDHVNVVKLIEVLDDPaeDNLYLVFDLLRKGPVMEVPCD---KpFPEEQARLYLRDIILGLEYLHCQKIVHRDIKPSNLLLGDDGHVKIADFGVSNQFEGNDAQLSSTAGTPAFMAPEAISdTGQSFSGkALDVWATGVTLYCFVYGKCPF--IdEYILALHRKIKNEAVVfPEEP---EVSEELKDLILKMLDKNPETRIGVSDIKLHPWV</alignment>
+                    </profilescan-location>
+                </locations>
+            </profilescan-match>
+        </matches>
+    </protein>
+    <protein>
+        <sequence md5="9ece8f2e893fcfdd0f35522f09dbaf3d">MALLRDVSLQDPRDRFELLQRVGAGTYGDVYKARDTVTSELAAVKIVKLDPGDDISSLQQEITILRECRHPNVVAYIGSYLRNDRLWICMEFCGGGSLQEIYHATGPLEERQIAYVCREALKGLHHLHSQGKIHRDIKGANLLLTLQGDVKLADFGVSGELTASVAKRRSFIGTPYWMAPEVAAVERKGGYNELCDVWALGITAIELGELQPPLFHLHPMRALMLMSKSSFQPPKLRDKTRWTQNFHHFLKLALTKNPKKRPTAEKLLQHPFTTQQLPRALLTQLLDKASDPHLGTPSPEDCELETYDMFPDTIHSRGQHGPAERTPSEIQFHQVKFGAPRRKETDPLNEPWEEEWTLLGKEELSGSLLQSVQEALEERSLTIRSASEFQELDSPDDTMGTIKRAPFLGPLPTDPPAEEPLSSPPGTLPPPPSGPNSSPLLPTAWATMKQREDPERSSCHGLPPTPKVHMGACFSKVFNGCPLRIHAAVTWIHPVTRDQFLVVGAEEGIYTLNLHELHEDTLEKLISHRCSWLYCVNNVLLSLSGKSTHIWAHDLPGLFEQRRLQQQVPLSIPTNRLTQRIIPRRFALSTKIPDTKGCLQCRVVRNPYTGATFLLAALPTSLLLLQWYEPLQKFLLLKNFSSPLPSPAGMLEPLVLDGKELPQVCVGAEGPEGPGCRVLFHVLPLEAGLTPDILIPPEGIPGSAQQVIQVDRDTILVSFERCVRIVNMQGEPTATLAPELTFDFPIETVVCLQDSVLAFWSHGMQGRSLDTNEVTQEITDETRIFRVLGAHRDIILESIPTDNPEAHSNLYILTGHQSTY</sequence>
+        <xref id="sp|Q12851|M4K2_HUMAN" name="sp|Q12851|M4K2_HUMAN Mitogen-activated protein kinase kinase kinase kinase 2 OS=Homo sapiens OX=9606 GN=MAP4K2 PE=1 SV=2 GB=BC047865"/>
+        <matches>
+            <hmmer3-match evalue="6.8E-62" score="209.5">
+                <signature ac="PF00780" desc="CNH domain" name="CNH">
+                    <entry ac="IPR001180" desc="Citron homology (CNH) domain" name="CNH_dom" type="DOMAIN"/>
+                    <signature-library-release library="PFAM" version="31.0"/>
+                </signature>
+                <model-ac>PF00780</model-ac>
+                <locations>
+                    <hmmer3-location env-end="790" env-start="492" score="209.0" evalue="9.5E-62" hmm-start="1" hmm-end="274" hmm-length="275" hmm-bounds="N_TERMINAL_COMPLETE" start="492" end="789"/>
+                </locations>
+            </hmmer3-match>
+            <hmmer3-match evalue="2.8E-61" score="207.1">
+                <signature ac="PF00069" desc="Protein kinase domain" name="Pkinase">
+                    <entry ac="IPR000719" desc="Protein kinase domain" name="Prot_kinase_dom" type="DOMAIN">
+                        <go-xref category="BIOLOGICAL_PROCESS" db="GO" id="GO:0006468" name="protein phosphorylation"/>
+                        <go-xref category="MOLECULAR_FUNCTION" db="GO" id="GO:0004672" name="protein kinase activity"/>
+                        <go-xref category="MOLECULAR_FUNCTION" db="GO" id="GO:0005524" name="ATP binding"/>
+                    </entry>
+                    <signature-library-release library="PFAM" version="31.0"/>
+                </signature>
+                <model-ac>PF00069</model-ac>
+                <locations>
+                    <hmmer3-location env-end="273" env-start="16" score="206.5" evalue="4.2E-61" hmm-start="1" hmm-end="263" hmm-length="264" hmm-bounds="N_TERMINAL_COMPLETE" start="16" end="272"/>
+                </locations>
+            </hmmer3-match>
+            <profilescan-match>
+                <signature ac="PS50011" desc="Protein kinase domain profile." name="PROTEIN_KINASE_DOM">
+                    <entry ac="IPR000719" desc="Protein kinase domain" name="Prot_kinase_dom" type="DOMAIN">
+                        <go-xref category="BIOLOGICAL_PROCESS" db="GO" id="GO:0006468" name="protein phosphorylation"/>
+                        <go-xref category="MOLECULAR_FUNCTION" db="GO" id="GO:0004672" name="protein kinase activity"/>
+                        <go-xref category="MOLECULAR_FUNCTION" db="GO" id="GO:0005524" name="ATP binding"/>
+                    </entry>
+                    <signature-library-release library="PROSITE_PROFILES" version="2017_09"/>
+                </signature>
+                <model-ac>PS50011</model-ac>
+                <locations>
+                    <profilescan-location score="47.637" start="16" end="273">
+                        <alignment>FELLQRVGAGTYGDVYKARDTVTSELAAVKIVKLD----PgdDISSLQQEITILRECRHPNVVAYIGSYLRNDRLWICMEFCGGGSLQEIYHA---TgpLEERQIAYVCREALKGLHHLHSQGKIHRDIKGANLLLTLQGDVKLADFGVSGELTASVAKRRSFIGTPYWMAPEVAAveRKGGYNELCDVWALGITAIELGELQPPLFHLHPMRALMLMSKSS-FQP--PKLRDktrWTQNFHHFLKLALTKNPKKRPTAEKLLQHPFT</alignment>
+                    </profilescan-location>
+                </locations>
+            </profilescan-match>
+            <profilescan-match>
+                <signature ac="PS50219" desc="Citron homology (CNH) domain profile." name="CNH">
+                    <entry ac="IPR001180" desc="Citron homology (CNH) domain" name="CNH_dom" type="DOMAIN"/>
+                    <signature-library-release library="PROSITE_PROFILES" version="2017_09"/>
+                </signature>
+                <model-ac>PS50219</model-ac>
+                <locations>
+                    <profilescan-location score="22.973" start="482" end="793">
+                        <alignment>PLRIHAAVTWIhpvtrDQFLVVGAEEGIYTL----NLHELHEDTLEKLISHR-CSWLYCVN--NVLLSLSgkSTHIWAHDLPGLFEqrrlqqqvplsiptnrltqriipRRFALSTKIPDTKGCLQCRVVRNPYTGATFLLAALPTSLLLLQWYE-PLQKFLLLKNFssPLPSPAGMLEPLVldgkeLPQVCVgAEGPEgpgcrvlFHVLPLEAGLTPDILIPP-----EGIPGSAQQVIQVDRDTILVSFERCVRIVNMQGEPTATLaPELTFDFPIETVVCLQDSVLAFWSHGMQGRSLDTNEVTQEITDETRIFRVLGAHRD</alignment>
+                    </profilescan-location>
+                </locations>
+            </profilescan-match>
+        </matches>
+    </protein>
+</protein-matches>
