@@ -36,8 +36,18 @@ import java.util.stream.Collectors;
  * */
 public class IprGffReader {
 
-  private String currentSeqRegion;
+  private String currentSeqRegion=null;
+  private String iprscanVersion=null;
+  private String date=null;
   
+  public String getIprScanVersion() {
+    return iprscanVersion;
+  }
+  
+  public String getIprScanDate() {
+    return date;
+  }
+
   /**
    * Read a ggf3 IPRscan data file.
    * 
@@ -48,7 +58,7 @@ public class IprGffReader {
   public List<IprGffObject> processFileToList(String inputFilePath) {
     List<IprGffObject> inputList = new ArrayList<IprGffObject>();
     try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(inputFilePath)));){
-      inputList = br.lines().skip(3).map(mapToItem).filter(o -> o!=null).collect(Collectors.toList());
+      inputList = br.lines().map(mapToItem).filter(o -> o!=null).collect(Collectors.toList());
     } catch (IOException e) {
       System.err.println(e);
     }
@@ -89,7 +99,13 @@ public class IprGffReader {
   
   private Function<String, IprGffObject> mapToItem = (line) -> {
     if (line.startsWith("#")) {
-      if(line.contains("sequence-region")) {
+      if(line.contains("interproscan-version")) {
+        //hope there is no exception in the IPRscan format...
+        //  we always expect ##interproscan-version number
+        //  so we get version as second string in the result of split!
+        iprscanVersion = line.split(" ")[1];
+      }
+      else if(line.contains("sequence-region")) {
         //hope there is no exception in the IPRscan format...
         //  we always expect ##sequence-region ID from to
         //  so we get ID as second string in the result of split!
@@ -103,6 +119,9 @@ public class IprGffReader {
       return null;
     }
     IprGffObject item = new IprGffObject(currentSeqRegion,p[0],p[1],p[2],p[3],p[4],p[5],p[6],p[7],p[8]);
+    if (date==null) {
+      date = item.getAttributeValue(IprGffObject.DATE_ATTR);
+    }
     return item;
   };
 }

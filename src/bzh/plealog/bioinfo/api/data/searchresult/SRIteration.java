@@ -20,6 +20,7 @@ import java.io.Serializable;
 import java.util.Enumeration;
 import java.util.List;
 
+import bzh.plealog.bioinfo.api.data.feature.FeatureTable;
 import bzh.plealog.bioinfo.api.data.sequence.DSequenceAlignment;
 import bzh.plealog.bioinfo.api.data.sequence.DSequenceException;
 
@@ -64,6 +65,12 @@ public interface SRIteration extends Serializable{
      */
     public int getIterationQueryLength();
     public void setIterationQueryLength(int len);
+
+    /**
+     * Returns the FeatureTable of the query sequence to which belongs this iteration.
+     */
+    public FeatureTable getIterationQueryFeatureTable();
+    public void setIterationQueryFeatureTable(FeatureTable ft);
 
     public void addHit(SRHit hit);
     

@@ -50,6 +50,7 @@ import bzh.plealog.bioinfo.api.data.searchresult.SRHsp;
 import bzh.plealog.bioinfo.api.data.searchresult.SRIteration;
 import bzh.plealog.bioinfo.api.data.searchresult.SROutput;
 import bzh.plealog.bioinfo.api.data.searchresult.io.SRLoader;
+import bzh.plealog.bioinfo.api.data.searchresult.io.SRWriter;
 import bzh.plealog.bioinfo.io.gff.iprscan.IprGffObject;
 import bzh.plealog.bioinfo.io.gff.iprscan.IprGffReader;
 import bzh.plealog.bioinfo.io.gff.iprscan.IprPrediction;
@@ -62,7 +63,12 @@ import bzh.plealog.bioinfo.io.searchresult.txt.TxtExportSROutput;
 public class TestFeatureSystem {
   private static File     blastFile;
   private static File     blastFile2;
-	private static SRLoader nativeBlastLoader;
+  private static File     blastFile3;
+  private static File     iprscanFile;
+  private static File     tmpFile;
+  private static SRLoader nativeBlastLoader;
+  private static SRLoader ncbiBlastLoader2;
+  private static SRWriter nativeBlastWriter;
   private static boolean _firstHspOnly = false;
   private static boolean _bestHitOnly = false;
 	
@@ -77,12 +83,25 @@ public class TestFeatureSystem {
 		// sample NCBI legacy Blast result
 		blastFile = new File("data/test/hits_with_full_annot.zml");
 		blastFile2 = new File("data/test/hits_with_bco.zml");
+		//iprscan prot data file
+		iprscanFile = new File("data/test/ipr-uniprot-sequences.fasta.gff3");
+		//corresponding blastp file (contains sams queries as iprscan date file)
+		blastFile3 = new File("data/test/ipr-uniprot-sequences-blastp-sw.xml");
+	  // setup a temp file (will be deleted in tearDownAfterClass())
+    tmpFile = File.createTempFile("featureTest", ".zml");
+    //dump tmp file to help debugging
+    System.out.println("Temp file is: "+ tmpFile.getAbsolutePath());
 		// setup a native BOutput loader
 		nativeBlastLoader = SerializerSystemFactory.getLoaderInstance(SerializerSystemFactory.NATIVE_LOADER);
+	  // setup an NCBI Blast Loader (XML2 single file)
+		ncbiBlastLoader2 = SerializerSystemFactory.getLoaderInstance(SerializerSystemFactory.NCBI_LOADER2);
+	  // setup a native BOutput writer
+    nativeBlastWriter = SerializerSystemFactory.getWriterInstance(SerializerSystemFactory.NATIVE_WRITER);
 	}
 
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception {
+	  //tmpFile.delete();
 	}
 	@Before
 	public void setUp() throws Exception {
@@ -224,7 +243,11 @@ public class TestFeatureSystem {
     assertEquals(4, gffMap.size());
     
     IprPredictions iprs = new IprPredictions(gffMap.get("GAAA01000103.1"));
+    iprs.setIprscanVersion(gr.getIprScanVersion());
+    iprs.setIprscanDate(gr.getIprScanDate());
     
+    assertEquals(iprs.getIprscanVersion(), "5.28-67.0");
+    assertEquals(iprs.getIprscanDate(), "11-09-2020");
     List<IprPrediction> prs = iprs.getAllDomains();
     assertEquals(20, prs.size());
     Hashtable<String, Long> refValues= new Hashtable<>();
@@ -447,4 +470,79 @@ public class TestFeatureSystem {
         4);
   }
 
+  private void annotatBlastWithIprscan(SROutput bo, Map<String, List<IprGffObject>> gffMap) {
+    //annotate queries located in the blast results with IPRscan domain prediction
+    Enumeration<SRIteration> enumIter = bo.enumerateIteration();
+    while(enumIter.hasMoreElements()) {
+      SRIteration iter = enumIter.nextElement();
+      String qId = iter.getIterationQueryID();
+      List<IprGffObject> gffObjs = gffMap.get(qId);
+      if (gffObjs==null) {
+        qId = iter.getIterationQueryDesc().split(" ")[0];
+        gffObjs = gffMap.get(qId);
+      }
+      if (gffObjs!=null) {
+        FeatureTable ft = new IprPredictions(gffObjs).getFeatureTable(true);
+        iter.setIterationQueryFeatureTable(ft);
+      }
+    }
+
+  }
+  
+  private void controlAnnotatedBlast(SROutput bo) {
+    Enumeration<SRIteration> enumIter = bo.enumerateIteration();
+    int countAnnotatedQueries=0;
+    while(enumIter.hasMoreElements()) {
+      SRIteration iter = enumIter.nextElement();
+      countAnnotatedQueries += (iter.getIterationQueryFeatureTable()!=null ? 1:0);
+    }
+    assertEquals(6, countAnnotatedQueries);
+  }
+  
+  @Test
+  public void testIprAnnotateBlastResult() {
+    //Load interpro-scan data file
+    String gff_file=iprscanFile.getAbsolutePath();
+    IprGffReader gr = new IprGffReader();
+    Map<String, List<IprGffObject>> gffMap = gr.processFileToMap(gff_file);
+    assertNotNull(gffMap);
+    assertEquals(6, gffMap.size());
+    
+    //Load corresponding  blastp data file
+    SROutput bo = ncbiBlastLoader2.load(blastFile3);
+    assertNotNull(bo);
+    assertTrue(bo.countIteration()==6);
+
+    //annotate Blast result (queries) with IPRscan predictions
+    annotatBlastWithIprscan(bo, gffMap);
+    
+    //do a little control: all queries should have been annotated
+    controlAnnotatedBlast(bo);
+  }
+  
+  @Test
+  public void testIprAnnotateBlastResult_IO() {
+    //Load interpro-scan data file
+    String gff_file=iprscanFile.getAbsolutePath();
+    IprGffReader gr = new IprGffReader();
+    Map<String, List<IprGffObject>> gffMap = gr.processFileToMap(gff_file);
+    assertNotNull(gffMap);
+    assertEquals(6, gffMap.size());
+    
+    //Load corresponding  blastp data file
+    SROutput bo = ncbiBlastLoader2.load(blastFile3);
+    assertNotNull(bo);
+    assertTrue(bo.countIteration()==6);
+
+    //annotate Blast result (queries) with IPRscan predictions
+    annotatBlastWithIprscan(bo, gffMap);
+
+    //save annotated blast results
+    nativeBlastWriter.write(tmpFile, bo);
+    //reload that file
+    bo = nativeBlastLoader.load(tmpFile);
+    
+    //do a little control: all queries should have been annotated
+    controlAnnotatedBlast(bo);
+  }
 }

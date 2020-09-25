@@ -37,6 +37,8 @@ import bzh.plealog.bioinfo.api.data.feature.FeatureTable;
 public class IprPredictions {
 
   private List<IprPrediction> gffObjs;
+  private String iprscanVersion;
+  private String date;
   
   /**
    * Constructor.
@@ -49,6 +51,23 @@ public class IprPredictions {
       gffObjs.add(new IprPrediction(gff));
     }
   }
+
+  public String getIprscanVersion() {
+    return iprscanVersion;
+  }
+
+  public void setIprscanVersion(String iprscanVersion) {
+    this.iprscanVersion = iprscanVersion;
+  }
+
+  public void setIprscanDate(String d) {
+    this.date = d;
+  }
+
+  public String getIprscanDate() {
+    return date;
+  }
+
 
   /**
    * Return number of domain predictions.
@@ -114,6 +133,9 @@ public class IprPredictions {
         }
       }
     }
+    
+    ft.setSource(getIprscanVersion());
+    ft.setDate(getIprscanDate());
     
     //now, we may have to adjust domain location with regard to user provided
     //sequence. In case of protein: nothing to do. In case of nucleotide: remap

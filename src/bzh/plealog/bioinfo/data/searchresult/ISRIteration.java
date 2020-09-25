@@ -1,4 +1,4 @@
-/* Copyright (C) 2006-2016 Patrick G. Durand
+/* Copyright (C) 2006-2020 Patrick G. Durand
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published by
@@ -22,6 +22,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import bzh.plealog.bioinfo.api.core.config.CoreSystemConfigurator;
+import bzh.plealog.bioinfo.api.data.feature.FeatureTable;
 import bzh.plealog.bioinfo.api.data.searchresult.SRHit;
 import bzh.plealog.bioinfo.api.data.searchresult.SRHsp;
 import bzh.plealog.bioinfo.api.data.searchresult.SRIteration;
@@ -74,6 +75,11 @@ public class ISRIteration implements SRIteration{
 	 */
     private ArrayList<SRHit>          hitList;
 
+    /**
+     * @serial
+     */
+    private FeatureTable qFeatTable;
+    
     private transient DSequenceAlignment msa_;
     
     private static final String MSA_BUILD_ERR_MSG_HEADER = "Unable to create MSA";
@@ -88,7 +94,8 @@ public class ISRIteration implements SRIteration{
         return ibi;
     }
     /**
-     * All the object but the MSA is copied.
+     * All the objects but the MSA are copied. If not shallow, IterQueryFeatureTable (if any) and all hits 
+     * data are also cloned. Otherwise objects reference are copied from one SRIteration to the cloned one.
      */
     public void copy(ISRIteration src, boolean shallow){
         Enumeration<SRHit> myEnum;
@@ -101,6 +108,15 @@ public class ISRIteration implements SRIteration{
         this.setIterationQueryDesc(src.getIterationQueryDesc());
         this.setIterationQueryID(src.getIterationQueryID());
         this.setIterationQueryLength(src.getIterationQueryLength());
+        if (src.getIterationQueryFeatureTable()!=null) {
+          if (!shallow){
+            this.setIterationQueryFeatureTable((FeatureTable)src.getIterationQueryFeatureTable().clone());
+          }
+          else{
+            this.setIterationQueryFeatureTable(src.getIterationQueryFeatureTable());
+          }
+        }
+        
         if (!shallow){
             myEnum = src.enumerateHit();
             while(myEnum.hasMoreElements()){
@@ -128,6 +144,9 @@ public class ISRIteration implements SRIteration{
     public int getIterationQueryLength(){return qLength;}
     public void setIterationQueryLength(int len){qLength=len;}
     
+    public FeatureTable getIterationQueryFeatureTable() {return qFeatTable;}
+    public void setIterationQueryFeatureTable(FeatureTable ft) {qFeatTable=ft;}
+
     public void setHitList(ArrayList<SRHit> lst){hitList = lst;}
     public ArrayList<SRHit> getHitList(){return hitList;}
     
