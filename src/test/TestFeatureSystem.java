@@ -545,4 +545,47 @@ public class TestFeatureSystem {
     //do a little control: all queries should have been annotated
     controlAnnotatedBlast(bo);
   }
+  
+  @Test
+  public void testNewSRClassificationExtractor(){
+    TreeMap<String, TreeMap<AnnotationDataModelConstants.ANNOTATION_CATEGORY, HashMap<String, AnnotationDataModel>>> annotatedHitsHashMap = null;
+    TreeMap<AnnotationDataModelConstants.ANNOTATION_CATEGORY, TreeMap<String, AnnotationDataModel>> annotationDictionary = null;
+
+    // LOad sample data set (BLASTp results annotated using BeeDeeM Annotatot Tool)
+    SROutput bo = nativeBlastLoader.load(blastFile2);
+    assertNotNull(bo);
+    
+    // Extract Bio Classification: IPR, EC, GO and TAX
+    SRClassification classif1=null, classif2=null;
+    long time = System.currentTimeMillis();
+    int loops = 1000;
+    for(int i= 0; i < loops; i++) {
+      annotatedHitsHashMap = new TreeMap<String, TreeMap<AnnotationDataModelConstants.ANNOTATION_CATEGORY, HashMap<String, AnnotationDataModel>>>();
+      annotationDictionary = new TreeMap<AnnotationDataModelConstants.ANNOTATION_CATEGORY, TreeMap<String, AnnotationDataModel>>();
+      ExtractAnnotation.buildAnnotatedHitDataSet(bo, 0, annotatedHitsHashMap, annotationDictionary);
+      classif1 = ExtractAnnotation.buildClassificationDataSet(annotationDictionary);
+    }
+    System.out.println("Old classif extractor: "+(System.currentTimeMillis()-time) + "ms");
+    
+    time = System.currentTimeMillis();
+    for(int i= 0; i < loops; i++) {
+      classif2 = ExtractAnnotation.getClassificationdata(bo);
+    }
+    System.out.println("New classif extractor: "+(System.currentTimeMillis()-time) + "ms");
+    
+    Enumeration<String> enumIds = classif1.getTermIDs();
+    while(enumIds.hasMoreElements()) {
+      String id = enumIds.nextElement();
+      assertNotNull(classif2.getTerm(id));
+    }
+
+    enumIds = classif2.getTermIDs();
+    while(enumIds.hasMoreElements()) {
+      String id = enumIds.nextElement();
+      if(id.startsWith("PF")==false) {//ExtractAnnotation.buildAnnotatedHitDataSet() does not handle PFAM
+        assertNotNull(classif1.getTerm(id));
+      }
+    }
+  }
+  
 }

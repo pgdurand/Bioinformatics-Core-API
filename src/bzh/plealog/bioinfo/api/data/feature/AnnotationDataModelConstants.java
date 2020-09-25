@@ -1,5 +1,8 @@
 package bzh.plealog.bioinfo.api.data.feature;
 
+import java.util.HashSet;
+import java.util.Hashtable;
+
 import org.apache.commons.lang.StringUtils;
 
 /* Copyright (C) 2006-2018 Patrick G. Durand
@@ -51,6 +54,19 @@ public class AnnotationDataModelConstants {
       return encoding;
     }
   }
+  
+  //Utility Set to locate Qualifier values from FeatureTable that are capable
+  //of providing classification terms
+  @SuppressWarnings("serial")
+  public static Hashtable<String, ANNOTATION_CATEGORY> CLASSIF_TERM_PROVIDER = new Hashtable<String, ANNOTATION_CATEGORY>() {{
+    put(ANNOTATION_CATEGORY.TAX.getEncoding(), ANNOTATION_CATEGORY.TAX);
+    put(ANNOTATION_CATEGORY.EC.getEncoding(), ANNOTATION_CATEGORY.EC);
+    put(ANNOTATION_CATEGORY.GO.getEncoding(), ANNOTATION_CATEGORY.GO);
+    put(ANNOTATION_CATEGORY.IPR.getEncoding(), ANNOTATION_CATEGORY.IPR);
+    put(ANNOTATION_CATEGORY.PFM.getEncoding(), ANNOTATION_CATEGORY.PFM);
+    put(ANNOTATION_CATEGORY.PS.getEncoding(), ANNOTATION_CATEGORY.PS);
+  }};
+
   //Special keys to get information about GO sub-classifications
   public static enum ANNOTATION_GO_SUBCATEGORY {
     P ("P","Biological Process"), 
@@ -119,6 +135,15 @@ public class AnnotationDataModelConstants {
   public static final String FEATURE_QUALIFIER_ANNOTATION_KEYWORD_NIL = "";
   public static final String FEATURE_PROTEIN_KEYWORD = "protein";
   public static final String FEATURE_SOURCE_KEYWORD = "source";
+  
+  //Utility Set to locate Qualfiers from FeatureTable that are capable
+  //of providing classification data
+  @SuppressWarnings("serial")
+  public static HashSet<String> CLASSIF_PROVIDER = new HashSet<String>() {{
+    add(FEATURE_QUALIFIER_XREF);
+    add(FEATURE_QUALIFIER_ENZYME);
+  }};
+  
   
  private static void formatDataLine(StringBuffer buf, ANNOTATION_CATEGORY cat, String id, String description) {
    buf.append(cat.getEncoding());

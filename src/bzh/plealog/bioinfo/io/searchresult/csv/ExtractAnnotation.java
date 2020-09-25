@@ -37,6 +37,7 @@ import bzh.plealog.bioinfo.api.data.searchresult.SRHit;
 import bzh.plealog.bioinfo.api.data.searchresult.SRHsp;
 import bzh.plealog.bioinfo.api.data.searchresult.SRIteration;
 import bzh.plealog.bioinfo.api.data.searchresult.SROutput;
+import bzh.plealog.bioinfo.io.searchresult.txt.TxtExportSROutput;
 
 public class ExtractAnnotation {
 
@@ -692,6 +693,272 @@ public class ExtractAnnotation {
       buildClassificationDataSet(refClassification, classification, annotatedHitsHashMap, output_file_index, iteration_index, i);
     }
     return classification;
+  }
+
+  private static void addClassifTerm(SRClassification classification, String id, String desc, 
+      AnnotationDataModelConstants.ANNOTATION_CATEGORY cat) {
+    if (classification.getTerm(id)==null) {
+      SRCTerm term = CoreSystemConfigurator.getSRFactory().creationBTerm();
+      term.setDescription(desc);
+      term.setType(cat.getType());
+      if(cat.equals(AnnotationDataModelConstants.ANNOTATION_CATEGORY.TAX) ||
+          cat.equals(AnnotationDataModelConstants.ANNOTATION_CATEGORY.EC)){
+        id = cat.getType()+":"+id;
+      }
+      classification.addTerm(id, term);
+    }
+  }
+  
+
+  /**
+   * Collect classification data from a Feature.
+   * 
+   * @param classif classification object filled in by this method
+   * @param feature from where to collect classification data
+   * 
+   * @see AnnotationDataModelConstants.CLASSIF_TERM_PROVIDER to review collected classification data
+   * */
+  public static void prepareClassificationdata(SRClassification classif, Feature feature) {
+    Enumeration<Qualifier> enumQualifiers;
+    Qualifier qualifier;
+    String qName, qValue, id, desc, term;
+    int idx;
+
+    enumQualifiers = feature.enumQualifiers();
+    while (enumQualifiers.hasMoreElements()) {
+      qualifier = (Qualifier) enumQualifiers.nextElement();
+      qName = qualifier.getName();
+      if (!AnnotationDataModelConstants.CLASSIF_PROVIDER.contains(qName)) {
+        continue;
+      }
+      qValue = qualifier.getValue();
+      //NCBI Taxonomy
+      if (qValue.startsWith(AnnotationDataModelConstants.FEATURE_QUALIFIER_ANNOTATION_KEYWORD_TAXON)) {
+        StringTokenizer tokenizer = new StringTokenizer(qValue, 
+            AnnotationDataModelConstants.FEATURE_QUALIFIER_ANNOTATION_SEPARATOR_NCBI+
+            AnnotationDataModelConstants.FEATURE_QUALIFIER_ANNOTATION_SEPARATOR_SWISSPROT);
+        if (tokenizer.countTokens()==2) {
+          tokenizer.nextToken();//skip FEATURE_QUALIFIER_ANNOTATION_KEYWORD_TAXON
+          id = tokenizer.nextToken().trim();
+          addClassifTerm(
+              classif, 
+              id, 
+              null, 
+              AnnotationDataModelConstants.ANNOTATION_CATEGORY.TAX);
+          continue;
+        }
+        
+      }
+      if (qName.equals(AnnotationDataModelConstants.FEATURE_QUALIFIER_ENZYME)) {
+        addClassifTerm(
+            classif, 
+            qValue, 
+            null, 
+            AnnotationDataModelConstants.ANNOTATION_CATEGORY.EC);
+        continue;
+      }
+      // Standard Swissprot db_xref format:
+      // annotation_type + SEPARATOR + BLANK + key + SEPARATOR + BLANK + label
+      // e.g. InterPro; IPR000485; HTH_AsnC_lrp.
+      idx = qValue.indexOf(AnnotationDataModelConstants.FEATURE_QUALIFIER_ANNOTATION_SEPARATOR_SWISSPROT);
+      if (idx<0) {
+        continue;
+      }
+      term = qValue.substring(0, idx).trim();
+      //do we handle that classification?
+      if (AnnotationDataModelConstants.CLASSIF_TERM_PROVIDER.containsKey(term)){
+        StringTokenizer tokenizer = new StringTokenizer(qValue, 
+            AnnotationDataModelConstants.FEATURE_QUALIFIER_ANNOTATION_SEPARATOR_SWISSPROT);
+        tokenizer.nextToken();//skip FEATURE_QUALIFIER_ANNOTATION_KEYWORD_TAXON
+        id = tokenizer.nextToken().trim();
+        if (tokenizer.hasMoreTokens()) {
+          desc = tokenizer.nextToken();
+          if (desc.equals("-.")) {//no description
+            desc=null;
+          }
+        }
+        else {
+          desc=null;
+        }
+        addClassifTerm(
+            classif, 
+            id, 
+            desc, 
+            AnnotationDataModelConstants.CLASSIF_TERM_PROVIDER.get(term));
+      }
+    }
+  }
+  
+  /**
+   * Collect classification data from a FeatureTable.
+   * 
+   * @param classif classification object filled in by this method
+   * @param featureTable from where to collect classification data
+   * 
+   * @see AnnotationDataModelConstants.CLASSIF_TERM_PROVIDER to review collected classification data
+   * */
+  public static void prepareClassificationdata(SRClassification classif, FeatureTable featureTable) {
+    Enumeration<Feature> enumFeatures;
+    
+    enumFeatures = featureTable.enumFeatures();
+    while (enumFeatures.hasMoreElements()) {
+      prepareClassificationdata(classif, (Feature) enumFeatures.nextElement());
+      
+    }
+  }
+
+  /**
+   * Collect classification data from a FeatureTable.
+   * 
+   * @param featureTable from where to collect classification data
+   * 
+   * @see AnnotationDataModelConstants.CLASSIF_TERM_PROVIDER to review collected classification data
+   * 
+   * @return collected classification data
+   * */
+  public static SRClassification getClassificationdata(FeatureTable featureTable) {
+    SRClassification classif = CoreSystemConfigurator.getSRFactory().creationBClassification();
+    prepareClassificationdata(classif, featureTable);
+    return classif;
+  }
+
+  /**
+   * Collect classification data from a SRHit.
+   * 
+   * @param classif classification object filled in by this method
+   * @param hit from where to collect classification data
+   * @param firstHspOnly retrieve data from first HSP or all HSPs
+   * 
+   * @see AnnotationDataModelConstants.CLASSIF_TERM_PROVIDER to review collected classification data
+   * */
+  public static void prepareClassificationdata(SRClassification classif, SRHit hit, boolean firstHspOnly) {
+    int k, size3;
+    SRHsp hsp;
+    // Loop over each Hit and get Bio Classification data
+    size3 = hit.countHsp();
+    for (k = 0; k < size3; k++) {// loop on hsp
+      hsp = hit.getHsp(k);
+      prepareClassificationdata(classif, hsp.getFeatures());
+      if (firstHspOnly) {
+        break;
+      }
+    }
+  }
+
+  /**
+   * Collect classification data from a SRIteration.
+   * 
+   * @param classif classification object filled in by this method
+   * @param sri from where to collect classification data
+   * @param bestHitOnly retrieve data from best hit only or all hit
+   * @param firstHspOnly retrieve data from first HSP or all HSPs
+   * 
+   * @see AnnotationDataModelConstants.CLASSIF_TERM_PROVIDER to review collected classification data
+   * */
+  public static void prepareClassificationdata(SRClassification classif, SRIteration sri, boolean bestHitOnly, boolean firstHspOnly) {
+    int j, size2;
+    // Loop over each Hit and get Bio Classification data
+    size2 = sri.countHit();
+    for (j = 0; j < size2; j++) {// loop on hits
+      prepareClassificationdata(classif, sri.getHit(j), firstHspOnly);
+      if (bestHitOnly) {
+        break;
+      }
+    }
+  }
+
+  /**
+   * Collect classification data from a SROutput.
+   * 
+   * @param bo from where to collect classification data
+   * @param bestHitOnly retrieve data from best hit only or all hit
+   * @param firstHspOnly retrieve data from first HSP or all HSPs
+   * 
+   * @see AnnotationDataModelConstants.CLASSIF_TERM_PROVIDER to review collected classification data
+   * 
+   * @return collected classification data
+   * */
+  public static SRClassification getClassificationdata(SROutput bo, boolean bestHitOnly, boolean firstHspOnly) {
+    SRClassification classif = CoreSystemConfigurator.getSRFactory().creationBClassification();
+    int i, size;
+    // Loop over each Hit and get Bio Classification data
+    size = bo.countIteration();
+    for (i = 0; i < size; i++) {// loop on iterations
+      prepareClassificationdata(classif, bo.getIteration(i), bestHitOnly, firstHspOnly);
+    }
+    return classif;
+  }
+
+  /**
+   * Collect classification data from a SROutput. All hits and all HSPs are scanned from data.
+   * 
+   * @param bo from where to collect classification data
+   * 
+   * @see AnnotationDataModelConstants.CLASSIF_TERM_PROVIDER to review collected classification data
+   * 
+   * @return collected classification data
+   * */
+  public static SRClassification getClassificationdata(SROutput bo) {
+    return getClassificationdata(bo, false, false);
+  }
+
+  /**
+   * Collect classification data from a SRIteration.
+   * 
+   * @param sri from where to collect classification data
+   * @param bestHitOnly retrieve data from best hit only or all hit
+   * @param firstHspOnly retrieve data from first HSP or all HSPs
+   * 
+   * @see AnnotationDataModelConstants.CLASSIF_TERM_PROVIDER to review collected classification data
+   * 
+   * @return collected classification data
+   * */
+  public static SRClassification getClassificationdata(SRIteration sri, boolean bestHitOnly, boolean firstHspOnly) {
+    SRClassification classif = CoreSystemConfigurator.getSRFactory().creationBClassification();
+    prepareClassificationdata(classif, sri, bestHitOnly, firstHspOnly);
+    return classif;
+  }
+  
+  /**
+   * Collect classification data from a SRIteration. All hits and all HSPs are scanned from data.
+   * 
+   * @param sri from where to collect classification data
+   * 
+   * @see AnnotationDataModelConstants.CLASSIF_TERM_PROVIDER to review collected classification data
+   * 
+   * @return collected classification data
+   * */
+  public static SRClassification getClassificationdata(SRIteration sri) {
+    return getClassificationdata(sri, false, false);
+  }
+  
+  /**
+   * Collect classification data from a SRHit.
+   * 
+   * @param hit from where to collect classification data
+   * @param firstHspOnly retrieve data from first HSP or all HSPs
+   * 
+   * @see AnnotationDataModelConstants.CLASSIF_TERM_PROVIDER to review collected classification data
+   * 
+   * @return collected classification data
+   * */
+  public static SRClassification getClassificationdata(SRHit hit, boolean firstHspOnly) {
+    SRClassification classif = CoreSystemConfigurator.getSRFactory().creationBClassification();
+    prepareClassificationdata(classif, hit, firstHspOnly);
+    return classif;
+  }
+
+  /**
+   * Collect classification data from a SRHit. Collect data from all HSPs.
+   * 
+   * @param hit from where to collect classification data
+   * 
+   * @see AnnotationDataModelConstants.CLASSIF_TERM_PROVIDER to review collected classification data
+   * 
+   * @return collected classification data
+   * */
+  public static SRClassification getClassificationdata(SRHit hit) {
+    return getClassificationdata(hit, false);
   }
 
 }
