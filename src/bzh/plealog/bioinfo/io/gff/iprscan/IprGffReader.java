@@ -30,7 +30,7 @@ import java.util.stream.Collectors;
 /**
  * IprScan ggf3 file reader.
  * 
- * @see test.TestSerialSystem for sample use case
+ * @see test.TestFeatureSystem for sample use case
  * 
  * @author Patrick G. Durand
  * */

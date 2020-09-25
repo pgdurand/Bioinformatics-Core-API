@@ -30,7 +30,7 @@ import bzh.plealog.bioinfo.api.data.feature.FeatureTable;
  * of IprGffObjects to a FeatureTable instance suitable to be used by all other
  * Core APIs in this library.
  * 
- * @see test.TestSerialSystem for sample use case
+ * @see test.TestFeatureSystem for sample use case
 
  * @author Patrick G. Durand
  */

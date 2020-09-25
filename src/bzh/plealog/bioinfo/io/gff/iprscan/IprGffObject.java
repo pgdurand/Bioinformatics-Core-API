@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 /**
  * Model class representing an IPRscan prediction line as read in a gff3 data file.
  * 
- * @see test.TestSerialSystem for sample use case
+ * @see test.TestFeatureSystem for sample use case
  * 
  * @author Patrick G. Durand
  */
