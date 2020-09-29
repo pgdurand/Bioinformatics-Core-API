@@ -37,7 +37,6 @@ import bzh.plealog.bioinfo.api.data.searchresult.SRHit;
 import bzh.plealog.bioinfo.api.data.searchresult.SRHsp;
 import bzh.plealog.bioinfo.api.data.searchresult.SRIteration;
 import bzh.plealog.bioinfo.api.data.searchresult.SROutput;
-import bzh.plealog.bioinfo.io.searchresult.txt.TxtExportSROutput;
 
 public class ExtractAnnotation {
 
@@ -772,13 +771,13 @@ public class ExtractAnnotation {
         tokenizer.nextToken();//skip FEATURE_QUALIFIER_ANNOTATION_KEYWORD_TAXON
         id = tokenizer.nextToken().trim();
         if (tokenizer.hasMoreTokens()) {
-          desc = tokenizer.nextToken();
+          desc = tokenizer.nextToken().trim();
           if (desc.equals("-.")) {//no description
-            desc=null;
+            desc=AnnotationDataModelConstants.FEATURE_EMPTY_DESC;
           }
         }
         else {
-          desc=null;
+          desc=AnnotationDataModelConstants.FEATURE_EMPTY_DESC;
         }
         addClassifTerm(
             classif, 

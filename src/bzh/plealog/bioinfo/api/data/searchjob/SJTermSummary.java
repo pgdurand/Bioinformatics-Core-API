@@ -27,14 +27,14 @@ import bzh.plealog.bioinfo.api.data.searchresult.SRCTerm;
  * 
  * @author Patrick G. Durand
  */
-public class SRTermSummary {
+public class SJTermSummary {
   private String _id;
   private SRCTerm _term;
   private String _viewType = "-";
   
   private static MessageFormat VIEW_TYPE_FORMAT = new MessageFormat("{0}:{1}")  ;
   
-  public SRTermSummary(String id, SRCTerm term) {
+  public SJTermSummary(String id, SRCTerm term) {
     _id = id;
     _term = term;
     //handle sub-classification (C, P or F) for GO. 

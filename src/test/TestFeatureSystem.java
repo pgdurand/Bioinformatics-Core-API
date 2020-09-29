@@ -44,6 +44,7 @@ import bzh.plealog.bioinfo.api.data.feature.AnnotationDataModelConstants;
 import bzh.plealog.bioinfo.api.data.feature.Feature;
 import bzh.plealog.bioinfo.api.data.feature.FeatureTable;
 import bzh.plealog.bioinfo.api.data.feature.Qualifier;
+import bzh.plealog.bioinfo.api.data.searchjob.SJFileSummary;
 import bzh.plealog.bioinfo.api.data.searchresult.SRClassification;
 import bzh.plealog.bioinfo.api.data.searchresult.SRHit;
 import bzh.plealog.bioinfo.api.data.searchresult.SRHsp;
@@ -64,6 +65,7 @@ public class TestFeatureSystem {
   private static File     blastFile;
   private static File     blastFile2;
   private static File     blastFile3;
+  private static File     blastFile4;
   private static File     iprscanFile;
   private static File     tmpFile;
   private static SRLoader nativeBlastLoader;
@@ -89,6 +91,9 @@ public class TestFeatureSystem {
 		blastFile3 = new File("data/test/ipr-uniprot-sequences-blastp-sw.xml");
 	  // setup a temp file (will be deleted in tearDownAfterClass())
     tmpFile = File.createTempFile("featureTest", ".zml");
+    //
+    blastFile4 = new File("data/test/blastp-71queries-swissprot-bco.zml");
+
     //dump tmp file to help debugging
     System.out.println("Temp file is: "+ tmpFile.getAbsolutePath());
 		// setup a native BOutput loader
@@ -544,6 +549,7 @@ public class TestFeatureSystem {
     
     //do a little control: all queries should have been annotated
     controlAnnotatedBlast(bo);
+    
   }
   
   @Test
@@ -587,5 +593,34 @@ public class TestFeatureSystem {
       }
     }
   }
-  
+
+  @Test
+  public void testSRFileSummary(){
+    //Load corresponding  blastp data file
+    long time = System.currentTimeMillis();
+    SROutput bo = nativeBlastLoader.load(blastFile4);
+    System.out.println("Loading time: "+(System.currentTimeMillis()-time) + "ms");
+    
+    time = System.currentTimeMillis();
+    SJFileSummary summary = new SJFileSummary();
+    summary.initialize(bo);
+    System.out.println("Processing time: "+(System.currentTimeMillis()-time) + "ms");
+    
+    ArrayList<String> regionIds = new ArrayList<>();
+    summary.getClassificationForView().forEach(k -> regionIds.add(k.getID()));
+    ArrayList<String> typesRef = new ArrayList<String>(Arrays.asList(
+        "GO:0042470", "GO:0019904", 
+        "GO:0045744", "IPR000308", 
+        "IPR023409", "IPR023410",
+        "IPR036815","PF00244"));
+    assertTrue(regionIds.containsAll(typesRef));
+    
+    typesRef.add("TAX:9601");
+    regionIds.clear();
+    Enumeration<String> ids = summary.getClassification().getTermIDs();
+    while(ids.hasMoreElements()) {
+      regionIds.add(ids.nextElement());
+    }
+    assertTrue(regionIds.containsAll(typesRef));
+  }
 }

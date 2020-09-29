@@ -20,8 +20,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
 
-import bzh.plealog.bioinfo.api.data.searchjob.SRFileSummary;
 import bzh.plealog.bioinfo.api.data.searchjob.QueryBase;
+import bzh.plealog.bioinfo.api.data.searchjob.SJFileSummary;
 import bzh.plealog.bioinfo.api.data.searchresult.SROutput;
 import bzh.plealog.bioinfo.api.data.sequence.DSequence;
 
@@ -33,7 +33,7 @@ import bzh.plealog.bioinfo.api.data.sequence.DSequence;
 public class InMemoryQuery extends QueryBase {
 
   private ArrayList<SROutput> _results;
-  private ArrayList<SRFileSummary> _summaries;
+  private ArrayList<SJFileSummary> _summaries;
   private ArrayList<String> _statuses;
   private ArrayList<Byte> _statuses_b;
   
@@ -63,7 +63,7 @@ public class InMemoryQuery extends QueryBase {
    */
   public void addResult(SROutput result) {
     _results.add(result);
-    SRFileSummary bfs = new SRFileSummary();
+    SJFileSummary bfs = new SJFileSummary();
     bfs.initialize(result);
     _summaries.add(bfs);
     _statuses.add(QueryBase.STATUS_OK);
@@ -135,7 +135,7 @@ public class InMemoryQuery extends QueryBase {
   }
 
   @Override
-  public Enumeration<SRFileSummary> getSummaries() {
+  public Enumeration<SJFileSummary> getSummaries() {
     return Collections.enumeration(_summaries);
   }
 
@@ -156,7 +156,7 @@ public class InMemoryQuery extends QueryBase {
   }
 
   @Override
-  public SRFileSummary getSummary(int queryNum) {
+  public SJFileSummary getSummary(int queryNum) {
     return _summaries.get(queryNum);
   }
 

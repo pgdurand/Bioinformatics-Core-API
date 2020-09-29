@@ -21,13 +21,10 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.TreeMap;
 
 import bzh.plealog.bioinfo.api.core.config.CoreSystemConfigurator;
-import bzh.plealog.bioinfo.api.data.feature.AnnotationDataModelConstants;
 import bzh.plealog.bioinfo.api.data.feature.AnnotationDataModelConstants.ANNOTATION_CATEGORY;
 import bzh.plealog.bioinfo.api.data.searchresult.SRCTerm;
 import bzh.plealog.bioinfo.api.data.searchresult.SRClassification;
@@ -39,7 +36,6 @@ import bzh.plealog.bioinfo.api.data.searchresult.SRIteration;
 import bzh.plealog.bioinfo.api.data.searchresult.SROutput;
 import bzh.plealog.bioinfo.api.data.searchresult.SRRequestInfo;
 import bzh.plealog.bioinfo.api.data.sequence.BankSequenceInfo;
-import bzh.plealog.bioinfo.io.searchresult.csv.AnnotationDataModel;
 import bzh.plealog.bioinfo.io.searchresult.csv.ExtractAnnotation;
 
 /**
@@ -50,7 +46,7 @@ import bzh.plealog.bioinfo.io.searchresult.csv.ExtractAnnotation;
  * 
  * @author Patrick G. Durand
  */
-public class SRFileSummary implements Serializable {
+public class SJFileSummary implements Serializable {
 
   private static final long serialVersionUID = 7467266811057328060L;
 
@@ -95,7 +91,7 @@ public class SRFileSummary implements Serializable {
   private transient String originJobName = NOT_APPLICABLE;
   private transient String originJobId = NOT_APPLICABLE;
   //mains terms only for View purpose
-  private transient List<SRTermSummary> mainTermsForView;
+  private transient List<SJTermSummary> mainTermsForView;
   
   private transient boolean _initialized;
   
@@ -112,7 +108,7 @@ public class SRFileSummary implements Serializable {
   /**
    * Default constructor.
    */
-  public SRFileSummary() {
+  public SJFileSummary() {
     reset(true);
     setBestHitAccession(NOT_APPLICABLE);
     setBestHitDescription(NOT_APPLICABLE);
@@ -159,6 +155,39 @@ public class SRFileSummary implements Serializable {
     setOriginJobName(NOT_APPLICABLE);
   }
 
+  private void prepareClassificationData(SROutput output) {
+    // Get unique set of Bio Classification IDs
+    if (output.getClassification()!=null) {
+      SRClassification classification = CoreSystemConfigurator.getSRFactory().creationBClassification();
+      SRClassification hitClassification;
+      
+      // Collect unique set of Bio Classification IDs of first hit only
+      hitClassification = ExtractAnnotation.getClassificationdata(output.getIteration(0).getHit(0), true);
+      
+      //then discard FAKE terms (those making path of Terms associated to hits)
+      Enumeration<String> ids = hitClassification.getTermIDs();
+      String id;
+      SRCTerm term;
+      //prepare the view List of main Terms
+      LinkedList<SJTermSummary>mapTerms = new LinkedList<>();
+      while(ids.hasMoreElements()) {
+        id = ids.nextElement();
+        //refClassification contains full Term data (desc + path)
+        term = output.getClassification().getTerm(id);
+        if (term==null)//backward compatibility: Pfam IDs were not handled in previous releases
+          term = hitClassification.getTerm(id);
+        classification.addTerm(id, term);
+        if ((term.getType().equals(SRCTerm.FAKE_TERM)||
+            term.getType().equals(ANNOTATION_CATEGORY.TAX.name()))==false) {
+          mapTerms.add(new SJTermSummary(id, term));
+        }
+      }
+      setClassification(classification);  
+      //Java 8 style to sort a List by two fields
+      mapTerms.sort(Comparator.comparing(SJTermSummary::getViewType).thenComparing(SJTermSummary::getID));
+      setClassificationForView(mapTerms);
+    }
+  }
   /**
    * Initializes this BFileSummary from a BOutput.
    */
@@ -250,43 +279,7 @@ public class SRFileSummary implements Serializable {
         taxonomy = si.getTaxonomy();
     }
 
-    // Get unique set of Bio Classification IDs
-    if (output.getClassification()!=null) {
-      SRClassification classification = CoreSystemConfigurator.getSRFactory().creationBClassification();
-      SRClassification refClassification;
-      
-      //classification data if any; get data for best hit only by default
-      TreeMap<String, TreeMap<AnnotationDataModelConstants.ANNOTATION_CATEGORY, HashMap<String, AnnotationDataModel>>> annotatedHitsHashMap = 
-          new TreeMap<String, TreeMap<AnnotationDataModelConstants.ANNOTATION_CATEGORY, HashMap<String, AnnotationDataModel>>>();
-      TreeMap<AnnotationDataModelConstants.ANNOTATION_CATEGORY, TreeMap<String, AnnotationDataModel>> annotationDictionary = 
-          new TreeMap<AnnotationDataModelConstants.ANNOTATION_CATEGORY, TreeMap<String, AnnotationDataModel>>();
-
-      // Prepare Bio Classification (IPR, EC, GO and TAX) for all hits
-      //this call populates annotatedHitsHashMap and annotationDictionary
-      ExtractAnnotation.buildAnnotatedHitDataSet(output, 0, annotatedHitsHashMap, annotationDictionary);
-
-      // Collect unique set of Bio Classification IDs of first hit only
-      refClassification = ExtractAnnotation.buildClassificationDataSet(output.getClassification(), annotatedHitsHashMap, 0, 0, 0);
-      //then discard FAKE terms (those making path of Terms associated to hits)
-      Enumeration<String> ids = refClassification.getTermIDs();
-      String id;
-      SRCTerm term;
-      //prepare the view List of main Terms
-      LinkedList<SRTermSummary>mapTerms = new LinkedList<>();
-      while(ids.hasMoreElements()) {
-        id = ids.nextElement();
-        term = refClassification.getTerm(id);
-        classification.addTerm(id, term);
-        if ((term.getType().equals(SRCTerm.FAKE_TERM)||
-            term.getType().equals(ANNOTATION_CATEGORY.TAX.name()))==false) {
-          mapTerms.add(new SRTermSummary(id, term));
-        }
-      }
-      setClassification(classification);  
-      //Java 8 style to sort a List by two fields
-      mapTerms.sort(Comparator.comparing(SRTermSummary::getViewType).thenComparing(SRTermSummary::getID));
-      setClassificationForView(mapTerms);
-    }
+    prepareClassificationData(output);
 
     _initialized = true;
   }
@@ -636,11 +629,11 @@ public class SRFileSummary implements Serializable {
     return classification;
   }
   
-  public void setClassificationForView(List<SRTermSummary> terms) {
+  public void setClassificationForView(List<SJTermSummary> terms) {
     mainTermsForView = terms;
   }
   
-  public List<SRTermSummary> getClassificationForView(){
+  public List<SJTermSummary> getClassificationForView(){
     return mainTermsForView;
   }
   
@@ -652,14 +645,14 @@ public class SRFileSummary implements Serializable {
    * can use the following strings: GOC, GOP, GOF. In this parameter is null full list of SRTermSummary
    * is returned.
    * */
-  public List<SRTermSummary> getClassificationForView(List<String> types){
+  public List<SJTermSummary> getClassificationForView(List<String> types){
     if (types==null || mainTermsForView==null) {
       return mainTermsForView;
     }
-    ArrayList<SRTermSummary> newList;
+    ArrayList<SJTermSummary> newList;
     String type;
     newList = new ArrayList<>();
-    for(SRTermSummary term : mainTermsForView) {
+    for(SJTermSummary term : mainTermsForView) {
       type = term.getViewType();
       if (types.contains(type)) {
         newList.add(term);

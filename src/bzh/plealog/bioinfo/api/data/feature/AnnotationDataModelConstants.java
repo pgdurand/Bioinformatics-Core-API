@@ -136,6 +136,8 @@ public class AnnotationDataModelConstants {
   public static final String FEATURE_PROTEIN_KEYWORD = "protein";
   public static final String FEATURE_SOURCE_KEYWORD = "source";
   
+  public static final String FEATURE_EMPTY_DESC = "-";
+  
   //Utility Set to locate Qualfiers from FeatureTable that are capable
   //of providing classification data
   @SuppressWarnings("serial")
