@@ -60,6 +60,7 @@ import bzh.plealog.bioinfo.io.searchresult.SerializerSystemFactory;
 import bzh.plealog.bioinfo.io.searchresult.csv.AnnotationDataModel;
 import bzh.plealog.bioinfo.io.searchresult.csv.ExtractAnnotation;
 import bzh.plealog.bioinfo.io.searchresult.txt.TxtExportSROutput;
+import bzh.plealog.bioinfo.tools.ImportIprScanPredictions;
 
 public class TestFeatureSystem {
   private static File     blastFile;
@@ -475,26 +476,8 @@ public class TestFeatureSystem {
         4);
   }
 
-  private void annotatBlastWithIprscan(SROutput bo, Map<String, List<IprGffObject>> gffMap) {
-    //annotate queries located in the blast results with IPRscan domain prediction
-    Enumeration<SRIteration> enumIter = bo.enumerateIteration();
-    while(enumIter.hasMoreElements()) {
-      SRIteration iter = enumIter.nextElement();
-      String qId = iter.getIterationQueryID();
-      List<IprGffObject> gffObjs = gffMap.get(qId);
-      if (gffObjs==null) {
-        qId = iter.getIterationQueryDesc().split(" ")[0];
-        gffObjs = gffMap.get(qId);
-      }
-      if (gffObjs!=null) {
-        FeatureTable ft = new IprPredictions(gffObjs).getFeatureTable(true);
-        iter.setIterationQueryFeatureTable(ft);
-      }
-    }
-
-  }
-  
   private void controlAnnotatedBlast(SROutput bo) {
+    assertNotNull(bo.getClassification());
     Enumeration<SRIteration> enumIter = bo.enumerateIteration();
     int countAnnotatedQueries=0;
     while(enumIter.hasMoreElements()) {
@@ -519,7 +502,7 @@ public class TestFeatureSystem {
     assertTrue(bo.countIteration()==6);
 
     //annotate Blast result (queries) with IPRscan predictions
-    annotatBlastWithIprscan(bo, gffMap);
+    new ImportIprScanPredictions().annotateBlastWithIprscan(bo, gffMap);
     
     //do a little control: all queries should have been annotated
     controlAnnotatedBlast(bo);
@@ -540,7 +523,7 @@ public class TestFeatureSystem {
     assertTrue(bo.countIteration()==6);
 
     //annotate Blast result (queries) with IPRscan predictions
-    annotatBlastWithIprscan(bo, gffMap);
+    new ImportIprScanPredictions().annotateBlastWithIprscan(bo, gffMap);
 
     //save annotated blast results
     nativeBlastWriter.write(tmpFile, bo);
@@ -554,6 +537,7 @@ public class TestFeatureSystem {
   
   @Test
   public void testNewSRClassificationExtractor(){
+    System.out.println("> "+new Object(){}.getClass().getEnclosingMethod().getName());
     TreeMap<String, TreeMap<AnnotationDataModelConstants.ANNOTATION_CATEGORY, HashMap<String, AnnotationDataModel>>> annotatedHitsHashMap = null;
     TreeMap<AnnotationDataModelConstants.ANNOTATION_CATEGORY, TreeMap<String, AnnotationDataModel>> annotationDictionary = null;
 
@@ -596,6 +580,7 @@ public class TestFeatureSystem {
 
   @Test
   public void testSRFileSummary(){
+    System.out.println("> "+new Object(){}.getClass().getEnclosingMethod().getName());
     //Load corresponding  blastp data file
     long time = System.currentTimeMillis();
     SROutput bo = nativeBlastLoader.load(blastFile4);
@@ -607,7 +592,7 @@ public class TestFeatureSystem {
     System.out.println("Processing time: "+(System.currentTimeMillis()-time) + "ms");
     
     ArrayList<String> regionIds = new ArrayList<>();
-    summary.getClassificationForView().forEach(k -> regionIds.add(k.getID()));
+    summary.getHitClassificationForView().forEach(k -> regionIds.add(k.getID()));
     ArrayList<String> typesRef = new ArrayList<String>(Arrays.asList(
         "GO:0042470", "GO:0019904", 
         "GO:0045744", "IPR000308", 
@@ -617,10 +602,26 @@ public class TestFeatureSystem {
     
     typesRef.add("TAX:9601");
     regionIds.clear();
-    Enumeration<String> ids = summary.getClassification().getTermIDs();
+    Enumeration<String> ids = summary.getHitClassification().getTermIDs();
     while(ids.hasMoreElements()) {
       regionIds.add(ids.nextElement());
     }
     assertTrue(regionIds.containsAll(typesRef));
+  }
+  
+  @Test
+  public void testIprAnnotateTool() {
+    
+    assertTrue(new ImportIprScanPredictions().importData(
+        blastFile3.getAbsolutePath(), 
+        iprscanFile.getAbsolutePath(), 
+        tmpFile.getAbsolutePath()));
+    
+    //reload result file created above
+    SROutput bo = nativeBlastLoader.load(tmpFile);
+    
+    //do a little control: all queries should have been annotated
+    controlAnnotatedBlast(bo);
+    
   }
 }
