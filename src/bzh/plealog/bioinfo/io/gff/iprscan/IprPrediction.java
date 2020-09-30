@@ -42,7 +42,7 @@ public class IprPrediction {
   public static final String ID_QUAL = "id";
   public static final String NAME_QUAL = "name";
   public static final String SIGNATURE_QUAL = "description";
-  public static final String DBXREF_QUAL = "dbxref";
+  public static final String DBXREF_QUAL = AnnotationDataModelConstants.FEATURE_QUALIFIER_XREF;
   public static final String SCORE_QUAL = "score";
   public static final String STATUS_QUAL = "status";
   public static final String STRAND_QUAL = "strand";
