@@ -798,7 +798,8 @@ public class ExtractAnnotation {
    * */
   public static void prepareClassificationdata(SRClassification classif, FeatureTable featureTable) {
     Enumeration<Feature> enumFeatures;
-    
+    if (featureTable==null)
+      return;
     enumFeatures = featureTable.enumFeatures();
     while (enumFeatures.hasMoreElements()) {
       prepareClassificationdata(classif, (Feature) enumFeatures.nextElement());

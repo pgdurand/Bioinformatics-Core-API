@@ -81,7 +81,8 @@ public class SJFileSummary implements Serializable {
   private SROutput.FEATURES_CONTAINER featContainer;
   private boolean filtered;
   //complete classification (main Terms + FAKE ones (those internal to paths).
-  private SRClassification classification;
+  private SRClassification hClassification;
+  private SRClassification qClassification;
   
   private transient String totalGaps;
   private transient String percentGaps;
@@ -91,7 +92,8 @@ public class SJFileSummary implements Serializable {
   private transient String originJobName = NOT_APPLICABLE;
   private transient String originJobId = NOT_APPLICABLE;
   //mains terms only for View purpose
-  private transient List<SJTermSummary> mainTermsForView;
+  private transient List<SJTermSummary> mainHitTermsForView;
+  private transient List<SJTermSummary> mainQueryTermsForView;
   
   private transient boolean _initialized;
   
@@ -158,6 +160,7 @@ public class SJFileSummary implements Serializable {
   private void prepareClassificationData(SROutput output) {
     // Get unique set of Bio Classification IDs
     if (output.getClassification()!=null) {
+      //Step 1 : best hit part
       SRClassification classification = CoreSystemConfigurator.getSRFactory().creationBClassification();
       SRClassification hitClassification;
       
@@ -169,7 +172,7 @@ public class SJFileSummary implements Serializable {
       String id;
       SRCTerm term;
       //prepare the view List of main Terms
-      LinkedList<SJTermSummary>mapTerms = new LinkedList<>();
+      LinkedList<SJTermSummary> mapTerms = new LinkedList<>();
       while(ids.hasMoreElements()) {
         id = ids.nextElement();
         //refClassification contains full Term data (desc + path)
@@ -182,11 +185,37 @@ public class SJFileSummary implements Serializable {
           mapTerms.add(new SJTermSummary(id, term));
         }
       }
-      setClassification(classification);  
-      //Java 8 style to sort a List by two fields
+      setHitClassification(classification);  
       mapTerms.sort(Comparator.comparing(SJTermSummary::getViewType).thenComparing(SJTermSummary::getID));
-      setClassificationForView(mapTerms);
+      setHitClassificationForView(mapTerms);
+      
+      //Step 2 : query part
+      if (output.getIteration(0).getIterationQueryFeatureTable()!=null) {
+        SRClassification queryClassification = CoreSystemConfigurator.getSRFactory().creationBClassification();
+        classification = ExtractAnnotation.getClassificationdata(
+            output.getIteration(0).getIterationQueryFeatureTable());
+        
+        ids = classification.getTermIDs();
+        //prepare the view List of main Terms
+        mapTerms = new LinkedList<>();
+        while(ids.hasMoreElements()) {
+          id = ids.nextElement();
+          //refClassification contains full Term data (desc + path)
+          term = output.getClassification().getTerm(id);
+          if (term==null)//backward compatibility: Pfam IDs were not handled in previous releases
+            term = classification.getTerm(id);
+          queryClassification.addTerm(id, term);
+          if ((term.getType().equals(SRCTerm.FAKE_TERM)||
+              term.getType().equals(ANNOTATION_CATEGORY.TAX.name()))==false) {
+            mapTerms.add(new SJTermSummary(id, term));
+          }
+        }
+        setQueryClassification(queryClassification);  
+        mapTerms.sort(Comparator.comparing(SJTermSummary::getViewType).thenComparing(SJTermSummary::getID));
+        setQueryClassificationForView(mapTerms);
+      }
     }
+
   }
   /**
    * Initializes this BFileSummary from a BOutput.
@@ -621,22 +650,38 @@ public class SJFileSummary implements Serializable {
     this.originJobId = originJobId;
   }
 
-  public void setClassification(SRClassification classification) {
-    this.classification = classification;
+  public void setHitClassification(SRClassification classification) {
+    this.hClassification = classification;
   }
 
-  public SRClassification getClassification() {
-    return classification;
+  public SRClassification getHitClassification() {
+    return hClassification;
   }
   
-  public void setClassificationForView(List<SJTermSummary> terms) {
-    mainTermsForView = terms;
+  public void setHitClassificationForView(List<SJTermSummary> terms) {
+    mainHitTermsForView = terms;
   }
   
-  public List<SJTermSummary> getClassificationForView(){
-    return mainTermsForView;
+  public List<SJTermSummary> getHitClassificationForView(){
+    return mainHitTermsForView;
+  }
+
+  public void setQueryClassification(SRClassification classification) {
+    this.qClassification = classification;
+  }
+
+  public SRClassification getQueryClassification() {
+    return qClassification;
   }
   
+  public void setQueryClassificationForView(List<SJTermSummary> terms) {
+    mainQueryTermsForView = terms;
+  }
+  
+  public List<SJTermSummary> getQueryClassificationForView(){
+    return mainQueryTermsForView;
+  }
+
   /**
    * Returned a filtered list of SRTermSummary.
    * 
@@ -645,14 +690,14 @@ public class SJFileSummary implements Serializable {
    * can use the following strings: GOC, GOP, GOF. In this parameter is null full list of SRTermSummary
    * is returned.
    * */
-  public List<SJTermSummary> getClassificationForView(List<String> types){
-    if (types==null || mainTermsForView==null) {
-      return mainTermsForView;
+  public List<SJTermSummary> getHitClassificationForView(List<String> types){
+    if (types==null || mainHitTermsForView==null) {
+      return mainHitTermsForView;
     }
     ArrayList<SJTermSummary> newList;
     String type;
     newList = new ArrayList<>();
-    for(SJTermSummary term : mainTermsForView) {
+    for(SJTermSummary term : mainHitTermsForView) {
       type = term.getViewType();
       if (types.contains(type)) {
         newList.add(term);
@@ -660,7 +705,31 @@ public class SJFileSummary implements Serializable {
     }
     return newList;
   }
-  
+
+  /**
+   * Returned a filtered list of SRTermSummary.
+   * 
+   * @param types list of String representation of AnnotationDataModelConstants.ANNOTATION_CATEGORY values.
+   * We use that design to enable sub-filtering of GO terms. Indeed, in addition to ANNOTATION_CATEGORY.GO, one
+   * can use the following strings: GOC, GOP, GOF. In this parameter is null full list of SRTermSummary
+   * is returned.
+   * */
+  public List<SJTermSummary> getQueryClassificationForView(List<String> types){
+    if (types==null || mainQueryTermsForView==null) {
+      return mainQueryTermsForView;
+    }
+    ArrayList<SJTermSummary> newList;
+    String type;
+    newList = new ArrayList<>();
+    for(SJTermSummary term : mainQueryTermsForView) {
+      type = term.getViewType();
+      if (types.contains(type)) {
+        newList.add(term);
+      }
+    }
+    return newList;
+  }
+
   public String toString() {
     StringBuffer szBuf;
 
