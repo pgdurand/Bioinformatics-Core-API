@@ -25,10 +25,13 @@ Use a [Java Virtual Machine](http://www.oracle.com/technetwork/java/javase/downl
 
 Since this package is a library, its primary purpose targets a use within other softwares. You can see how to use the library by having a look at:
 
-* "test" package in this project: it contains sample sources codes; "TestSerialSystem.java" is of particular interest
+* "test" package in this project: it contains sample sources codes; "TestSerialSystem.java" and "TestSFeatureSystem.java" are of particular interest
 * [Blast Filter Tool](https://github.com/pgdurand/BLAST-Filter-Tool) source code: a full example of a running application relying on this library
 * [Bioinformatics Core UI components](https://github.com/pgdurand/Bioinformatics-UI-API): a set of viewers of sequence/feature/etc objects
 
+Added in release 6.2.0 (Sept. 2020), there is a tool available:
+
+* ImportIprScanPredictions: import Iprscan predicted domains and adds that information into a BLAST or PLAST result file.
 
 See also [Wiki](https://github.com/pgdurand/Bioinformatics-Core-API/wiki).
 
@@ -39,4 +42,4 @@ Bioinformatics Core API itself is released under the GNU Affero General Public L
 It depends on several thrid-party libraries as stated in the NOTICE.txt file provided with this project.
 
 --
-(c) 2003-2017 - Patrick G. Durand
+(c) 2003-2020 - Patrick G. Durand
