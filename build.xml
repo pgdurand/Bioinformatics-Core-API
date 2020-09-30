@@ -41,10 +41,13 @@
 
 <!-- ============================================================= -->
 <target name="prepare">
-    <delete dir="${distrib}"/>
-    <mkdir  dir="${Dlib}"/>
-    <mkdir  dir="${Dsrc}"/>
-    <mkdir  dir="${Ddoc.api}"/>
+  <echo/>
+  <echo>  Ant version: ${ant.version}</echo>
+  <echo>  Java version: ${ant.java.version}</echo>
+  <delete dir="${distrib}"/>
+  <mkdir  dir="${Dlib}"/>
+  <mkdir  dir="${Dsrc}"/>
+  <mkdir  dir="${Ddoc.api}"/>
 </target>
 
 <target name="is-java-eight">
@@ -100,6 +103,10 @@
 
          <!-- utilities-->
          <include name="bzh/plealog/bioinfo/util/**"/>
+
+        <!-- tools-->
+        <include name="bzh/plealog/bioinfo/tools/**"/>
+
       </fileset>
     </copy>
 	<antcall target="javac8"/>
@@ -156,11 +163,11 @@
     sourcepath="${src}" 
     version="true">
     <bottom>
-      <![CDATA[(c) <a href="https://www.linkedin.com/in/pgdurand56/">Patrick G. Durand</a> - 2004-202020]]>
+      <![CDATA[(c) <a href="https://www.linkedin.com/in/pgdurand56/">Patrick G. Durand</a> - 2004-2020]]>
     </bottom>
     <header>
       <![CDATA[Plealog Bioinformatics Core API - ${pbc.LibVersion}]]></header>
-    <link href="https://docs.oracle.com/javase/7/docs/api/"/>
+    <link href="https://docs.oracle.com/javase/8/docs/api/"/>
     <!-- arg value="-Xdoclint:reference"/ -->
   </javadoc>
 </target>
