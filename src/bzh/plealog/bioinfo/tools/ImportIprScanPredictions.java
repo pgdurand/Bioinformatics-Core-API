@@ -122,6 +122,9 @@ public class ImportIprScanPredictions {
         iter.setIterationQueryFeatureTable(ft);
       }
     }
+    if (nqueriesAnnotated==0) {
+      return 0;
+    }
     //Re-collect all unique classifications objects if needed (from hits data)
     SRClassification classif = bo.getClassification();
     if (classif==null) {

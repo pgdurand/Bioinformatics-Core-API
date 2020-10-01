@@ -157,9 +157,41 @@ public class SJFileSummary implements Serializable {
     setOriginJobName(NOT_APPLICABLE);
   }
 
+  public void updateQueryClassificationData(SROutput output) {
+    if (output.getIteration(0).getIterationQueryFeatureTable()!=null) {
+      SRClassification queryClassification = CoreSystemConfigurator.getSRFactory().creationBClassification();
+      SRClassification classification = ExtractAnnotation.getClassificationdata(
+          output.getIteration(0).getIterationQueryFeatureTable());
+      if (classification.size()==0)
+        return;
+      Enumeration<String>  ids = classification.getTermIDs();
+      //prepare the view List of main Terms
+      LinkedList<SJTermSummary>  mapTerms = new LinkedList<>();
+      String id;
+      SRCTerm term;
+      while(ids.hasMoreElements()) {
+        id = ids.nextElement();
+        //refClassification contains full Term data (desc + path)
+        if (output.getClassification()!=null)
+          term = output.getClassification().getTerm(id);
+        else
+          term = null;
+        if (term==null)//backward compatibility: Pfam IDs were not handled in previous releases
+          term = classification.getTerm(id);
+        queryClassification.addTerm(id, term);
+        if ((term.getType().equals(SRCTerm.FAKE_TERM)||
+            term.getType().equals(ANNOTATION_CATEGORY.TAX.name()))==false) {
+          mapTerms.add(new SJTermSummary(id, term));
+        }
+      }
+      setQueryClassification(queryClassification);  
+      mapTerms.sort(Comparator.comparing(SJTermSummary::getViewType).thenComparing(SJTermSummary::getID));
+      setQueryClassificationForView(mapTerms);
+    }
+  }
+  
   private void prepareClassificationData(SROutput output) {
     // Get unique set of Bio Classification IDs
-    if (output.getClassification()!=null) {
       //Step 1 : best hit part
       SRClassification classification = CoreSystemConfigurator.getSRFactory().creationBClassification();
       SRClassification hitClassification;
@@ -167,6 +199,8 @@ public class SJFileSummary implements Serializable {
       // Collect unique set of Bio Classification IDs of first hit only
       hitClassification = ExtractAnnotation.getClassificationdata(output.getIteration(0).getHit(0), true);
       
+      if (hitClassification.size()==0)
+        return;
       //then discard FAKE terms (those making path of Terms associated to hits)
       Enumeration<String> ids = hitClassification.getTermIDs();
       String id;
@@ -176,7 +210,10 @@ public class SJFileSummary implements Serializable {
       while(ids.hasMoreElements()) {
         id = ids.nextElement();
         //refClassification contains full Term data (desc + path)
-        term = output.getClassification().getTerm(id);
+        if (output.getClassification()!=null)
+          term = output.getClassification().getTerm(id);
+        else
+          term = null;
         if (term==null)//backward compatibility: Pfam IDs were not handled in previous releases
           term = hitClassification.getTerm(id);
         classification.addTerm(id, term);
@@ -190,32 +227,8 @@ public class SJFileSummary implements Serializable {
       setHitClassificationForView(mapTerms);
       
       //Step 2 : query part
-      if (output.getIteration(0).getIterationQueryFeatureTable()!=null) {
-        SRClassification queryClassification = CoreSystemConfigurator.getSRFactory().creationBClassification();
-        classification = ExtractAnnotation.getClassificationdata(
-            output.getIteration(0).getIterationQueryFeatureTable());
-        
-        ids = classification.getTermIDs();
-        //prepare the view List of main Terms
-        mapTerms = new LinkedList<>();
-        while(ids.hasMoreElements()) {
-          id = ids.nextElement();
-          //refClassification contains full Term data (desc + path)
-          term = output.getClassification().getTerm(id);
-          if (term==null)//backward compatibility: Pfam IDs were not handled in previous releases
-            term = classification.getTerm(id);
-          queryClassification.addTerm(id, term);
-          if ((term.getType().equals(SRCTerm.FAKE_TERM)||
-              term.getType().equals(ANNOTATION_CATEGORY.TAX.name()))==false) {
-            mapTerms.add(new SJTermSummary(id, term));
-          }
-        }
-        setQueryClassification(queryClassification);  
-        mapTerms.sort(Comparator.comparing(SJTermSummary::getViewType).thenComparing(SJTermSummary::getID));
-        setQueryClassificationForView(mapTerms);
-      }
-    }
-
+      updateQueryClassificationData(output);
+      
   }
   /**
    * Initializes this BFileSummary from a BOutput.
