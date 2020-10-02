@@ -67,6 +67,16 @@ public class AnnotationDataModelConstants {
     put(ANNOTATION_CATEGORY.PS.getEncoding(), ANNOTATION_CATEGORY.PS);
   }};
 
+  @SuppressWarnings("serial")
+  public static Hashtable<String, ANNOTATION_CATEGORY> CLASSIF_TERM_TYPE = new Hashtable<String, ANNOTATION_CATEGORY>() {{
+    put(ANNOTATION_CATEGORY.TAX.getType(), ANNOTATION_CATEGORY.TAX);
+    put(ANNOTATION_CATEGORY.EC.getType(), ANNOTATION_CATEGORY.EC);
+    put(ANNOTATION_CATEGORY.GO.getType(), ANNOTATION_CATEGORY.GO);
+    put(ANNOTATION_CATEGORY.IPR.getType(), ANNOTATION_CATEGORY.IPR);
+    put(ANNOTATION_CATEGORY.PFM.getType(), ANNOTATION_CATEGORY.PFM);
+    put(ANNOTATION_CATEGORY.PS.getType(), ANNOTATION_CATEGORY.PS);
+  }};
+
   //Special keys to get information about GO sub-classifications
   public static enum ANNOTATION_GO_SUBCATEGORY {
     P ("P","Biological Process"), 

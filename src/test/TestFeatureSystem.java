@@ -1,4 +1,4 @@
-/* Copyright (C) 2006-2019 Patrick G. Durand
+/* Copyright (C) 2006-2020 Patrick G. Durand
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published by
@@ -24,12 +24,10 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
-import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 import org.apache.log4j.BasicConfigurator;
@@ -57,7 +55,6 @@ import bzh.plealog.bioinfo.io.gff.iprscan.IprGffReader;
 import bzh.plealog.bioinfo.io.gff.iprscan.IprPrediction;
 import bzh.plealog.bioinfo.io.gff.iprscan.IprPredictions;
 import bzh.plealog.bioinfo.io.searchresult.SerializerSystemFactory;
-import bzh.plealog.bioinfo.io.searchresult.csv.AnnotationDataModel;
 import bzh.plealog.bioinfo.io.searchresult.csv.ExtractAnnotation;
 import bzh.plealog.bioinfo.io.searchresult.txt.TxtExportSROutput;
 import bzh.plealog.bioinfo.tools.ImportIprScanPredictions;
@@ -139,26 +136,22 @@ public class TestFeatureSystem {
       return;
     }
     tokenizer = new StringTokenizer(set_of_ids, ";");
+    String token;
     while(tokenizer.hasMoreTokens()) {
-      assertNotNull(classif.getTerm(tokenizer.nextToken()));
+      token = tokenizer.nextToken();
+      assertNotNull(classif.getTerm(token));
     }
     
 	}
 	@Test
 	public void testAnnotation(){
-    TreeMap<String, TreeMap<AnnotationDataModelConstants.ANNOTATION_CATEGORY, HashMap<String, AnnotationDataModel>>> annotatedHitsHashMap = null;
-    TreeMap<AnnotationDataModelConstants.ANNOTATION_CATEGORY, TreeMap<String, AnnotationDataModel>> annotationDictionary = null;
-
     // LOad sample data set (BLASTp results annotated using BeeDeeM Annotatot Tool)
     SROutput bo = nativeBlastLoader.load(blastFile2);
     assertNotNull(bo);
     
     // Extract Bio Classification: IPR, EC, GO and TAX
-    annotatedHitsHashMap = new TreeMap<String, TreeMap<AnnotationDataModelConstants.ANNOTATION_CATEGORY, HashMap<String, AnnotationDataModel>>>();
-    annotationDictionary = new TreeMap<AnnotationDataModelConstants.ANNOTATION_CATEGORY, TreeMap<String, AnnotationDataModel>>();
-    ExtractAnnotation.buildAnnotatedHitDataSet(bo, 0, annotatedHitsHashMap, annotationDictionary);
-    SRClassification classif = ExtractAnnotation.buildClassificationDataSet(annotationDictionary);
-    
+    Map<AnnotationDataModelConstants.ANNOTATION_CATEGORY, SRClassification> ftClassif=null;
+    SRClassification classif = ExtractAnnotation.getClassificationdata(bo);
     int i, j, k, size, size2, size3;
     SRIteration iteration;
     SRHit hit;
@@ -178,18 +171,22 @@ public class TestFeatureSystem {
         size3 = hit.countHsp();
         for (k = 0; k < size3; k++) {// loop on hsp
           hsp = hit.getHsp(k);
+          ftClassif = ExtractAnnotation.prepareClassification(
+              classif, 
+              hsp.getFeatures());
           s = TxtExportSROutput.getFormattedData(
-              annotatedHitsHashMap, iteration, hit, hsp, TxtExportSROutput.BIO_CLASSIF_TAX, false, false);
+              ftClassif, iteration, hit, hsp, TxtExportSROutput.BIO_CLASSIF_TAX, false, false);
           checkClassification(classif, s);
           s = TxtExportSROutput.getFormattedData(
-              annotatedHitsHashMap, iteration, hit, hsp, TxtExportSROutput.BIO_CLASSIF_GO, false, false);
+              ftClassif, iteration, hit, hsp, TxtExportSROutput.BIO_CLASSIF_GO, false, false);
           checkClassification(classif, s);
           s = TxtExportSROutput.getFormattedData(
-              annotatedHitsHashMap, iteration, hit, hsp, TxtExportSROutput.BIO_CLASSIF_EC, false, false);
+              ftClassif, iteration, hit, hsp, TxtExportSROutput.BIO_CLASSIF_EC, false, false);
           checkClassification(classif, s);
           s = TxtExportSROutput.getFormattedData(
-              annotatedHitsHashMap, iteration, hit, hsp, TxtExportSROutput.BIO_CLASSIF_IPR, false, false);
+              ftClassif, iteration, hit, hsp, TxtExportSROutput.BIO_CLASSIF_IPR, false, false);
           checkClassification(classif, s);
+          ftClassif.clear();
           if (_firstHspOnly) {
             break;
           }
@@ -201,10 +198,8 @@ public class TestFeatureSystem {
     }
     
     //do some cleaning
-    if (annotatedHitsHashMap != null)
-      annotatedHitsHashMap.clear();
-    if (annotationDictionary != null)
-      annotationDictionary.clear();
+    if (ftClassif != null)
+      ftClassif.clear();
 	}
   @Test
   public void testIprGffReader() {
@@ -535,49 +530,6 @@ public class TestFeatureSystem {
     
   }
   
-  @Test
-  public void testNewSRClassificationExtractor(){
-    System.out.println("> "+new Object(){}.getClass().getEnclosingMethod().getName());
-    TreeMap<String, TreeMap<AnnotationDataModelConstants.ANNOTATION_CATEGORY, HashMap<String, AnnotationDataModel>>> annotatedHitsHashMap = null;
-    TreeMap<AnnotationDataModelConstants.ANNOTATION_CATEGORY, TreeMap<String, AnnotationDataModel>> annotationDictionary = null;
-
-    // LOad sample data set (BLASTp results annotated using BeeDeeM Annotatot Tool)
-    SROutput bo = nativeBlastLoader.load(blastFile2);
-    assertNotNull(bo);
-    
-    // Extract Bio Classification: IPR, EC, GO and TAX
-    SRClassification classif1=null, classif2=null;
-    long time = System.currentTimeMillis();
-    int loops = 1000;
-    for(int i= 0; i < loops; i++) {
-      annotatedHitsHashMap = new TreeMap<String, TreeMap<AnnotationDataModelConstants.ANNOTATION_CATEGORY, HashMap<String, AnnotationDataModel>>>();
-      annotationDictionary = new TreeMap<AnnotationDataModelConstants.ANNOTATION_CATEGORY, TreeMap<String, AnnotationDataModel>>();
-      ExtractAnnotation.buildAnnotatedHitDataSet(bo, 0, annotatedHitsHashMap, annotationDictionary);
-      classif1 = ExtractAnnotation.buildClassificationDataSet(annotationDictionary);
-    }
-    System.out.println("Old classif extractor: "+(System.currentTimeMillis()-time) + "ms");
-    
-    time = System.currentTimeMillis();
-    for(int i= 0; i < loops; i++) {
-      classif2 = ExtractAnnotation.getClassificationdata(bo);
-    }
-    System.out.println("New classif extractor: "+(System.currentTimeMillis()-time) + "ms");
-    
-    Enumeration<String> enumIds = classif1.getTermIDs();
-    while(enumIds.hasMoreElements()) {
-      String id = enumIds.nextElement();
-      assertNotNull(classif2.getTerm(id));
-    }
-
-    enumIds = classif2.getTermIDs();
-    while(enumIds.hasMoreElements()) {
-      String id = enumIds.nextElement();
-      if(id.startsWith("PF")==false) {//ExtractAnnotation.buildAnnotatedHitDataSet() does not handle PFAM
-        assertNotNull(classif1.getTerm(id));
-      }
-    }
-  }
-
   @Test
   public void testSRFileSummary(){
     System.out.println("> "+new Object(){}.getClass().getEnclosingMethod().getName());

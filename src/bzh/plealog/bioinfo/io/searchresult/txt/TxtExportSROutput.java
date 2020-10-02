@@ -26,15 +26,15 @@ import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.MessageFormat;
 import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 import java.util.StringTokenizer;
-import java.util.TreeMap;
 
 import bzh.plealog.bioinfo.api.data.feature.AnnotationDataModelConstants;
 import bzh.plealog.bioinfo.api.data.feature.Feature;
 import bzh.plealog.bioinfo.api.data.feature.FeatureTable;
 import bzh.plealog.bioinfo.api.data.feature.Qualifier;
+import bzh.plealog.bioinfo.api.data.searchresult.SRClassification;
 import bzh.plealog.bioinfo.api.data.searchresult.SRHit;
 import bzh.plealog.bioinfo.api.data.searchresult.SRHsp;
 import bzh.plealog.bioinfo.api.data.searchresult.SRHspScore;
@@ -46,7 +46,6 @@ import bzh.plealog.bioinfo.api.data.sequence.DSequence;
 import bzh.plealog.bioinfo.api.data.sequence.DSymbol;
 import bzh.plealog.bioinfo.data.searchresult.SRUtils;
 import bzh.plealog.bioinfo.io.PrintfFormat;
-import bzh.plealog.bioinfo.io.searchresult.csv.AnnotationDataModel;
 import bzh.plealog.bioinfo.io.searchresult.csv.ExtractAnnotation;
 import bzh.plealog.bioinfo.util.CoreUtil;
 
@@ -514,7 +513,8 @@ public class TxtExportSROutput {
       boolean escapeStringWithQuotes, boolean addPctString) {
     return getFormattedData(null, null, hit, hsp, colId, escapeStringWithQuotes, addPctString);
   }
-  public static String getFormattedData(TreeMap<String, TreeMap<AnnotationDataModelConstants.ANNOTATION_CATEGORY, HashMap<String, AnnotationDataModel>>> annotatedHitsHashMap,
+  public static String getFormattedData(
+      Map<AnnotationDataModelConstants.ANNOTATION_CATEGORY, SRClassification> ftClassification,
       SRIteration iteration, SRHit hit, SRHsp hsp, int colId,
       boolean escapeStringWithQuotes, boolean addPctString) {
     StringBuffer buf;
@@ -683,7 +683,7 @@ public class TxtExportSROutput {
       case BIO_CLASSIF_EC:
       case BIO_CLASSIF_IPR:
         val = "n/a";
-        if (annotatedHitsHashMap!=null){
+        if (ftClassification!=null){
           AnnotationDataModelConstants.ANNOTATION_CATEGORY cat;
           if (colId==BIO_CLASSIF_TAX) {
             cat = AnnotationDataModelConstants.ANNOTATION_CATEGORY.TAX;
@@ -700,12 +700,7 @@ public class TxtExportSROutput {
           else {
             cat = null;
           }
-          val = ExtractAnnotation.getFormattedFeatures(
-                  annotatedHitsHashMap, 
-                  0, 
-                  iteration!=null?iteration.getIterationIterNum()-1:0, 
-                  hit.getHitNum()-1, 
-                  cat);
+          val = ExtractAnnotation.getFormattedFeatures(ftClassification, cat);
           if (escapeStringWithQuotes){
             buf = new StringBuffer();
             buf.append("\"");

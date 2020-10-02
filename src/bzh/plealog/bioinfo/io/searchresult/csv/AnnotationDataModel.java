@@ -73,9 +73,24 @@ public class AnnotationDataModel {
     return _annotationType;
   }
 
+  private String formatFeatures(String key, String label) {
+    String feature = "";
+  
+    feature = key;
+    if (!label.equals("")) {
+      // truncate
+      if (label.length() > AnnotationDataModelConstants.FEATURE_LABEL_MAX_LEN) {
+        label = label.substring(0, AnnotationDataModelConstants.FEATURE_LABEL_MAX_LEN) + AnnotationDataModelConstants.SPACE
+            + AnnotationDataModelConstants.FEATURE_LABEL_CONTINUATION_TAG;
+      }
+      feature += AnnotationDataModelConstants.SPACE + AnnotationDataModelConstants.FEATURE_LABEL_SEPARATOR_OPEN + label
+          + AnnotationDataModelConstants.FEATURE_LABEL_SEPARATOR_CLOSE;
+    }
+    return feature;
+  }
   public String toString() {
     String node_label = "";
-    node_label = ExtractAnnotation.formatFeatures(getAccession(), getLabel());
+    node_label = formatFeatures(getAccession(), getLabel());
     node_label += (getNbHits() > 1 ? " (" + getNbHits() + ")" : "");
     return node_label;
   }

@@ -18,10 +18,10 @@ package bzh.plealog.bioinfo.io.searchresult.csv;
 
 import java.io.IOException;
 import java.io.Writer;
-import java.util.HashMap;
-import java.util.TreeMap;
+import java.util.Map;
 
 import bzh.plealog.bioinfo.api.data.feature.AnnotationDataModelConstants;
+import bzh.plealog.bioinfo.api.data.searchresult.SRClassification;
 import bzh.plealog.bioinfo.api.data.searchresult.SRHit;
 import bzh.plealog.bioinfo.api.data.searchresult.SRHsp;
 import bzh.plealog.bioinfo.api.data.searchresult.SRIteration;
@@ -161,10 +161,7 @@ public class CSVExportSROutput {
   public void export(Writer writer, SROutput output) throws Exception {
     if (writer == null || output == null)
       return;
-
-    TreeMap<String, TreeMap<AnnotationDataModelConstants.ANNOTATION_CATEGORY, HashMap<String, AnnotationDataModel>>> annotatedHitsHashMap = null;
-    TreeMap<AnnotationDataModelConstants.ANNOTATION_CATEGORY, TreeMap<String, AnnotationDataModel>> annotationDictionary = null;
-
+    Map<AnnotationDataModelConstants.ANNOTATION_CATEGORY, SRClassification> ftClassif=null;
     SRIteration iteration;
     SRHit hit;
     SRHsp hsp;
@@ -193,22 +190,6 @@ public class CSVExportSROutput {
           writer.write(_separator);
       }
       writer.write("\n");
-    }
-
-    // need to export Biological classification ?
-    for (i = 0; i < cols; i++) {
-      if (_colIds[i] == TxtExportSROutput.BIO_CLASSIF ||
-          _colIds[i] == TxtExportSROutput.BIO_CLASSIF_TAX ||
-          _colIds[i] == TxtExportSROutput.BIO_CLASSIF_GO ||
-          _colIds[i] == TxtExportSROutput.BIO_CLASSIF_EC ||
-          _colIds[i] == TxtExportSROutput.BIO_CLASSIF_IPR) {
-        annotatedHitsHashMap = new TreeMap<String, TreeMap<AnnotationDataModelConstants.ANNOTATION_CATEGORY, HashMap<String, AnnotationDataModel>>>();
-        annotationDictionary = new TreeMap<AnnotationDataModelConstants.ANNOTATION_CATEGORY, TreeMap<String, AnnotationDataModel>>();
-        ExtractAnnotation.buildAnnotatedHitDataSet(output, 0, annotatedHitsHashMap, annotationDictionary);
-        //HashSet<ExtractAnnotation.ANNOTATION_CATEGORY> DEF_CAT = new HashSet<ExtractAnnotation.ANNOTATION_CATEGORY>();
-        //DEF_CAT.add(ANNOTATION_CATEGORY.GO);
-        //ExtractAnnotation.buildAnnotatedHitDataSet(output, 0, annotatedHitsHashMap, annotationDictionary, DEF_CAT);
-      }
     }
 
     obj = output.getRequestInfo().getValue(SRRequestInfo.QUERY_ID_DESCRIPTOR_KEY);
@@ -253,7 +234,16 @@ public class CSVExportSROutput {
             hsp = hit.getHsp(k);
             writeQueryInfo(writer, qId, qName, qLength);
             for (l = 0; l < cols; l++) {// loop on data columns
-              s = TxtExportSROutput.getFormattedData(annotatedHitsHashMap, iteration, hit, hsp, _colIds[l], _escapeString,
+              ftClassif = ExtractAnnotation.prepareClassification(
+                  output.getClassification(), 
+                  hsp.getFeatures());
+              s = TxtExportSROutput.getFormattedData(
+                  ftClassif, 
+                  iteration, 
+                  hit, 
+                  hsp, 
+                  _colIds[l], 
+                  _escapeString, 
                   _addPctString);
               if (_exportHandler!=null) {
                 s = _exportHandler.handle(s, _colIds[l]);
@@ -272,10 +262,8 @@ public class CSVExportSROutput {
           }
         }
       }
-      if (annotatedHitsHashMap != null)
-        annotatedHitsHashMap.clear();
-      if (annotationDictionary != null)
-        annotationDictionary.clear();
+      if (ftClassif != null)
+        ftClassif.clear();
     } else {// empty results
       if (_showQueryId) {
         writeString(writer, qId);
@@ -297,9 +285,7 @@ public class CSVExportSROutput {
       }
       writer.write("\n");
     }
-    if (annotatedHitsHashMap != null)
-      annotatedHitsHashMap.clear();
-    if (annotationDictionary != null)
-      annotationDictionary.clear();
+    if (ftClassif != null)
+      ftClassif.clear();
   }
 }
