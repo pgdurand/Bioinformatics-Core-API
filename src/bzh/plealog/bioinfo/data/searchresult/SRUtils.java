@@ -17,14 +17,10 @@
 package bzh.plealog.bioinfo.data.searchresult;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.TreeMap;
 
 import bzh.plealog.bioinfo.api.core.config.CoreSystemConfigurator;
-import bzh.plealog.bioinfo.api.data.feature.AnnotationDataModelConstants;
-import bzh.plealog.bioinfo.api.data.searchresult.SRClassification;
 import bzh.plealog.bioinfo.api.data.searchresult.SRHit;
 import bzh.plealog.bioinfo.api.data.searchresult.SRHsp;
 import bzh.plealog.bioinfo.api.data.searchresult.SRIteration;
@@ -32,7 +28,6 @@ import bzh.plealog.bioinfo.api.data.searchresult.SROutput;
 import bzh.plealog.bioinfo.api.data.searchresult.SRRequestInfo;
 import bzh.plealog.bioinfo.api.data.searchresult.utils.SREntry;
 import bzh.plealog.bioinfo.api.data.searchresult.utils.SRFactory;
-import bzh.plealog.bioinfo.io.searchresult.csv.AnnotationDataModel;
 import bzh.plealog.bioinfo.io.searchresult.csv.ExtractAnnotation;
 
 public class SRUtils {
@@ -86,6 +81,7 @@ public class SRUtils {
         		bo.getRequestInfo().setValue(SRRequestInfo.QUERY_ID_DESCRIPTOR_KEY, target.getIterationQueryID());
         }
 
+        ExtractAnnotation.updateClassificationdata(sQuery.getResult().getClassification(), bo);
         entry = new SREntry(sQuery.getBlastClientName(), sQuery.getQueryName(), 
         		sQuery.getAbsolutePath(), bo, sQuery.getQuery(), sQuery.getDbName(), true);
         entry.setEntryOrderNum(sQuery.getEntryOrderNum());
@@ -198,6 +194,8 @@ public class SRUtils {
     result2.setRequestInfo(ri2);
     result2.addIteration(iterTgt);
 
+    ExtractAnnotation.updateClassificationdata(result.getClassification(), result2);
+    
     return result2;
   }
 
@@ -219,15 +217,9 @@ public class SRUtils {
    * @return list of SRResult
    * */
   public static List<SROutput> splitMultiResult(SROutput result){
-    TreeMap<String, TreeMap<AnnotationDataModelConstants.ANNOTATION_CATEGORY, HashMap<String, AnnotationDataModel>>> annotatedHitsHashMap = 
-        new TreeMap<String, TreeMap<AnnotationDataModelConstants.ANNOTATION_CATEGORY, HashMap<String, AnnotationDataModel>>>();
-    TreeMap<AnnotationDataModelConstants.ANNOTATION_CATEGORY, TreeMap<String, AnnotationDataModel>> annotationDictionary = 
-        new TreeMap<AnnotationDataModelConstants.ANNOTATION_CATEGORY, TreeMap<String, AnnotationDataModel>>();
-    SRClassification classif;
     ArrayList<SROutput> results;
     SROutput sro;
     int i, size;
-    boolean handleClassif;
     
     results = new ArrayList<>();
     // we should not separate Iterations when considering a PSI-BLAST result
@@ -235,28 +227,11 @@ public class SRUtils {
       results.add(result);
     }
     else {
-      // Extract complete Bio Classification (IPR, EC, GO and TAX) for all hits
-      handleClassif = result.getClassification()!=null ;
-      if(handleClassif) {
-        ExtractAnnotation.buildAnnotatedHitDataSet(result, 0, annotatedHitsHashMap, annotationDictionary);
-      }
-
       //loop over all iterations (each of them contains results for an individual fasta query)
       size = result.countIteration();
       for(i=0;i<size;i++) {
         // we have to create a single SROuput for each SRIteration
         sro = extractResult(result, i);
-        
-        if(handleClassif) {
-          //classification data if any; get for best hit only by default
-          classif = ExtractAnnotation.buildClassificationDataSet(
-              result.getClassification(),
-              annotatedHitsHashMap, 
-              0, i, 0, result.getIteration(i).countHit()-1);
-          
-          // Collect unique set of Bio Classification IDs
-          sro.setClassification(classif);
-        }
         results.add(sro);
       }
     }

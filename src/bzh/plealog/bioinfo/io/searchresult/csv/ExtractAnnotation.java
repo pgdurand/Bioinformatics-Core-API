@@ -960,5 +960,34 @@ public class ExtractAnnotation {
   public static SRClassification getClassificationdata(SRHit hit) {
     return getClassificationdata(hit, false);
   }
+  
 
+  /**
+   * Update classification of a SROutput.
+   * 
+   * @param refClassif reference classification
+   * @param sro SROutput on which SRClassification is going to be updated using refClassif
+   * as reference of SRTerms.
+   */
+  public static void updateClassificationdata(SRClassification refClassif, SROutput sro) {
+    if (refClassif==null || refClassif.size()==0) {
+      return;
+    }
+    SRClassification sroClassif = getClassificationdata(sro);
+    if (sroClassif==null || refClassif.size()==0) {
+      return;
+    }
+    SRClassification newRefClassif = CoreSystemConfigurator.getSRFactory().creationBClassification();
+    Enumeration<String> ids = sroClassif.getTermIDs();
+    while(ids.hasMoreElements()) {
+      String id = ids.nextElement();
+      SRCTerm term = refClassif.getTerm(id);
+      if (term!=null) {
+        newRefClassif.addTerm(id, term);
+      }
+    }
+    if (refClassif.size()!=0) {
+      sro.setClassification(newRefClassif);
+    }
+  }
 }
