@@ -135,7 +135,7 @@ public class TxtExportSROutput {
                                                                INT_FORMATTER_TXT,
                                                                new DecimalFormatSymbols(
                                                                    Locale.US));
-
+  //New itrem? ALWAYS increment ! NEVER insert !
   public static final int            HIT_NUM               = 0;
   public static final int            ACCESS_DEF            = 1;
   public static final int            LENGTH                = 2;
@@ -168,13 +168,22 @@ public class TxtExportSROutput {
   public static final int            BIO_CLASSIF_GO        = 29;
   public static final int            BIO_CLASSIF_IPR       = 30;
   public static final int            BIO_CLASSIF_EC        = 31;
+  public static final int            BIO_CLASSIF_PFM       = 32;
+  //Following added to dump IPRscan predicted domains on query
+  public static final int            QUERY_BIO_CLASSIF     = 33;//all: GO+EC+IPR
+  public static final int            QUERY_BIO_CLASSIF_GO  = 34;
+  public static final int            QUERY_BIO_CLASSIF_IPR = 35;
+  public static final int            QUERY_BIO_CLASSIF_EC  = 36;
+  public static final int            QUERY_BIO_CLASSIF_PFM = 37;
 
   public static final int[]          DATA_COL_IDS          = { HIT_NUM,
       ACCESS_DEF, LENGTH, NBHSPS, SCORE_BITS, EVALUE, SCORE, Q_FROM, Q_TO,
       Q_GAPS, Q_FRAME, Q_COVERAGE, H_FROM, H_TO, H_GAP, H_FRAME, H_COVERAGE,
       IDENTITY, POSITIVE, GAPS, ALI_LEN, ORGANISM, TAXONOMY, ACCESSION,
       DEFINITION, BIO_CLASSIF, MISMATCHES, T_GAPS, BIO_CLASSIF_TAX, BIO_CLASSIF_GO,
-      BIO_CLASSIF_IPR, BIO_CLASSIF_EC};
+      BIO_CLASSIF_IPR, BIO_CLASSIF_EC, BIO_CLASSIF_PFM, QUERY_BIO_CLASSIF, 
+      QUERY_BIO_CLASSIF_GO, QUERY_BIO_CLASSIF_IPR,QUERY_BIO_CLASSIF_EC, 
+      QUERY_BIO_CLASSIF_PFM};
   public static final String[]       DATA_COL_HEADERS      = {
       "#",
       // why '_' ? See DataColumn.setColName()
@@ -189,13 +198,18 @@ public class TxtExportSROutput {
       "Query frame", "Query Coverage", "Hit from", "Hit to", "Hit gaps",
       "Hit frame", "Hit coverage", "Identity", "Positive", "GapsP",
       "Align. length", "Organism", "Taxonomy", "Hit Accession",
-      "Hit Definition", "Biological classification", "Mismatches", "Gaps",
-      "NCBI Taxonomy Classification", "GeneOntology Classification",
-      "InterPro Classification", "Enzyme Commission Classification"};
+      "Hit Definition", "Biological classification (hit)", "Mismatches", "Gaps",
+      "NCBI Taxonomy Classification (hit)", "GeneOntology Classification (hit)",
+      "InterPro Classification (hit)", "Enzyme Commission Classification (hit)",
+      "PFAM Classification (hit)",
+      "Biological Classification (query)", "GeneOntology Classification (query)",
+      "InterPro Classification (query)", "Enzyme Commission Classification (query)",
+      "PFAM Classification (query)"};
   private static final boolean[]     DATA_COL_VISIBILITY   = { false, true,
       false, false, true, true, false, false, false, false, false, false,
       false, false, false, false, false, false, false, false, false, false,
-      false, false, false, false, false, false, false, false, false, false            };
+      false, false, false, false, false, false, false, false, false, false,
+      false, false, false, false, false, false};
   private static final int[]         DATA_COL_SIZE         = {
       SCORE_FORMATTER_TXT.length(), 60, INT_FORMATTER_TXT.length(),
       SCORE_FORMATTER_TXT.length(), SCORE_FORMATTER_TXT.length(),
@@ -207,7 +221,9 @@ public class TxtExportSROutput {
       SCORE_FORMATTER_TXT.length(), PCT_FORMATTER_TXT.length(),
       PCT_FORMATTER_TXT.length(), PCT_FORMATTER_TXT.length(),
       PCT_FORMATTER_TXT.length(), INT_FORMATTER_TXT.length(), 25, 25, 25, 60,
-      60, INT_FORMATTER_TXT.length(), INT_FORMATTER_TXT.length(), 60, 60, 60, 60};
+      60, INT_FORMATTER_TXT.length(), INT_FORMATTER_TXT.length(),
+      60, 60, 60, 60, 60,
+      60, 60, 60, 60, 60};
 
   public static int[] getDefaultColumnIDs() {
     int columns=0, idx=0;
@@ -682,20 +698,29 @@ public class TxtExportSROutput {
       case BIO_CLASSIF_GO:
       case BIO_CLASSIF_EC:
       case BIO_CLASSIF_IPR:
+      case BIO_CLASSIF_PFM:
+      case QUERY_BIO_CLASSIF:
+      case QUERY_BIO_CLASSIF_GO:
+      case QUERY_BIO_CLASSIF_EC:
+      case QUERY_BIO_CLASSIF_IPR:
+      case QUERY_BIO_CLASSIF_PFM:
         val = "n/a";
         if (ftClassification!=null){
           AnnotationDataModelConstants.ANNOTATION_CATEGORY cat;
           if (colId==BIO_CLASSIF_TAX) {
             cat = AnnotationDataModelConstants.ANNOTATION_CATEGORY.TAX;
           }
-          else if (colId==BIO_CLASSIF_GO) {
+          else if (colId==BIO_CLASSIF_GO || colId==QUERY_BIO_CLASSIF_GO) {
             cat = AnnotationDataModelConstants.ANNOTATION_CATEGORY.GO;
           }
-          else if (colId==BIO_CLASSIF_EC) {
+          else if (colId==BIO_CLASSIF_EC || colId==QUERY_BIO_CLASSIF_EC) {
             cat = AnnotationDataModelConstants.ANNOTATION_CATEGORY.EC;
           }
-          else if (colId==BIO_CLASSIF_IPR) {
+          else if (colId==BIO_CLASSIF_IPR || colId==QUERY_BIO_CLASSIF_IPR) {
             cat = AnnotationDataModelConstants.ANNOTATION_CATEGORY.IPR;
+          }
+          else if (colId==BIO_CLASSIF_PFM || colId==QUERY_BIO_CLASSIF_PFM) {
+            cat = AnnotationDataModelConstants.ANNOTATION_CATEGORY.PFM;
           }
           else {
             cat = null;

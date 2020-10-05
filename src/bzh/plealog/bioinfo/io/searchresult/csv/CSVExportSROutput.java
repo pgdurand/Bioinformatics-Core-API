@@ -158,10 +158,15 @@ public class CSVExportSROutput {
       writer.write(_separator);
     }
   }
+  private boolean isQueryBioClassifColsId(int colid) {
+    return colid >= TxtExportSROutput.QUERY_BIO_CLASSIF &&
+        colid <= TxtExportSROutput.QUERY_BIO_CLASSIF_PFM;     
+  }
   public void export(Writer writer, SROutput output) throws Exception {
     if (writer == null || output == null)
       return;
-    Map<AnnotationDataModelConstants.ANNOTATION_CATEGORY, SRClassification> ftClassif=null;
+    Map<AnnotationDataModelConstants.ANNOTATION_CATEGORY, SRClassification> ftClassifHit=null;
+    Map<AnnotationDataModelConstants.ANNOTATION_CATEGORY, SRClassification> ftClassifQuery=null;
     SRIteration iteration;
     SRHit hit;
     SRHsp hsp;
@@ -227,18 +232,21 @@ public class CSVExportSROutput {
           }
           writer.write("\n");
         }
+        ftClassifQuery = ExtractAnnotation.prepareClassification(
+            output.getClassification(), 
+            iteration.getIterationQueryFeatureTable());
         for (j = 0; j < size2; j++) {// loop on hits
           hit = iteration.getHit(j);
           size3 = hit.countHsp();
           for (k = 0; k < size3; k++) {// loop on hsp
             hsp = hit.getHsp(k);
             writeQueryInfo(writer, qId, qName, qLength);
+            ftClassifHit = ExtractAnnotation.prepareClassification(
+                output.getClassification(), 
+                hsp.getFeatures());
             for (l = 0; l < cols; l++) {// loop on data columns
-              ftClassif = ExtractAnnotation.prepareClassification(
-                  output.getClassification(), 
-                  hsp.getFeatures());
               s = TxtExportSROutput.getFormattedData(
-                  ftClassif, 
+                  isQueryBioClassifColsId(_colIds[l])? ftClassifQuery:ftClassifHit, 
                   iteration, 
                   hit, 
                   hsp, 
@@ -262,8 +270,8 @@ public class CSVExportSROutput {
           }
         }
       }
-      if (ftClassif != null)
-        ftClassif.clear();
+      if (ftClassifHit != null)
+        ftClassifHit.clear();
     } else {// empty results
       if (_showQueryId) {
         writeString(writer, qId);
@@ -285,7 +293,7 @@ public class CSVExportSROutput {
       }
       writer.write("\n");
     }
-    if (ftClassif != null)
-      ftClassif.clear();
+    if (ftClassifHit != null)
+      ftClassifHit.clear();
   }
 }

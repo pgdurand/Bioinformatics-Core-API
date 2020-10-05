@@ -17,13 +17,10 @@
 package bzh.plealog.bioinfo.io.searchresult.csv;
 
 import java.util.Enumeration;
-import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.StringTokenizer;
-
-import org.apache.log4j.Logger;
 
 import bzh.plealog.bioinfo.api.core.config.CoreSystemConfigurator;
 import bzh.plealog.bioinfo.api.data.feature.AnnotationDataModelConstants;
@@ -38,18 +35,6 @@ import bzh.plealog.bioinfo.api.data.searchresult.SRIteration;
 import bzh.plealog.bioinfo.api.data.searchresult.SROutput;
 
 public class ExtractAnnotation {
-
-  private static final Logger LOG = Logger.getLogger(ExtractAnnotation.class.getSimpleName());
-
-  private static HashSet<AnnotationDataModelConstants.ANNOTATION_CATEGORY> DEF_CAT = new HashSet<AnnotationDataModelConstants.ANNOTATION_CATEGORY>();
-
-  static {
-    DEF_CAT.add(AnnotationDataModelConstants.ANNOTATION_CATEGORY.EC);
-    DEF_CAT.add(AnnotationDataModelConstants.ANNOTATION_CATEGORY.GO);
-    DEF_CAT.add(AnnotationDataModelConstants.ANNOTATION_CATEGORY.IPR);
-    DEF_CAT.add(AnnotationDataModelConstants.ANNOTATION_CATEGORY.TAX);
-  }
-
 
   private static void addClassifTerm(SRClassification classification, String id, String desc, 
       AnnotationDataModelConstants.ANNOTATION_CATEGORY cat) {
@@ -348,6 +333,47 @@ public class ExtractAnnotation {
     }
   }
   
+  /**
+   * Add a classification to another one.
+   * 
+   * @param classif1 a classification. Cannot be null.
+   * @param classif2 another classification. Can be null. Content of classif2 is added to classif1.
+   */
+  public static void addClassificationdata(SRClassification classif1, SRClassification classif2) {
+    if (classif2==null || classif2.size()==0) {
+      return;
+    }
+    Enumeration<String> ids = classif2.getTermIDs();
+    while(ids.hasMoreElements()) {
+      String id = ids.nextElement();
+      if (classif1.getTerm(id)==null) {
+        classif1.addTerm(id, classif2.getTerm(id));
+      }
+    }
+  }
+  /**
+   * Merge two classifications.
+   * 
+   * @param classif1 a classification. Can be null.
+   * @param classif2 another classification. Can be null.
+   * 
+   * @return merged classifications. A new classification object is returned, classif1
+   * nor classif2 is modified.
+   */
+  public static SRClassification mergeClassificationdata(SRClassification classif1, SRClassification classif2) {
+    SRClassification newRefClassif = CoreSystemConfigurator.getSRFactory().creationBClassification();
+    
+    if (classif1!=null && classif1.size()!=0) {
+      Enumeration<String> ids = classif1.getTermIDs();
+      while(ids.hasMoreElements()) {
+        String id = ids.nextElement();
+        newRefClassif.addTerm(id, classif1.getTerm(id));
+      }
+    }
+    addClassificationdata(newRefClassif, classif2);
+    
+    return newRefClassif;
+  }
   /**
    * Prepare the classification data from a feature Table. Returned data is organized by 
    * classification category.
