@@ -21,6 +21,8 @@ import java.util.Enumeration;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.plealog.genericapp.api.log.EZLogger;
+
 import bzh.plealog.bioinfo.api.core.config.CoreSystemConfigurator;
 import bzh.plealog.bioinfo.api.data.feature.Feature;
 import bzh.plealog.bioinfo.api.data.feature.FeatureTable;
@@ -106,7 +108,7 @@ public class IprPredictions {
    * 
    * @return a FeatureTable representation of list of (unique) domain predictions
    */
-  public FeatureTable getFeatureTable(boolean uniqueDomainId) {
+  public FeatureTable getFeatureTableBak(boolean uniqueDomainId) {
     List<IprPrediction> filtered_objs;
     FeatureTable ft;
     Feature feat;
@@ -162,4 +164,85 @@ public class IprPredictions {
     }
     return ft;
   }
+  public FeatureTable getFeatureTable(boolean uniqueDomainId) {
+    List<IprPrediction> filtered_objs;
+    FeatureTable ft;
+    Feature feat;
+    boolean doRemap = false;
+    
+    
+    ft = CoreSystemConfigurator.getFeatureTableFactory().getFTInstance();
+    ft.setSource(getIprscanVersion());
+    ft.setDate(getIprscanDate());
+    
+    if (uniqueDomainId) {
+      filtered_objs = filterUniqueDomains();
+    }
+    else {
+      filtered_objs = gffObjs;
+    }
+    
+    for(IprPrediction pred : filtered_objs) {
+      feat = pred.getFeature();
+      if (feat.getKey().equals(IprPrediction.UNK)==false) {
+        ft.addFeature(feat);
+        //the following enables to detect nucleotide sequence provided by user
+        if (feat.getKey().equals(IprPrediction.PROTEIN)) {
+          doRemap = true;
+        }
+      }
+    }
+    
+    //now, we may have to adjust domain location with regard to user provided
+    //sequence. In case of protein: nothing to do. In case of nucleotide: remap
+    // Iprscan predicted domains to user_provided nucleotide one.
+    if (!doRemap){
+      //we have protein sequences, no remap do to
+      return ft;
+    }
+    //remap protein domain location to nucleotide sequence coordinate system
+    int protStartOnNuc=0, protStopOnNuc=0, strand=0, from, to;
+    boolean reverseLocation = strand==Feature.MINUS_STRAND;
+    Enumeration<Feature> enumFeats = ft.enumFeatures();
+    while(enumFeats.hasMoreElements()) {
+      feat = enumFeats.nextElement();
+      if (feat.getKey().equals(IprPrediction.DOMAIN)==false) {
+        //to remap domains, retrieve location of ORF on nucleic_sequence.
+        //Since ORF is always reported BEFORE domains, this code is fine
+        if (feat.getKey().equals(IprPrediction.PROTEIN)) {
+          protStartOnNuc = feat.getFrom();
+          protStopOnNuc = feat.getTo();
+          strand = feat.getStrand();
+          reverseLocation = strand==Feature.MINUS_STRAND;
+        }
+        continue;
+      }
+      //remap locations ONLY for features of type domain
+      from = feat.getFrom();
+      to = feat.getTo();
+      try {
+        if (reverseLocation){
+          //in Feature data model, 'from' must be less than 'to'... as Iprscan does
+          feat.setFrom(protStopOnNuc - (to-1)*3);
+          feat.setTo(protStopOnNuc - (from-1)*3);
+          feat.setStrand(Feature.MINUS_STRAND);
+        }
+        else {
+          feat.setFrom(protStartOnNuc + (from-1)*3);
+          feat.setTo(protStartOnNuc + (to-1)*3);
+        }
+      }
+      catch(IllegalArgumentException t) {
+        //catching in a loop is not really appropriate... however, we would like
+        //to continue loading data even is some features are wrongly remapped
+        EZLogger.warn(String.format("> %s: domain %d..%d: %s", 
+            gffObjs.get(0).getIprGffObject().getRegionId(), 
+            from, 
+            to,
+            t.getMessage()));
+      }
+    }
+    return ft;
+  }
+
 }

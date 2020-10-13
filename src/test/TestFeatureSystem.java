@@ -24,6 +24,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Enumeration;
+import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
@@ -575,5 +576,59 @@ public class TestFeatureSystem {
     //do a little control: all queries should have been annotated
     controlAnnotatedBlast(bo);
     
+  }
+  
+  @SuppressWarnings("serial")
+  @Test
+  public void testRealIprNucDomainsGff() {
+    String gff_file="data/test/domains.fsa_nt.gff3";
+    
+    IprGffReader gr = new IprGffReader();
+    Map<String, List<IprGffObject>> gffMap = gr.processFileToMap(gff_file);
+    
+    assertNotNull(gffMap);
+    
+    List<IprGffObject> gffObjs = gffMap.get("GAAA01000002.1");
+    assertNotNull(gffObjs);
+    
+    IprPredictions iprs = new IprPredictions(gffObjs);
+    FeatureTable ft = iprs.getFeatureTable(true);
+    
+    assertNotNull(ft);
+    assertEquals(ft.features(), 3);
+    
+    HashSet<String> refValues= new HashSet<String>(){{
+      add("source : 1..1068");
+      add("protein : 309..575");
+      add("protein : 664..1068 (-)");
+      
+    }};
+    Enumeration<Feature> feats = ft.enumFeatures();
+    while(feats.hasMoreElements()) {
+      Feature feat = feats.nextElement();
+      assertTrue(refValues.contains(feat.toString()));
+    }
+    
+    gffObjs = gffMap.get("GAAA01000005.1");
+    assertNotNull(gffObjs);
+    
+    iprs = new IprPredictions(gffObjs);
+    ft = iprs.getFeatureTable(true);
+    
+    assertNotNull(ft);
+    assertEquals(ft.features(), 5);
+    
+    refValues= new HashSet<String>(){{
+      add("source : 1..1647");
+      add("protein : 759..1256 (-)");
+      add("domain : 848..971 (-)");
+      add("domain : 848..971 (-)");
+      add("protein : 979..1161 (-)");
+    }};
+    feats = ft.enumFeatures();
+    while(feats.hasMoreElements()) {
+      Feature feat = feats.nextElement();
+      assertTrue(refValues.contains(feat.toString()));
+    }
   }
 }

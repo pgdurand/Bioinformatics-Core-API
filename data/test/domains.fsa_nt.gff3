@@ -1,0 +1,36 @@
+##gff-version 3
+##feature-ontology http://song.cvs.sourceforge.net/viewvc/song/ontology/sofa.obo?revision=1.269
+##interproscan-version 5.28-67.0
+##sequence-region GAAA01000002.1 1 1068
+GAAA01000002.1	provided_by_user	nucleic_acid	1	1068	.	+	.	ID=GAAA01000002.1;Name=GAAA01000002.1;md5=97302e0f4336c3afc5a88354e12eed9b
+GAAA01000002.1	getorf	ORF	309	575	.	+	.	Target=pep_GAAA01000002.1_309_575 1 89;ID=orf_GAAA01000002.1_309_575;Name=GAAA01000002.1_6;md5=97302e0f4336c3afc5a88354e12eed9b
+GAAA01000002.1	getorf	polypeptide	1	89	.	+	.	ID=pep_GAAA01000002.1_309_575;md5=29a3496c7bf8935a4ec90795d3b4826a
+GAAA01000002.1	SignalP_EUK	protein_match	1	23	.	+	.	date=01-10-2020;Target=null 1 23;ID=match$433_1_23;Name=SignalP-noTM;status=T
+##sequence-region GAAA01000002.1 1 1068
+GAAA01000002.1	provided_by_user	nucleic_acid	1	1068	.	+	.	ID=GAAA01000002.1;Name=GAAA01000002.1;md5=97302e0f4336c3afc5a88354e12eed9b
+GAAA01000002.1	getorf	ORF	664	1068	.	-	.	Target=pep_GAAA01000002.1_664_1068_r 1 135;ID=orf_GAAA01000002.1_664_1068_r;Name=GAAA01000002.1_15;md5=97302e0f4336c3afc5a88354e12eed9b
+GAAA01000002.1	getorf	polypeptide	1	135	.	+	.	ID=pep_GAAA01000002.1_664_1068_r;md5=d4b58353f777f2ede04d13372f84f994
+GAAA01000002.1	SignalP_EUK	protein_match	1	25	.	+	.	date=01-10-2020;Target=null 1 25;ID=match$440_1_25;Name=SignalP-noTM;status=T
+##sequence-region GAAA01000005.1 1 1647
+GAAA01000005.1	provided_by_user	nucleic_acid	1	1647	.	+	.	ID=GAAA01000005.1;Name=GAAA01000005.1;md5=3c76335b90b1a5918b80b69bbf9b29d6
+GAAA01000005.1	getorf	ORF	759	1256	.	-	.	Target=pep_GAAA01000005.1_759_1256_r 1 166;ID=orf_GAAA01000005.1_759_1256_r;Name=GAAA01000005.1_29;md5=3c76335b90b1a5918b80b69bbf9b29d6
+GAAA01000005.1	getorf	polypeptide	1	166	.	+	.	ID=pep_GAAA01000005.1_759_1256_r;md5=a72fcc558191b67f253fd12cb9a75b3e
+GAAA01000005.1	ProSiteProfiles	protein_match	96	137	12.386	+	.	date=01-10-2020;Target=null 96 137;ID=match$162_96_137;signature_desc=Zinc finger RING-type profile.;Name=PS50089;status=T;Dbxref="InterPro:IPR001841"
+GAAA01000005.1	Pfam	protein_match	96	137	2.8E-12	+	.	date=01-10-2020;Target=null 96 137;ID=match$163_96_137;signature_desc=Ring finger domain;Name=PF13639;status=T;Dbxref="InterPro:IPR001841"
+##sequence-region GAAA01000005.1 1 1647
+GAAA01000005.1	provided_by_user	nucleic_acid	1	1647	.	+	.	ID=GAAA01000005.1;Name=GAAA01000005.1;md5=3c76335b90b1a5918b80b69bbf9b29d6
+GAAA01000005.1	getorf	ORF	979	1161	.	-	.	Target=pep_GAAA01000005.1_979_1161_r 1 61;ID=orf_GAAA01000005.1_979_1161_r;Name=GAAA01000009.1_18;md5=3c76335b90b1a5918b80b69bbf9b29d6
+GAAA01000005.1	getorf	polypeptide	1	61	.	+	.	ID=pep_GAAA01000005.1_979_1161_r;md5=0d5c92496f5bb2f20adb03654c7595d9
+##sequence-region GAAA01000005.1 1 1647
+GAAA01000005.1	provided_by_user	nucleic_acid	1	1647	.	+	.	ID=GAAA01000005.1;Name=GAAA01000005.1;md5=3c76335b90b1a5918b80b69bbf9b29d6
+GAAA01000005.1	getorf	ORF	979	1161	.	-	.	Target=pep_GAAA01000005.1_979_1161_r 1 61;ID=orf_GAAA01000005.1_979_1161_r;Name=GAAA01000005.1_28;md5=3c76335b90b1a5918b80b69bbf9b29d6
+GAAA01000005.1	getorf	polypeptide	1	61	.	+	.	ID=pep_GAAA01000005.1_979_1161_r;md5=0d5c92496f5bb2f20adb03654c7595d9
+##sequence-region GAAA01000005.1 1 1647
+GAAA01000005.1	provided_by_user	nucleic_acid	1	1647	.	+	.	ID=GAAA01000005.1;Name=GAAA01000005.1;md5=3c76335b90b1a5918b80b69bbf9b29d6
+GAAA01000005.1	getorf	ORF	979	1161	.	-	.	Target=pep_GAAA01000005.1_979_1161_r 1 61;ID=orf_GAAA01000005.1_979_1161_r;Name=GAAA01000008.1_24;md5=3c76335b90b1a5918b80b69bbf9b29d6
+GAAA01000005.1	getorf	polypeptide	1	61	.	+	.	ID=pep_GAAA01000005.1_979_1161_r;md5=0d5c92496f5bb2f20adb03654c7595d9
+##sequence-region GAAA01000005.1 1 1647
+GAAA01000005.1	provided_by_user	nucleic_acid	1	1647	.	+	.	ID=GAAA01000005.1;Name=GAAA01000005.1;md5=3c76335b90b1a5918b80b69bbf9b29d6
+GAAA01000005.1	getorf	ORF	979	1161	.	-	.	Target=pep_GAAA01000005.1_979_1161_r 1 61;ID=orf_GAAA01000005.1_979_1161_r;Name=GAAA01000006.1_14;md5=3c76335b90b1a5918b80b69bbf9b29d6
+GAAA01000005.1	getorf	polypeptide	1	61	.	+	.	ID=pep_GAAA01000005.1_979_1161_r;md5=0d5c92496f5bb2f20adb03654c7595d9
+

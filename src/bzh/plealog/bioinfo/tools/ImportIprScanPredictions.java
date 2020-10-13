@@ -26,7 +26,8 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Options;
 import org.apache.log4j.BasicConfigurator;
-import org.apache.log4j.Logger;
+
+import com.plealog.genericapp.api.log.EZLogger;
 
 import bzh.plealog.bioinfo.api.data.feature.FeatureTable;
 import bzh.plealog.bioinfo.api.data.searchresult.SRClassification;
@@ -51,7 +52,6 @@ import bzh.plealog.bioinfo.util.CmdLineUtils;
  */
 public class ImportIprScanPredictions {
 
-  private static final Logger LOG = Logger.getLogger(ImportIprScanPredictions.class.getSimpleName());
   
   private static final String IN_KEY = "in";
   private static final String IPR_KEY = "ipr";
@@ -172,17 +172,17 @@ public class ImportIprScanPredictions {
         throw new RuntimeException(String.format("unable to read BLAST file: %s",bo_file.getAbsolutePath()));
       }
     } catch (Exception e) {
-      LOG.warn(e.toString());
+      EZLogger.warn(e.toString());
       return false;
     }
     
     if(sro==null || sro.isEmpty()) {
-      LOG.warn("BLAST file is empty");
+      EZLogger.warn("BLAST file is empty");
       return false;
     }
     int nqueries = sro.getIterations().size();
     
-    LOG.info(
+    EZLogger.info(
         String.format("BLAST file contains results for %d %s", 
             nqueries, nqueries>1 ? "queries" : "query"));
     
@@ -191,17 +191,17 @@ public class ImportIprScanPredictions {
     Map<String, List<IprGffObject>> gffMap = gr.processFileToMap(iprs_file.getAbsolutePath());
     
     if(gffMap==null || gffMap.isEmpty()) {
-      LOG.warn(
+      EZLogger.warn(
           String.format("No IprScan predictons loaded from: %s", iprs_file.getAbsolutePath()));
       return false;
     }
     
-    LOG.info(
+    EZLogger.info(
         String.format("IprScan predictions imported for %d sequences", gffMap.keySet().size()));
     
     //annotate Blast result (queries) with IPRscan predictions
     int nqueriesAnnotated = annotateBlastWithIprscan(sro, gffMap);
-    LOG.info(
+    EZLogger.info(
         String.format("%d %s been annotated with IPRscan domains", 
             nqueriesAnnotated, nqueriesAnnotated>1 ? "queries have" : "query has"));
     
@@ -212,7 +212,7 @@ public class ImportIprScanPredictions {
     try {
       nativeBlastWriter.write(out_file, sro);
     } catch (SRWriterException e) {
-      LOG.warn(e.toString());
+      EZLogger.warn(e.toString());
       return false;
     }
     
