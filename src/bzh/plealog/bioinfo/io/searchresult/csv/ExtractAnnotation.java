@@ -37,9 +37,13 @@ import bzh.plealog.bioinfo.api.data.searchresult.SROutput;
 public class ExtractAnnotation {
 
   private static void addClassifTerm(SRClassification classification, String id, String desc, 
-      AnnotationDataModelConstants.ANNOTATION_CATEGORY cat) {
-    if (classification.getTerm(id)==null) {
-      SRCTerm term = CoreSystemConfigurator.getSRFactory().creationBTerm();
+      AnnotationDataModelConstants.ANNOTATION_CATEGORY cat, ExtractAnnotationVisitor visitor) {
+    
+    ExtractAnnotationVisitor.VISIT_TYPE vType = ExtractAnnotationVisitor.VISIT_TYPE.NEXT;
+    SRCTerm                             term = classification.getTerm(id);
+    
+    if (term == null) {
+      term = CoreSystemConfigurator.getSRFactory().creationBTerm();
       term.setDescription(desc);
       term.setType(cat.getType());
       if(cat.equals(AnnotationDataModelConstants.ANNOTATION_CATEGORY.TAX) ||
@@ -47,6 +51,10 @@ public class ExtractAnnotation {
         id = cat.getType()+":"+id;
       }
       classification.addTerm(id, term);
+      vType = ExtractAnnotationVisitor.VISIT_TYPE.FIRST;
+    }
+    if (visitor!=null) {
+      visitor.termVisited(term, vType);
     }
   }
   
@@ -59,7 +67,7 @@ public class ExtractAnnotation {
    * 
    * @see AnnotationDataModelConstants.CLASSIF_TERM_PROVIDER to review collected classification data
    * */
-  public static void prepareClassificationdata(SRClassification classif, Feature feature) {
+  public static void prepareClassificationdata(SRClassification classif, Feature feature, ExtractAnnotationVisitor visitor) {
     Enumeration<Qualifier> enumQualifiers;
     Qualifier qualifier;
     String qName, qValue, id, desc, term;
@@ -85,7 +93,8 @@ public class ExtractAnnotation {
               classif, 
               id, 
               null, 
-              AnnotationDataModelConstants.ANNOTATION_CATEGORY.TAX);
+              AnnotationDataModelConstants.ANNOTATION_CATEGORY.TAX,
+              visitor);
           continue;
         }
         
@@ -95,7 +104,8 @@ public class ExtractAnnotation {
             classif, 
             qValue, 
             null, 
-            AnnotationDataModelConstants.ANNOTATION_CATEGORY.EC);
+            AnnotationDataModelConstants.ANNOTATION_CATEGORY.EC,
+            visitor);
         continue;
       }
       // Standard Swissprot db_xref format:
@@ -125,9 +135,14 @@ public class ExtractAnnotation {
             classif, 
             id, 
             desc, 
-            AnnotationDataModelConstants.CLASSIF_TERM_PROVIDER.get(term));
+            AnnotationDataModelConstants.CLASSIF_TERM_PROVIDER.get(term),
+            visitor);
       }
     }
+  }
+  
+  public static void prepareClassificationdata(SRClassification classif, Feature feature) {
+    prepareClassificationdata(classif, feature, null);
   }
   
   /**
@@ -138,7 +153,8 @@ public class ExtractAnnotation {
    * 
    * @see AnnotationDataModelConstants.CLASSIF_TERM_PROVIDER to review collected classification data
    * */
-  public static void prepareClassificationdata(SRClassification classif, FeatureTable featureTable) {
+  public static void prepareClassificationdata(SRClassification classif, 
+      FeatureTable featureTable, ExtractAnnotationVisitor visitor) {
     Enumeration<Feature> enumFeatures;
     if (featureTable==null)
       return;
@@ -149,6 +165,10 @@ public class ExtractAnnotation {
     }
   }
 
+  public static void prepareClassificationdata(SRClassification classif, FeatureTable featureTable) {
+    prepareClassificationdata(classif, featureTable, null);
+  }
+  
   /**
    * Collect classification data from a FeatureTable.
    * 
@@ -159,8 +179,12 @@ public class ExtractAnnotation {
    * @return collected classification data
    * */
   public static SRClassification getClassificationdata(FeatureTable featureTable) {
+    return getClassificationdata(featureTable, null);
+  }
+  public static SRClassification getClassificationdata(FeatureTable featureTable, 
+      ExtractAnnotationVisitor visitor) {
     SRClassification classif = CoreSystemConfigurator.getSRFactory().creationBClassification();
-    prepareClassificationdata(classif, featureTable);
+    prepareClassificationdata(classif, featureTable, visitor);
     return classif;
   }
 
@@ -174,13 +198,18 @@ public class ExtractAnnotation {
    * @see AnnotationDataModelConstants.CLASSIF_TERM_PROVIDER to review collected classification data
    * */
   public static void prepareClassificationdata(SRClassification classif, SRHit hit, boolean firstHspOnly) {
+    prepareClassificationdata(classif, hit, firstHspOnly, null);
+  }
+  
+  public static void prepareClassificationdata(SRClassification classif, SRHit hit, boolean firstHspOnly, 
+      ExtractAnnotationVisitor visitor) {
     int k, size3;
     SRHsp hsp;
     // Loop over each Hit and get Bio Classification data
     size3 = hit.countHsp();
     for (k = 0; k < size3; k++) {// loop on hsp
       hsp = hit.getHsp(k);
-      prepareClassificationdata(classif, hsp.getFeatures());
+      prepareClassificationdata(classif, hsp.getFeatures(), visitor);
       if (firstHspOnly) {
         break;
       }
@@ -197,12 +226,18 @@ public class ExtractAnnotation {
    * 
    * @see AnnotationDataModelConstants.CLASSIF_TERM_PROVIDER to review collected classification data
    * */
-  public static void prepareClassificationdata(SRClassification classif, SRIteration sri, boolean bestHitOnly, boolean firstHspOnly) {
+  public static void prepareClassificationdata(SRClassification classif, SRIteration sri, 
+      boolean bestHitOnly, boolean firstHspOnly) {
+    prepareClassificationdata(classif, sri, bestHitOnly, firstHspOnly, null);
+  }
+  
+  public static void prepareClassificationdata(SRClassification classif, SRIteration sri, 
+      boolean bestHitOnly, boolean firstHspOnly, ExtractAnnotationVisitor visitor) {
     int j, size2;
     // Loop over each Hit and get Bio Classification data
     size2 = sri.countHit();
     for (j = 0; j < size2; j++) {// loop on hits
-      prepareClassificationdata(classif, sri.getHit(j), firstHspOnly);
+      prepareClassificationdata(classif, sri.getHit(j), firstHspOnly, visitor);
       if (bestHitOnly) {
         break;
       }
@@ -221,12 +256,16 @@ public class ExtractAnnotation {
    * @return collected classification data
    * */
   public static SRClassification getClassificationdata(SROutput bo, boolean bestHitOnly, boolean firstHspOnly) {
+    return getClassificationdata(bo, bestHitOnly, firstHspOnly, null);
+  }
+  public static SRClassification getClassificationdata(SROutput bo, boolean bestHitOnly, 
+      boolean firstHspOnly, ExtractAnnotationVisitor visitor) {
     SRClassification classif = CoreSystemConfigurator.getSRFactory().creationBClassification();
     int i, size;
     // Loop over each Hit and get Bio Classification data
     size = bo.countIteration();
     for (i = 0; i < size; i++) {// loop on iterations
-      prepareClassificationdata(classif, bo.getIteration(i), bestHitOnly, firstHspOnly);
+      prepareClassificationdata(classif, bo.getIteration(i), bestHitOnly, firstHspOnly, visitor);
     }
     return classif;
   }
@@ -241,7 +280,11 @@ public class ExtractAnnotation {
    * @return collected classification data
    * */
   public static SRClassification getClassificationdata(SROutput bo) {
-    return getClassificationdata(bo, false, false);
+    return getClassificationdata(bo, null);
+  }
+  
+  public static SRClassification getClassificationdata(SROutput bo, ExtractAnnotationVisitor visitor) {
+    return getClassificationdata(bo, false, false, visitor);
   }
 
   /**
@@ -256,8 +299,12 @@ public class ExtractAnnotation {
    * @return collected classification data
    * */
   public static SRClassification getClassificationdata(SRIteration sri, boolean bestHitOnly, boolean firstHspOnly) {
+    return getClassificationdata(sri, bestHitOnly, firstHspOnly, null);
+  }
+  public static SRClassification getClassificationdata(SRIteration sri, boolean bestHitOnly, 
+      boolean firstHspOnly, ExtractAnnotationVisitor visitor) {
     SRClassification classif = CoreSystemConfigurator.getSRFactory().creationBClassification();
-    prepareClassificationdata(classif, sri, bestHitOnly, firstHspOnly);
+    prepareClassificationdata(classif, sri, bestHitOnly, firstHspOnly, visitor);
     return classif;
   }
   
@@ -271,7 +318,10 @@ public class ExtractAnnotation {
    * @return collected classification data
    * */
   public static SRClassification getClassificationdata(SRIteration sri) {
-    return getClassificationdata(sri, false, false);
+    return getClassificationdata(sri, null);
+  }
+  public static SRClassification getClassificationdata(SRIteration sri, ExtractAnnotationVisitor visitor) {
+    return getClassificationdata(sri, false, false, visitor);
   }
   
   /**
@@ -285,8 +335,11 @@ public class ExtractAnnotation {
    * @return collected classification data
    * */
   public static SRClassification getClassificationdata(SRHit hit, boolean firstHspOnly) {
+    return getClassificationdata(hit, firstHspOnly, null);
+  }
+  public static SRClassification getClassificationdata(SRHit hit, boolean firstHspOnly, ExtractAnnotationVisitor visitor) {
     SRClassification classif = CoreSystemConfigurator.getSRFactory().creationBClassification();
-    prepareClassificationdata(classif, hit, firstHspOnly);
+    prepareClassificationdata(classif, hit, firstHspOnly, visitor);
     return classif;
   }
 
@@ -300,7 +353,10 @@ public class ExtractAnnotation {
    * @return collected classification data
    * */
   public static SRClassification getClassificationdata(SRHit hit) {
-    return getClassificationdata(hit, false);
+    return getClassificationdata(hit, null);
+  }
+  public static SRClassification getClassificationdata(SRHit hit, ExtractAnnotationVisitor visitor) {
+    return getClassificationdata(hit, false, visitor);
   }
   
 
@@ -386,7 +442,7 @@ public class ExtractAnnotation {
   public static Map<AnnotationDataModelConstants.ANNOTATION_CATEGORY, SRClassification> 
     prepareClassification(SRClassification refClassif, FeatureTable featureTable){
     
-    SRClassification ftClassif = getClassificationdata(featureTable);
+    SRClassification ftClassif = getClassificationdata(featureTable, null);
     
     if (ftClassif.size()==0)
       return null;
