@@ -43,6 +43,9 @@ public class InMemoryQuery extends QueryBase {
   private String _engineSysName = UNK;
   private String _rid = UNK;
   private int _status = QueryBase.UNKNOWN;
+
+  private int nbHitAccessions = -1;
+  private int nbSeqWithHit = -1;
   
   private static String UNK = "";
   
@@ -173,6 +176,40 @@ public class InMemoryQuery extends QueryBase {
   @Override
   public SROutput getResult(int queryNum) {
     return _results.get(queryNum);
+  }
+
+  @Override
+  public int getTotalHitAccessions() {
+    if (nbHitAccessions==-1) {
+      SROutput sro;
+      nbHitAccessions = 0;
+      int i, j, nIter, size = sequences();
+      for(i=0;i<size;i++) {
+        sro = getResult(i);
+        nIter = sro.countIteration();
+        for(j=0;j<nIter;j++){
+          nbHitAccessions += sro.getIteration(j).countHit();
+        }
+      }
+    }
+    return nbHitAccessions;
+  }
+
+  @Override
+  public int getTotalMatchingQueries() {
+    if (nbSeqWithHit==-1) {
+      nbSeqWithHit = 0;
+      int i, size = sequences();
+      for(i=0;i<size;i++) {
+        nbSeqWithHit += (hasHits(i) ? 1:0);
+      }
+    }
+    return nbSeqWithHit;
+  }
+
+  @Override
+  public int getTotalNotMatchingQueries() {
+    return sequences()-getTotalMatchingQueries();
   }
 
 }

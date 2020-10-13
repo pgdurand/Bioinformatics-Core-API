@@ -115,6 +115,21 @@ public abstract class QueryBase {
    */
   public abstract int countStatuses(byte status);
   
+  /**
+   * Return the grand total of hit accessions contained in the result of this Query.
+   */
+  public abstract int getTotalHitAccessions();
+  
+  /**
+   * Return the grand total of queries having a match in the reference bank.
+   */
+  public abstract int getTotalMatchingQueries();
+  
+  /**
+   * Return the grand total of queries having a no match in the reference bank.
+   */
+  public abstract int getTotalNotMatchingQueries();
+  
   /* == Per query section  ===================================================*/
   /**
    * Returns a sequence.
