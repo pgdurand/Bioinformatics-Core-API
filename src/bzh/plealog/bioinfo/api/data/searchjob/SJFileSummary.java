@@ -192,15 +192,15 @@ public class SJFileSummary implements Serializable {
   
   private void prepareClassificationData(SROutput output) {
     // Get unique set of Bio Classification IDs
-      //Step 1 : best hit part
-      SRClassification classification = CoreSystemConfigurator.getSRFactory().creationBClassification();
-      SRClassification hitClassification;
-      
-      // Collect unique set of Bio Classification IDs of first hit only
-      hitClassification = ExtractAnnotation.getClassificationdata(output.getIteration(0).getHit(0), true);
-      
-      if (hitClassification.size()==0)
-        return;
+
+    //Step 1 : best hit part
+    SRClassification classification = CoreSystemConfigurator.getSRFactory().creationBClassification();
+    SRClassification hitClassification;
+    
+    // Collect unique set of Bio Classification IDs of first hit only
+    hitClassification = ExtractAnnotation.getClassificationdata(output.getIteration(0).getHit(0), true);
+    
+    if (hitClassification.size()!=0) {
       //then discard FAKE terms (those making path of Terms associated to hits)
       Enumeration<String> ids = hitClassification.getTermIDs();
       String id;
@@ -225,9 +225,10 @@ public class SJFileSummary implements Serializable {
       setHitClassification(classification);  
       mapTerms.sort(Comparator.comparing(SJTermSummary::getViewType).thenComparing(SJTermSummary::getID));
       setHitClassificationForView(mapTerms);
-      
-      //Step 2 : query part
-      updateQueryClassificationData(output);
+    }
+    
+    //Step 2 : query part (new, introduced with IPRscan data import)
+    updateQueryClassificationData(output);
       
   }
   /**
@@ -743,6 +744,12 @@ public class SJFileSummary implements Serializable {
     return newList;
   }
 
+  public boolean hasTaxonomyData() {
+    boolean taxo = (getTaxonomy()!=null && !getTaxonomy().equals(UNKNOWN));
+    taxo |= (getOrganism()!=null && !getOrganism().equals(UNKNOWN));
+    return taxo;
+  }
+  
   public String toString() {
     StringBuffer szBuf;
 
