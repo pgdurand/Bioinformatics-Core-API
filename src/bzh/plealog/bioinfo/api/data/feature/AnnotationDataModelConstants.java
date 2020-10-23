@@ -106,6 +106,12 @@ public class AnnotationDataModelConstants {
   public static final String ENZYME_INDEX_LABEL = 
       ANNOTATION_CATEGORY.EC.getDescription();
   
+  public static final String PFAM_INDEX_LABEL = 
+      ANNOTATION_CATEGORY.PFM.getDescription();
+
+  public static final String PROSITE_INDEX_LABEL = 
+      ANNOTATION_CATEGORY.PS.getDescription();
+
   public static final String INTERPRO_INDEX_LABEL = 
   ANNOTATION_CATEGORY.IPR.getDescription();
   
@@ -143,9 +149,11 @@ public class AnnotationDataModelConstants {
   //List onotology labels
   //when updating this array, also update CLASSIF_INDEX and CLASSIF_INDEX_TYPE accordingly
   public static final String[] EXTENDED_FEATURE_INDEX_LABELS = {
-    ENZYME_INDEX_LABEL, 
-    INTERPRO_INDEX_LABEL,
     TAXON_INDEX_LABEL,
+    ENZYME_INDEX_LABEL, 
+    PFAM_INDEX_LABEL,
+    INTERPRO_INDEX_LABEL,
+    PROSITE_INDEX_LABEL,
     GO_SUBCELLULAR_LOCALISATION_INDEX_LABEL,
     GO_BIOLOGICAL_FUNCTION_INDEX_LABEL,
     GO_ENZYMATIC_ACTIVITY_INDEX_LABEL,
@@ -156,7 +164,9 @@ public class AnnotationDataModelConstants {
   public static Hashtable<String, String> CLASSIF_CODE_TO_NAME = new Hashtable<String, String>() {{
     put(ANNOTATION_CATEGORY.TAX.getType(), TAXON_INDEX_LABEL);
     put(ANNOTATION_CATEGORY.EC.getType(), ENZYME_INDEX_LABEL);
+    put(ANNOTATION_CATEGORY.PFM.getType(), PFAM_INDEX_LABEL);
     put(ANNOTATION_CATEGORY.IPR.getType(), INTERPRO_INDEX_LABEL);
+    put(ANNOTATION_CATEGORY.PS.getType(), PROSITE_INDEX_LABEL);
     put(GO_C_CODE, GO_SUBCELLULAR_LOCALISATION_INDEX_LABEL);
     put(GO_P_CODE, GO_BIOLOGICAL_FUNCTION_INDEX_LABEL);
     put(GO_F_CODE, GO_ENZYMATIC_ACTIVITY_INDEX_LABEL);
@@ -166,7 +176,9 @@ public class AnnotationDataModelConstants {
   @SuppressWarnings("serial")
   public static Hashtable<String, String> CLASSIF_NAME_TO_CODE = new Hashtable<String, String>() {{
     put(ENZYME_INDEX_LABEL, ANNOTATION_CATEGORY.EC.getType());
+    put(PFAM_INDEX_LABEL, ANNOTATION_CATEGORY.PFM.getType());
     put(INTERPRO_INDEX_LABEL, ANNOTATION_CATEGORY.IPR.getType());
+    put(PROSITE_INDEX_LABEL, ANNOTATION_CATEGORY.PS.getType());
     put(TAXON_INDEX_LABEL, ANNOTATION_CATEGORY.TAX.getType());
     put(GO_SUBCELLULAR_LOCALISATION_INDEX_LABEL, GO_C_CODE);
     put(GO_BIOLOGICAL_FUNCTION_INDEX_LABEL, GO_P_CODE);
@@ -178,7 +190,9 @@ public class AnnotationDataModelConstants {
   public static Hashtable<String, ANNOTATION_CATEGORY> CLASSIF_INDEX_TYPE = 
   new Hashtable<String, ANNOTATION_CATEGORY>() {{
     put(ENZYME_INDEX_LABEL, ANNOTATION_CATEGORY.EC);
+    put(PFAM_INDEX_LABEL, ANNOTATION_CATEGORY.PFM);
     put(INTERPRO_INDEX_LABEL, ANNOTATION_CATEGORY.IPR);
+    put(PROSITE_INDEX_LABEL, ANNOTATION_CATEGORY.PS);
     put(TAXON_INDEX_LABEL, ANNOTATION_CATEGORY.TAX);
     put(GO_SUBCELLULAR_LOCALISATION_INDEX_LABEL, ANNOTATION_CATEGORY.GO);
     put(GO_BIOLOGICAL_FUNCTION_INDEX_LABEL, ANNOTATION_CATEGORY.GO);
