@@ -318,6 +318,7 @@ public class ISROutput implements SROutput{
 		}
 		return bRet;
     }
+    @Override
     public FEATURES_CONTAINER checkFeatures(){
     	FeatureTable ft;
     	SRIteration   bi;
@@ -358,6 +359,24 @@ public class ISROutput implements SROutput{
 			return FEATURES_CONTAINER.none;
     }
 
+    @Override
+    public FEATURES_CONTAINER checkQueryFeatures() {
+      SRIteration   bi;
+      int          i,size, featCounter=0;
+
+      size = this.countIteration();
+      for(i=0;i<size;i++){
+        bi = this.getIteration(i);
+        if (bi.getIterationQueryFeatureTable()!=null) {
+          featCounter++;
+        }
+      }
+      if (featCounter==0)
+        return FEATURES_CONTAINER.none;
+      else
+        return FEATURES_CONTAINER.someQueries;
+    }
+    
     @Override
     public SRClassification getClassification() {
       return classification;

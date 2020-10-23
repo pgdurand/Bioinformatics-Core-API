@@ -57,7 +57,7 @@ public interface SROutput extends Serializable{
 	public static final String[] SEQ_TYPES = 
         {"aa","nuc"};
     
-	public static enum FEATURES_CONTAINER {none, allHits, someWithErrors};
+	public static enum FEATURES_CONTAINER {none, allHits, someWithErrors, someQueries};
 	
 	/**
      * Result contains protein data.
@@ -133,10 +133,17 @@ public interface SROutput extends Serializable{
     public boolean containsValidData();
     
     /**
-     * Check if this BOutput contains valid SequenceInfo and Features data.
+     * Check if this BOutput contains valid SequenceInfo and Features data. This method checks
+     * for Features only in SRHits.
      */
     public FEATURES_CONTAINER checkFeatures();
     
+    /**
+     * Check if this BOutput contains Queries with Features data. Introduced with IPRscan
+     * domain prediction import.
+     */
+    public FEATURES_CONTAINER checkQueryFeatures();
+
     /**
      * Return classification data associated to this SROutput.
      */
