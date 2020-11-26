@@ -20,14 +20,17 @@ import bzh.plealog.bioinfo.api.data.searchjob.SJTermSummary;
 
 public class SRClassificationCountTerm implements Comparable<SRClassificationCountTerm>{
   private SJTermSummary term;
-  private int count;
+  private int hCount;
+  private int qCount;
   private double percent;
   
-  public SRClassificationCountTerm(SJTermSummary term, int count, double percent) {
+  public enum TYPE {QUERY, HIT}
+  
+  public SRClassificationCountTerm(SJTermSummary term, int hCount, int qCount) {
     super();
     this.term = term;
-    this.count = count;
-    this.percent = percent;
+    this.hCount = hCount;
+    this.qCount = qCount;
   }
 
   public SJTermSummary getTerm() {
@@ -38,14 +41,26 @@ public class SRClassificationCountTerm implements Comparable<SRClassificationCou
     this.term = term;
   }
 
+  public int getHitCount() {
+    return hCount;
+  }
+
+  public void setHitCount(int count) {
+    this.hCount = count;
+  }
+
+  public int getQueryCount() {
+    return qCount;
+  }
+
+  public void setQueryCount(int count) {
+    this.qCount = count;
+  }
+
   public int getCount() {
-    return count;
+    return getHitCount()+getQueryCount();
   }
-
-  public void setCount(int count) {
-    this.count = count;
-  }
-
+  
   public double getPercent() {
     return percent;
   }

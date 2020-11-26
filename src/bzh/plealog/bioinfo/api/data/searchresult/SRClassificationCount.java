@@ -57,7 +57,7 @@ public class SRClassificationCount {
    * @param id term id
    * @param term classification term
    * */
-  public void addClassification(SJTermSummary term) {
+  public void addClassification(SJTermSummary term, SRClassificationCountTerm.TYPE type) {
     Hashtable<String, SRClassificationCountTerm> classif;
     SRClassificationCountTerm                    cTerm;
     String vType, id;
@@ -67,11 +67,23 @@ public class SRClassificationCount {
     classif = getBCCountClassification(vType);
     cTerm = classif.get(id);
     if (cTerm==null) {
-      cTerm = new SRClassificationCountTerm(term, 1, 0.d);
+      cTerm = new SRClassificationCountTerm(
+          term, 
+          type.equals(SRClassificationCountTerm.TYPE.HIT)?1:0, 
+          type.equals(SRClassificationCountTerm.TYPE.QUERY)?1:0);
       classif.put(id, cTerm);
     }
     else {
-      cTerm.setCount(cTerm.getCount()+1);
+      switch(type) {
+      case HIT:
+        cTerm.setHitCount(cTerm.getHitCount()+1);
+        break;
+      case QUERY:
+        cTerm.setQueryCount(cTerm.getQueryCount()+1);
+        break;
+      default:
+        break;
+      }
     }
   }
   /**
