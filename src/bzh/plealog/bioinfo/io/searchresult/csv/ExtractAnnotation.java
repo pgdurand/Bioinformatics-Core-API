@@ -16,9 +16,12 @@
  */
 package bzh.plealog.bioinfo.io.searchresult.csv;
 
+import java.util.ArrayList;
+import java.util.BitSet;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
 
@@ -27,6 +30,7 @@ import bzh.plealog.bioinfo.api.data.feature.AnnotationDataModelConstants;
 import bzh.plealog.bioinfo.api.data.feature.Feature;
 import bzh.plealog.bioinfo.api.data.feature.FeatureTable;
 import bzh.plealog.bioinfo.api.data.feature.Qualifier;
+import bzh.plealog.bioinfo.api.data.searchjob.SJTermSummary;
 import bzh.plealog.bioinfo.api.data.searchresult.SRCTerm;
 import bzh.plealog.bioinfo.api.data.searchresult.SRClassification;
 import bzh.plealog.bioinfo.api.data.searchresult.SRHit;
@@ -160,7 +164,7 @@ public class ExtractAnnotation {
       return;
     enumFeatures = featureTable.enumFeatures();
     while (enumFeatures.hasMoreElements()) {
-      prepareClassificationdata(classif, (Feature) enumFeatures.nextElement());
+      prepareClassificationdata(classif, (Feature) enumFeatures.nextElement(), visitor);
       
     }
   }
@@ -512,4 +516,102 @@ public class ExtractAnnotation {
     return featureCell.toString();
   }
 
+  /**
+   * Collect all classification types and for each of them count hits containing such 
+   * classification data. 
+   * 
+   * @param sro BLAST result
+   * @param bestHitOnly collect data for best hit only or all
+   * @param firstHspOnly collect data for first hsp only or all
+   * 
+   * @return hit counts for a set of classification data. Keys correspond to string
+   * representation of AnnotationDataModelConstants.ANNOTATION_CATEGORY.XXX.getType()
+   * expect for GO type for which we specify more precisely ontology sub-type using
+   * SJTermSummary().getViewType().
+   * */  
+  public static Map<String, Integer> countHitsByClassification(SROutput sro, boolean bestHitOnly, boolean firstHspOnly) {
+    List<SRHit> hits = new ArrayList<>();
+    SRIteration sri;
+    SRHit hit;
+    int i, j, size, size2;
+    SRClassification classif = CoreSystemConfigurator.getSRFactory().creationBClassification();
+    HitsByClassificationVisitor visitor;
+    
+    //Collect hits
+    size = sro.countIteration();
+    for (i = 0; i < size; i++) {
+      sri = sro.getIteration(i);
+      size2 = sri.countHit();
+      for (j = 0; j < size2; j++) {
+        hit = sri.getHit(j);
+        hits.add(hit);
+        if (bestHitOnly) {
+          break;
+        }
+      }
+    }
+    // Analyze FeatureTables from all collected hits
+    size = hits.size();
+    i = 0;
+    visitor = new HitsByClassificationVisitor(size);
+    for(SRHit h : hits) {
+      visitor.setCurrentHit(i);
+      prepareClassificationdata(classif, h, firstHspOnly, visitor);
+      i++;
+    }
+    return visitor.getClassificationByHits();
+  }
+  /**
+   * Collect all classification types and for each of them count hits containing such 
+   * classification data. Collect classification data for best hit only and all HSP for 
+   * that hit.
+   * 
+   * @param sro BLAST result
+   * 
+   * @return hit counts for a set of classification data. Keys correspond to string
+   * representation of AnnotationDataModelConstants.ANNOTATION_CATEGORY.XXX.getType()
+   * expect for GO type for which we specify more precisely ontology sub-type using
+   * SJTermSummary().getViewType().
+   * */
+  public static Map<String, Integer> countHitsByClassification(SROutput sro) {
+    return countHitsByClassification(sro, true, false); 
+  }
+  
+  private static class HitsByClassificationVisitor implements ExtractAnnotationVisitor {
+    private Hashtable<String, BitSet> hitCountsByClassification;
+    private int nbHits;
+    private int currentHit;
+    private HitsByClassificationVisitor(int nbHits) {
+      hitCountsByClassification = new Hashtable<>();
+      this.nbHits = nbHits;
+      currentHit=0;
+    }
+    private void setCurrentHit(int idx) {
+      currentHit = idx;
+    }
+    private Map<String, Integer> getClassificationByHits(){
+      Hashtable<String, Integer> hitCounts = new Hashtable<>();
+      for (String key : hitCountsByClassification.keySet()) {
+        hitCounts.put(key, hitCountsByClassification.get(key).cardinality());
+      }
+      return hitCounts;
+    }
+    @Override
+    public void termVisited(SRCTerm term, VISIT_TYPE v) {
+      BitSet set;
+      String type;
+      
+      type = term.getType();
+      if (type.equals(AnnotationDataModelConstants.ANNOTATION_CATEGORY.GO.getType())) {
+        type = new SJTermSummary(null, term).getViewType();
+      }
+      set = hitCountsByClassification.get(type);
+      if (set==null) {
+        set = new BitSet(nbHits);
+        hitCountsByClassification.put(type, set);
+      }
+      set.set(currentHit);
+    }
+    
+  }
 }

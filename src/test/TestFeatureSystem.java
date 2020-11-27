@@ -631,4 +631,29 @@ public class TestFeatureSystem {
       assertTrue(refValues.contains(feat.toString()));
     }
   }
+  @Test
+  public void testcountHitsByClassification() {
+    System.out.println("> "+new Object(){}.getClass().getEnclosingMethod().getName());
+    // read NCBI XML blast file
+    SROutput bo = nativeBlastLoader.load(blastFile4);
+    assertNotNull(bo);
+    Map<String, Integer> data = ExtractAnnotation.countHitsByClassification(bo);
+    /*for (String key : data.keySet()) {
+      System.out.println(key+"="+data.get(key));
+    }*/
+    @SuppressWarnings("serial")
+    Hashtable<String, Integer> refValues= new Hashtable<String, Integer>(){{
+      put("GO:F",57);
+      put("GO:P",61);
+      put("PF",64);
+      put("TAX",71);
+      put("GO:C",69);
+      put("EC",4);
+      put("IPR",70);
+    }};
+    assertEquals(refValues.size(), data.size());
+    for (String key : data.keySet()) {
+      assertEquals(refValues.get(key), data.get(key));
+    }
+  }
 }
