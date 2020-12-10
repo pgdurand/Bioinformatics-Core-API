@@ -16,7 +16,9 @@
  */
 package bzh.plealog.bioinfo.io.xml.iprscan;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -41,16 +43,17 @@ public class IprXmlReader {
   /**
    * Load data.
    * 
-   * @param f path to an Interproscan XML formatted data file
+   * @param inputFilePath path to an Interproscan XML formatted data file
    * @param remap figure out whether or not we have to remap locations (nucleotide only)
    * 
    * @return predicted domains as a map where keys are sequence IDs and values are
    * corresponding FeatureTables containing predicted domains. Return null in case of
    * SAX parsing error.
    */
-  public Map<String, FeatureTable> readFile(File f, boolean remap) {
+  public Map<String, FeatureTable> readFile(String inputFilePath, boolean remap) {
     //auto-detect data file type
     boolean isNucl = false;
+    File f = new File(inputFilePath);
     try {
       SAXParserFactory factory = SAXParserFactory.newInstance();
       factory.setValidating(true);
@@ -94,7 +97,35 @@ public class IprXmlReader {
    * SAX parsing error.
    */
 
-  public Map<String, FeatureTable> readFile(File f) {
-    return readFile(f, true);
+  public Map<String, FeatureTable> readFile(String inputFilePath) {
+    return readFile(inputFilePath, true);
   }
+  
+  /**
+   * Figures out whether or not file is an XML format
+   */
+  public boolean canRead(String inputFilePath) {
+    String line;
+    boolean xmlNucl = false, xmlProt=false;
+    int i = 0;
+
+    try (BufferedReader bReader = new BufferedReader(new FileReader(inputFilePath))) {
+      while ((line = bReader.readLine()) != null) {
+        if (line.indexOf("<nucleotide-sequence-matches") >= 0) {
+          xmlNucl = true;
+        }
+        else if (line.indexOf("<protein-matches") >= 0) {
+          xmlProt = true;
+        }
+        i++;
+        if (i > 10)
+          break;
+      }
+    } 
+    catch (Exception e) {
+    }
+
+    return xmlNucl || xmlProt;
+  }
+
 }

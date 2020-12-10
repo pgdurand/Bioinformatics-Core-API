@@ -497,7 +497,7 @@ public class TestFeatureSystem {
     //Load interpro-scan data file
     String gff_file=iprscanFile.getAbsolutePath();
     IprGffReader gr = new IprGffReader();
-    Map<String, List<IprGffObject>> gffMap = gr.processFileToMap(gff_file);
+    Map<String, FeatureTable> gffMap = gr.readFile(gff_file);
     assertNotNull(gffMap);
     assertEquals(6, gffMap.size());
     
@@ -512,13 +512,13 @@ public class TestFeatureSystem {
     //do a little control: all queries should have been annotated
     controlAnnotatedBlast(bo);
   }
-  
+
   @Test
   public void testIprAnnotateBlastResult_IO() {
     //Load interpro-scan data file
     String gff_file=iprscanFile.getAbsolutePath();
     IprGffReader gr = new IprGffReader();
-    Map<String, List<IprGffObject>> gffMap = gr.processFileToMap(gff_file);
+    Map<String, FeatureTable> gffMap = gr.readFile(gff_file);
     assertNotNull(gffMap);
     assertEquals(6, gffMap.size());
     
@@ -685,7 +685,7 @@ public class TestFeatureSystem {
     //Load interpro-scan data file
     String xml_file=iprscanProtFileXml.getAbsolutePath();
     IprXmlReader reader = new IprXmlReader();
-    Map<String, FeatureTable> predictions= reader.readFile(new File(xml_file));
+    Map<String, FeatureTable> predictions= reader.readFile(xml_file);
     assertTrue(predictions.isEmpty()==false);
     assertEquals(predictions.size(), 6);
     
@@ -801,7 +801,7 @@ public class TestFeatureSystem {
     //Load interpro-scan data file
     String xml_file=iprscanNuclFileXml.getAbsolutePath();
     IprXmlReader reader = new IprXmlReader();
-    Map<String, FeatureTable> predictions= reader.readFile(new File(xml_file), false);
+    Map<String, FeatureTable> predictions= reader.readFile(xml_file, false);
     assertTrue(predictions.isEmpty()==false);
     assertEquals(predictions.size(), 6);
     

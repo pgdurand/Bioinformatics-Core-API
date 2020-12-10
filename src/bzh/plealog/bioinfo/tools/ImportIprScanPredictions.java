@@ -18,7 +18,6 @@ package bzh.plealog.bioinfo.tools;
 
 import java.io.File;
 import java.util.Enumeration;
-import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.cli.CommandLine;
@@ -36,11 +35,10 @@ import bzh.plealog.bioinfo.api.data.searchresult.SROutput;
 import bzh.plealog.bioinfo.api.data.searchresult.io.SRLoader;
 import bzh.plealog.bioinfo.api.data.searchresult.io.SRWriter;
 import bzh.plealog.bioinfo.api.data.searchresult.io.SRWriterException;
-import bzh.plealog.bioinfo.io.gff.iprscan.IprGffObject;
 import bzh.plealog.bioinfo.io.gff.iprscan.IprGffReader;
-import bzh.plealog.bioinfo.io.gff.iprscan.IprPredictions;
 import bzh.plealog.bioinfo.io.searchresult.SerializerSystemFactory;
 import bzh.plealog.bioinfo.io.searchresult.csv.ExtractAnnotation;
+import bzh.plealog.bioinfo.io.xml.iprscan.IprXmlReader;
 import bzh.plealog.bioinfo.util.CmdLineUtils;
 
 /**
@@ -84,7 +82,7 @@ public class ImportIprScanPredictions {
         .withArgName( IPR_KEY )
         .hasArg()
         .isRequired()
-        .withDescription( "IprScan domain prediction file, GFF3 formated." )
+        .withDescription( "IprScan domain prediction file, GFF3 or XML formated." )
         .create(IPR_KEY);
 
     opts = new Options();
@@ -104,22 +102,21 @@ public class ImportIprScanPredictions {
    * 
    * @return number of queries annotated with domains
    */
-  public int annotateBlastWithIprscan(SROutput bo, Map<String, List<IprGffObject>> gffMap) {
+  public int annotateBlastWithIprscan(SROutput bo, Map<String, FeatureTable> gffMap) {
     int nqueriesAnnotated = 0; 
     //annotate queries located in the blast results with IPRscan domain prediction
     Enumeration<SRIteration> enumIter = bo.enumerateIteration();
     while(enumIter.hasMoreElements()) {
       SRIteration iter = enumIter.nextElement();
       String qId = iter.getIterationQueryID();
-      List<IprGffObject> gffObjs = gffMap.get(qId);
+      FeatureTable gffObjs = gffMap.get(qId);
       if (gffObjs==null) {
         qId = iter.getIterationQueryDesc().split(" ")[0];
         gffObjs = gffMap.get(qId);
       }
       if (gffObjs!=null) {
         nqueriesAnnotated++;
-        FeatureTable ft = new IprPredictions(gffObjs).getFeatureTable(true);
-        iter.setIterationQueryFeatureTable(ft);
+        iter.setIterationQueryFeatureTable(gffObjs);
       }
     }
     if (nqueriesAnnotated==0) {
@@ -188,19 +185,25 @@ public class ImportIprScanPredictions {
     
     //Load interpro-scan data file
     IprGffReader gr = new IprGffReader();
-    Map<String, List<IprGffObject>> gffMap = gr.processFileToMap(iprs_file.getAbsolutePath());
-    
-    if(gffMap==null || gffMap.isEmpty()) {
+    Map<String, FeatureTable> ftMap = null;
+    if (gr.canRead(iprs_file.getAbsolutePath())) {
+      ftMap = gr.readFile(iprs_file.getAbsolutePath());
+    }
+    else {
+      IprXmlReader xr = new IprXmlReader();
+      ftMap = xr.readFile(iprs_file.getAbsolutePath());
+    }
+    if(ftMap==null || ftMap.isEmpty()) {
       EZLogger.warn(
           String.format("No IprScan predictons loaded from: %s", iprs_file.getAbsolutePath()));
       return false;
     }
     
     EZLogger.info(
-        String.format("IprScan predictions imported for %d sequences", gffMap.keySet().size()));
+        String.format("IprScan predictions imported for %d sequences", ftMap.keySet().size()));
     
     //annotate Blast result (queries) with IPRscan predictions
-    int nqueriesAnnotated = annotateBlastWithIprscan(sro, gffMap);
+    int nqueriesAnnotated = annotateBlastWithIprscan(sro, ftMap);
     EZLogger.info(
         String.format("%d %s been annotated with IPRscan domains", 
             nqueriesAnnotated, nqueriesAnnotated>1 ? "queries have" : "query has"));

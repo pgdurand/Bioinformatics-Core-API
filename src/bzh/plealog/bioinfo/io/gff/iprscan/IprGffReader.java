@@ -19,13 +19,17 @@ package bzh.plealog.bioinfo.io.gff.iprscan;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+
+import bzh.plealog.bioinfo.api.data.feature.FeatureTable;
 
 /**
  * IprScan ggf3 file reader.
@@ -55,7 +59,7 @@ public class IprGffReader {
    * 
    * @return list of predictions.
    **/
-  public List<IprGffObject> processFileToList(String inputFilePath) {
+  private List<IprGffObject> processFileToList(String inputFilePath) {
     List<IprGffObject> inputList = new ArrayList<IprGffObject>();
     try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(inputFilePath)));){
       inputList = br.lines().map(mapToItem).filter(o -> o!=null).collect(Collectors.toList());
@@ -74,6 +78,7 @@ public class IprGffReader {
    * @return map of predictions. Keys are regionID, i.e. first column in the gff3 data file.
    **/
   public Map<String, List<IprGffObject>> processFileToMap(String inputFilePath) {
+    currentSeqRegion = iprscanVersion = date = null;
     // A T T E N T I O N :  there are duplicated predictions in IprScan GGF3 output!
 
     // Process the iprscan data file (gff3 format) 
@@ -96,7 +101,47 @@ public class IprGffReader {
     return predictions;
   }
 
+  /**
+   * Read a ggf3 IPRscan data file.
+   * 
+   * @param inputFilePath file to read
+   * 
+   * @return map of predictions. Keys are regionID and values are FeatureTables.
+   **/
+  public Map<String, FeatureTable> readFile(String inputFilePath) {
+    Map<String, List<IprGffObject>> gffMap = processFileToMap(inputFilePath);
+    HashMap<String, FeatureTable> domains = new HashMap<>();
+    gffMap.entrySet().forEach(e -> domains.put(e.getKey(), new IprPredictions(e.getValue()).getFeatureTable(true)));
+    return domains;
+  }
   
+  /**
+   * Figures out whether or not file is a GFF 3 format
+   */
+  public boolean canRead(String inputFilePath) {
+    String line;
+    boolean gffOk = false, iprOk=false;
+    int i = 0;
+
+    try (BufferedReader bReader = new BufferedReader(new FileReader(inputFilePath))) {
+      while ((line = bReader.readLine()) != null) {
+        if (line.indexOf("##gff-version") >= 0) {
+          gffOk = true;
+        }
+        else if (line.indexOf("##interproscan-version") >= 0) {
+          iprOk = true;
+        }
+        i++;
+        if (i > 10)
+          break;
+      }
+    } 
+    catch (Exception e) {
+    }
+
+    return gffOk && iprOk;
+  }
+
   private Function<String, IprGffObject> mapToItem = (line) -> {
     if (line.startsWith("#")) {
       if(line.contains("interproscan-version")) {
