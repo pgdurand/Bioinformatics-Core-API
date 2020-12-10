@@ -529,7 +529,7 @@ public class ExtractAnnotation {
    * expect for GO type for which we specify more precisely ontology sub-type using
    * SJTermSummary().getViewType().
    * */  
-  public static Map<String, Integer> countHitsByClassification(SROutput sro, boolean bestHitOnly, boolean firstHspOnly) {
+  private static HitsByClassificationVisitor scanHitsByClassification(SROutput sro, boolean bestHitOnly, boolean firstHspOnly) {
     List<SRHit> hits = new ArrayList<>();
     SRIteration sri;
     SRHit hit;
@@ -559,8 +559,25 @@ public class ExtractAnnotation {
       prepareClassificationdata(classif, h, firstHspOnly, visitor);
       i++;
     }
-    return visitor.getClassificationByHits();
+    return visitor;
   }
+  /**
+   * Collect all classification types and for each of them count hits containing such 
+   * classification data. 
+   * 
+   * @param sro BLAST result
+   * @param bestHitOnly collect data for best hit only or all
+   * @param firstHspOnly collect data for first hsp only or all
+   * 
+   * @return hit counts for a set of classification data. Keys correspond to string
+   * representation of AnnotationDataModelConstants.ANNOTATION_CATEGORY.XXX.getType()
+   * expect for GO type for which we specify more precisely ontology sub-type using
+   * SJTermSummary().getViewType().
+   * */  
+  public static Map<String, Integer> countHitsByClassification(SROutput sro, boolean bestHitOnly, boolean firstHspOnly) {
+    return scanHitsByClassification(sro, bestHitOnly, firstHspOnly).getClassificationByHits();
+  }
+
   /**
    * Collect all classification types and for each of them count hits containing such 
    * classification data. Collect classification data for best hit only and all HSP for 
@@ -576,6 +593,46 @@ public class ExtractAnnotation {
   public static Map<String, Integer> countHitsByClassification(SROutput sro) {
     return countHitsByClassification(sro, true, false); 
   }
+  
+  /**
+   * Return hits containing classification data. 
+   * 
+   * @param sro BLAST result
+   * @param bestHitOnly collect data for best hit only or all
+   * @param firstHspOnly collect data for first hsp only or all
+   * 
+   * @return hits containing classification data. 
+   * 
+   * Keys correspond to string representation of AnnotationDataModelConstants.ANNOTATION_CATEGORY.XXX.getType()
+   * expect for GO type for which we specify more precisely ontology sub-type using
+   * SJTermSummary().getViewType().
+   * 
+   * Values are BitSet in th order of hits in SROutput. When bit is set, then hit contains
+   * a particular classification data.
+   * */ 
+  public static Map<String, BitSet> getHitsByClassification(SROutput sro, boolean bestHitOnly, boolean firstHspOnly) {
+    return scanHitsByClassification(sro, bestHitOnly, firstHspOnly).getHitsClassifications();
+  }
+
+  /**
+   * Return hits containing classification data.  Collect classification data for 
+   * best hit only and all HSP for that hit.
+   * 
+   * @param sro BLAST result
+   * 
+   * @return hits containing classification data. 
+   * 
+   * Keys correspond to string representation of AnnotationDataModelConstants.ANNOTATION_CATEGORY.XXX.getType()
+   * expect for GO type for which we specify more precisely ontology sub-type using
+   * SJTermSummary().getViewType().
+   * 
+   * Values are BitSet in th order of hits in SROutput. When bit is set, then hit contains
+   * a particular classification data.
+   * */ 
+  public static Map<String, BitSet> getHitsByClassification(SROutput sro) {
+    return scanHitsByClassification(sro, true, false).getHitsClassifications();
+  }
+
   
   private static class HitsByClassificationVisitor implements ExtractAnnotationVisitor {
     private Hashtable<String, BitSet> hitCountsByClassification;
@@ -595,6 +652,9 @@ public class ExtractAnnotation {
         hitCounts.put(key, hitCountsByClassification.get(key).cardinality());
       }
       return hitCounts;
+    }
+    private Map<String, BitSet> getHitsClassifications(){
+      return hitCountsByClassification;
     }
     @Override
     public void termVisited(SRCTerm term, VISIT_TYPE v) {

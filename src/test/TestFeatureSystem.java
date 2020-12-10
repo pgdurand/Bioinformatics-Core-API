@@ -23,7 +23,9 @@ import static org.junit.Assert.assertTrue;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.List;
@@ -58,6 +60,7 @@ import bzh.plealog.bioinfo.io.gff.iprscan.IprPredictions;
 import bzh.plealog.bioinfo.io.searchresult.SerializerSystemFactory;
 import bzh.plealog.bioinfo.io.searchresult.csv.ExtractAnnotation;
 import bzh.plealog.bioinfo.io.searchresult.txt.TxtExportSROutput;
+import bzh.plealog.bioinfo.io.xml.iprscan.IprXmlReader;
 import bzh.plealog.bioinfo.tools.ImportIprScanPredictions;
 
 public class TestFeatureSystem {
@@ -66,6 +69,8 @@ public class TestFeatureSystem {
   private static File     blastFile3;
   private static File     blastFile4;
   private static File     iprscanFile;
+  private static File     iprscanProtFileXml;
+  private static File     iprscanNuclFileXml;
   private static File     tmpFile;
   private static SRLoader nativeBlastLoader;
   private static SRLoader ncbiBlastLoader2;
@@ -86,6 +91,10 @@ public class TestFeatureSystem {
 		blastFile2 = new File("data/test/hits_with_bco.zml");
 		//iprscan prot data file
 		iprscanFile = new File("data/test/ipr-uniprot-sequences.fasta.gff3");
+    //iprscan prot data file
+    iprscanProtFileXml = new File("data/test/ipr-uniprot-sequences.fasta.xml");
+    //iprscan nucl data file
+    iprscanNuclFileXml = new File("data/test/ipr-gb-sequences.fasta.xml");
 		//corresponding blastp file (contains sams queries as iprscan date file)
 		blastFile3 = new File("data/test/ipr-uniprot-sequences-blastp-sw.xml");
 	  // setup a temp file (will be deleted in tearDownAfterClass())
@@ -655,5 +664,270 @@ public class TestFeatureSystem {
     for (String key : data.keySet()) {
       assertEquals(refValues.get(key), data.get(key));
     }
+  }
+  
+  private void testFeature(FeatureTable ft, List<DomainReference> dRefs) {
+    List<String> domains = Collections.list(ExtractAnnotation.getClassificationdata(ft).getTermIDs());
+    ArrayList<String> domainsRefs = new ArrayList<>();
+    dRefs.forEach(k -> domainsRefs.addAll(k.domainIds));
+    assertTrue(domains.containsAll(domainsRefs));
+    
+    ArrayList<Integer> locs = new ArrayList<>();
+    Collections.list(ft.enumFeatures()).forEach(f -> {locs.add(f.getFrom()); locs.add(f.getTo());});
+    ArrayList<Integer> locsRefs = new ArrayList<>();
+    dRefs.forEach(k -> {locsRefs.add(k.start); locsRefs.add(k.end);});
+    assertTrue(locs.containsAll(locsRefs));
+    
+  }
+
+  @Test
+  public void testProtIprScanXmlLoader() {
+    //Load interpro-scan data file
+    String xml_file=iprscanProtFileXml.getAbsolutePath();
+    IprXmlReader reader = new IprXmlReader();
+    Map<String, FeatureTable> predictions= reader.readFile(new File(xml_file));
+    assertTrue(predictions.isEmpty()==false);
+    assertEquals(predictions.size(), 6);
+    
+    @SuppressWarnings("serial")
+    HashMap<String, List<DomainReference>> 
+    domains = new HashMap<String, List<DomainReference>>() {{
+      put("sp|Q12851|M4K2_HUMAN", 
+          new ArrayList<DomainReference>() {{
+            add(new DomainReference(492,789, new ArrayList<String>(Arrays.asList("PF00780",
+                "IPR001180"))));
+            add(new DomainReference(16,272, new ArrayList<String>(Arrays.asList("PF00069",
+                "IPR000719",
+                "GO:0006468",
+                "GO:0004672",
+                "GO:0005524"))));
+            add(new DomainReference(16,273, new ArrayList<String>(Arrays.asList("PS50011",
+                "IPR000719",
+                "GO:0006468",
+                "GO:0004672",
+                "GO:0005524"))));
+            add(new DomainReference(482,793, new ArrayList<String>(Arrays.asList("PS50219",
+                "IPR001180"))));
+          }}
+      );
+      put("sp|P97756|KKCC1_RAT", 
+          new ArrayList<DomainReference>() {{
+            add(new DomainReference(128,409, new ArrayList<String>(Arrays.asList("PF00069",
+                "IPR000719",
+                "GO:0006468",
+                "GO:0004672",
+                "GO:0005524"))));
+            add(new DomainReference(128,409, new ArrayList<String>(Arrays.asList("PS50011",
+                "IPR000719",
+                "GO:0006468",
+                "GO:0004672",
+                "GO:0005524"))));
+          }}
+      );
+      put("sp|O14733|MP2K7_HUMAN", 
+          new ArrayList<DomainReference>() {{
+            add(new DomainReference(121,380, new ArrayList<String>(Arrays.asList("PF00069",
+                "IPR000719",
+                "GO:0006468",
+                "GO:0004672",
+                "GO:0005524"))));
+            add(new DomainReference(120,380, new ArrayList<String>(Arrays.asList("PS50011",
+                "IPR000719",
+                "GO:0006468",
+                "GO:0004672",
+                "GO:0005524"))));
+          }}
+      );
+      put("tr|Q9NA00|Q9NA00_9CRUS", 
+          new ArrayList<DomainReference>() {{
+            add(new DomainReference(213,486, new ArrayList<String>(Arrays.asList("PF00069",
+                "IPR000719",
+                "GO:0006468",
+                "GO:0004672",
+                "GO:0005524"))));
+            add(new DomainReference(212,486, new ArrayList<String>(Arrays.asList("PS50011",
+                "IPR000719",
+                "GO:0006468",
+                "GO:0004672",
+                "GO:0005524"))));
+          }}
+      );
+      put("sp|P47809|MP2K4_MOUSE", 
+          new ArrayList<DomainReference>() {{
+            add(new DomainReference(102,365, new ArrayList<String>(Arrays.asList("PF00069",
+                "IPR000719",
+                "GO:0006468",
+                "GO:0004672",
+                "GO:0005524"))));
+            add(new DomainReference(100,365, new ArrayList<String>(Arrays.asList("PS50011",
+                "IPR000719",
+                "GO:0006468",
+                "GO:0004672",
+                "GO:0005524"))));
+          }}
+      );
+      put("tr|Q91356|Q91356_COTCO", 
+          new ArrayList<DomainReference>() {{
+            add(new DomainReference(
+              7, 
+              169, 
+              new ArrayList<String>(Arrays.asList(
+                  "IPR001245", "GO:0006468",
+                  "GO:0004672","PF07714"))));
+            add(new DomainReference(
+              1, 
+              173, 
+              new ArrayList<String>(Arrays.asList(
+                  "PS50011", "IPR000719",
+                  "GO:0006468","GO:0004672",
+                  "GO:0005524"))));  
+          }}
+      );
+    }};
+    
+    List<String> typesRef = predictions.keySet().stream().collect(Collectors.toList());
+    ArrayList<String> regionIds = new ArrayList<>();
+    predictions.forEach((k,v) -> regionIds.add(k));
+    assertTrue(regionIds.containsAll(typesRef));
+
+    for (String key : typesRef) {
+      assertEquals(domains.get(key).size(), predictions.get(key).features());
+      testFeature(predictions.get(key), domains.get(key));
+    }
+  }
+  
+  @Test
+  public void testNuclIprScanXmlLoader() {
+    //Load interpro-scan data file
+    String xml_file=iprscanNuclFileXml.getAbsolutePath();
+    IprXmlReader reader = new IprXmlReader();
+    Map<String, FeatureTable> predictions= reader.readFile(new File(xml_file), false);
+    assertTrue(predictions.isEmpty()==false);
+    assertEquals(predictions.size(), 6);
+    
+    @SuppressWarnings("serial")
+    HashMap<String, List<DomainReference>> 
+    domains = new HashMap<String, List<DomainReference>>() {{
+      put("S65207.1", 
+          new ArrayList<DomainReference>() {{
+            add(new DomainReference(7,169, new ArrayList<String>(Arrays.asList("PF07714",
+                "IPR001245",
+                "GO:0004672",
+                "GO:0006468"))));
+            add(new DomainReference(1,173, new ArrayList<String>(Arrays.asList("PS50011",
+                "IPR000719",
+                "GO:0006468",
+                "GO:0004672",
+                "GO:0005524"))));
+          }}
+      );
+      put("BC047865.1", 
+          new ArrayList<DomainReference>() {{
+            add(new DomainReference(514,811, new ArrayList<String>(Arrays.asList("PF00780",
+                "IPR001180"))));
+            add(new DomainReference(46,302, new ArrayList<String>(Arrays.asList("PF00069",
+                "IPR000719",
+                "GO:0006468",
+                "GO:0004672",
+                "GO:0005524"))));
+            add(new DomainReference(504,815, new ArrayList<String>(Arrays.asList("PS50219",
+                "IPR001180"))));
+            add(new DomainReference(46,303, new ArrayList<String>(Arrays.asList("PS50011",
+                "IPR000719",
+                "GO:0006468",
+                "GO:0004672",
+                "GO:0005524"))));
+          }}
+      );
+      put("U18310.1", 
+          new ArrayList<DomainReference>() {{
+            add(new DomainReference(111,374, new ArrayList<String>(Arrays.asList("PF00069",
+                "IPR000719",
+                "GO:0006468",
+                "GO:0004672",
+                "GO:0005524"))));
+            add(new DomainReference(109,374, new ArrayList<String>(Arrays.asList("PS50011",
+                "IPR000719",
+                "GO:0006468",
+                "GO:0004672",
+                "GO:0005524"))));
+          }}
+      );
+      put("AJ292557.1", 
+          new ArrayList<DomainReference>() {{
+            add(new DomainReference(220,493, new ArrayList<String>(Arrays.asList("PF00069",
+                "IPR000719",
+                "GO:0006468",
+                "GO:0004672",
+                "GO:0005524"))));
+            add(new DomainReference(219,493, new ArrayList<String>(Arrays.asList("PS50011",
+                "IPR000719",
+                "GO:0006468",
+                "GO:0004672",
+                "GO:0005524"))));
+          }}
+      );
+      put("AF014401.1", 
+          new ArrayList<DomainReference>() {{
+            add(new DomainReference(121,380, new ArrayList<String>(Arrays.asList("PF00069",
+                "IPR000719",
+                "GO:0006468",
+                "GO:0004672",
+                "GO:0005524"))));
+            add(new DomainReference(120,380, new ArrayList<String>(Arrays.asList("PS50011",
+                "IPR000719",
+                "GO:0006468",
+                "GO:0004672",
+                "GO:0005524"))));
+          }}
+      );
+      put("L42810.1", 
+          new ArrayList<DomainReference>() {{
+            add(new DomainReference(163,444, new ArrayList<String>(Arrays.asList("PF00069",
+                "IPR000719",
+                "GO:0006468",
+                "GO:0004672",
+                "GO:0005524"))));
+            add(new DomainReference(163,444, new ArrayList<String>(Arrays.asList("PS50011",
+                "IPR000719",
+                "GO:0006468",
+                "GO:0004672",
+                "GO:0005524"))));
+          }}
+      );
+    }};
+    
+    List<String> typesRef = predictions.keySet().stream().collect(Collectors.toList());
+    ArrayList<String> regionIds = new ArrayList<>();
+    predictions.forEach((k,v) -> regionIds.add(k));
+    assertTrue(regionIds.containsAll(typesRef));
+
+    for (String key : typesRef) {
+      FeatureTable ft = CoreSystemConfigurator.getFeatureTableFactory().getFTInstance();
+      Enumeration<Feature> enums = predictions.get(key).enumFeatures();
+      while(enums.hasMoreElements()) {
+        Feature feat = enums.nextElement();
+        if (feat.getKey().equals(IprPrediction.DOMAIN)) {
+          ft.addFeature(feat);
+        }
+      }
+      assertEquals(domains.get(key).size(), ft.features());
+      testFeature(ft, domains.get(key));
+    }
+    
+  }
+  
+  private class DomainReference {
+    int start;
+    int end;
+    List<String> domainIds;
+    
+    public DomainReference(int start, int end, List<String> domainIds) {
+      super();
+      this.start = start;
+      this.end = end;
+      this.domainIds = domainIds;
+    }
+    
   }
 }

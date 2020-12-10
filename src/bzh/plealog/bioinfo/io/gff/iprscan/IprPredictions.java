@@ -194,18 +194,26 @@ public class IprPredictions {
     }
     
     //now, we may have to adjust domain location with regard to user provided
-    //sequence. In case of protein: nothing to do. In case of nucleotide: remap
-    // Iprscan predicted domains to user_provided nucleotide one.
+    //sequence. For nucl sequences, IPRscan provides protein predicted domain
+    //locations using protein sequence coordinate system... however, we handle
+    //a feature table using nucleotide sequence coordinate system.
+    //In case of protein: nothing to do. In case of nucleotide: remap
+    //Iprscan predicted domains to user_provided nucleotide one.
     if (!doRemap){
       //we have protein sequences, no remap do to
       return ft;
     }
+    remapLocations(ft, gffObjs.get(0).getIprGffObject().getRegionId());
+    return ft;
+  }
+
+  public static void remapLocations(FeatureTable ft, String seqId) {
     //remap protein domain location to nucleotide sequence coordinate system
     int protStartOnNuc=0, protStopOnNuc=0, strand=0, from, to;
     boolean reverseLocation = strand==Feature.MINUS_STRAND;
     Enumeration<Feature> enumFeats = ft.enumFeatures();
     while(enumFeats.hasMoreElements()) {
-      feat = enumFeats.nextElement();
+      Feature feat = enumFeats.nextElement();
       if (feat.getKey().equals(IprPrediction.DOMAIN)==false) {
         //to remap domains, retrieve location of ORF on nucleic_sequence.
         //Since ORF is always reported BEFORE domains, this code is fine
@@ -236,13 +244,11 @@ public class IprPredictions {
         //catching in a loop is not really appropriate... however, we would like
         //to continue loading data even is some features are wrongly remapped
         EZLogger.warn(String.format("> %s: domain %d..%d: %s", 
-            gffObjs.get(0).getIprGffObject().getRegionId(), 
+            seqId, 
             from, 
             to,
             t.getMessage()));
       }
     }
-    return ft;
   }
-
 }

@@ -62,6 +62,10 @@ public class IprPrediction {
   public static final String PROTEIN = "protein";
   public static final String UNK = "unknown";
 
+  //some constants
+  public static final String S_predicted       = "predicted";
+  public static final String S_p_by_user       = "provided_by_user";
+  
   /**
    * Constructor.
    * 
@@ -155,7 +159,7 @@ public class IprPrediction {
         feat.addQualifier(ID_QUAL, gffObject.getAttributeValue(IprGffObject.ID_ATTR));
         feat.setStrand("+".equals(gffObject.getStrand()) ? Feature.PLUS_STRAND : Feature.MINUS_STRAND);
         feat.addQualifier(STRAND_QUAL, gffObject.getStrand());
-        feat.addQualifier(STATUS_QUAL, "predicted");
+        feat.addQualifier(STATUS_QUAL, S_predicted);
         break;
         default:
           feat.setKey(UNK);
