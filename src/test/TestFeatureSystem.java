@@ -71,6 +71,7 @@ public class TestFeatureSystem {
   private static File     iprscanFile;
   private static File     iprscanProtFileXml;
   private static File     iprscanNuclFileXml;
+  private static File     iprscanNuclFileXml2;
   private static File     tmpFile;
   private static SRLoader nativeBlastLoader;
   private static SRLoader ncbiBlastLoader2;
@@ -95,6 +96,7 @@ public class TestFeatureSystem {
     iprscanProtFileXml = new File("data/test/ipr-uniprot-sequences.fasta.xml");
     //iprscan nucl data file
     iprscanNuclFileXml = new File("data/test/ipr-gb-sequences.fasta.xml");
+    iprscanNuclFileXml2 = new File("data/test/GAAA01.1_1-500-subset-ipscan.xml");
 		//corresponding blastp file (contains sams queries as iprscan date file)
 		blastFile3 = new File("data/test/ipr-uniprot-sequences-blastp-sw.xml");
 	  // setup a temp file (will be deleted in tearDownAfterClass())
@@ -914,7 +916,58 @@ public class TestFeatureSystem {
       assertEquals(domains.get(key).size(), ft.features());
       testFeature(ft, domains.get(key));
     }
+  }
+  @Test
+  public void testNuclIprScanXmlLoader_moreData() {
+    //Load interpro-scan data file
+    String xml_file=iprscanNuclFileXml2.getAbsolutePath();
+    IprXmlReader reader = new IprXmlReader();
+    Map<String, FeatureTable> predictions= reader.readFile(xml_file, false);
+    assertTrue(predictions.isEmpty()==false);
+    assertEquals(predictions.size(), 1);
     
+    @SuppressWarnings("serial")
+    HashMap<String, List<DomainReference>> 
+    domains = new HashMap<String, List<DomainReference>>() {{
+      put("GAAA01000070.1", 
+          //TIGR, PRINTS and SUPERFAMILY IDs there as a reminder BUT they are 
+          // commented out because Core API does not handle them; see 
+          // testFeature(), call to ExtractAnnotation.getClassificationdata() method
+          new ArrayList<DomainReference>() {{
+            add(new DomainReference(75,552, new ArrayList<String>(Arrays.asList(/*"PR00301",*/
+                "IPR013126"))));
+            add(new DomainReference(76,673, new ArrayList<String>(Arrays.asList(/*"TIGR02350",*/
+                "IPR012725",
+                "GO:0006457",
+                "GO:0005524",
+                "GO:0051082"))));
+            add(new DomainReference(76,673, new ArrayList<String>(Arrays.asList("PF00012",
+                "IPR013126"))));
+            add(new DomainReference(451,607, new ArrayList<String>(Arrays.asList(/*"SSF100920",*/
+                "IPR029047"))));
+            add(new DomainReference(76,256, new ArrayList<String>(/*Arrays.asList("SSF100920")*/)));
+            add(new DomainReference(258,449, new ArrayList<String>(/*Arrays.asList("SSF100920"*/)));
+          }}
+      );
+    }};
+    
+    List<String> typesRef = predictions.keySet().stream().collect(Collectors.toList());
+    ArrayList<String> regionIds = new ArrayList<>();
+    predictions.forEach((k,v) -> regionIds.add(k));
+    assertTrue(regionIds.containsAll(typesRef));
+    
+    for (String key : typesRef) {
+      FeatureTable ft = CoreSystemConfigurator.getFeatureTableFactory().getFTInstance();
+      Enumeration<Feature> enums = predictions.get(key).enumFeatures();
+      while(enums.hasMoreElements()) {
+        Feature feat = enums.nextElement();
+        if (feat.getKey().equals(IprPrediction.DOMAIN)) {
+          ft.addFeature(feat);
+        }
+      }
+      assertEquals(domains.get(key).size(), ft.features());
+      testFeature(ft, domains.get(key));
+    }
   }
   
   private class DomainReference {

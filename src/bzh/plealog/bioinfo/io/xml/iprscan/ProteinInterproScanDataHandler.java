@@ -84,12 +84,14 @@ public class ProteinInterproScanDataHandler extends DefaultHandler {
     // a domain
     else if(qName.equalsIgnoreCase(IprXmlUtils.E_signature)){ 
       _domainId = attributes.getValue(IprXmlUtils.A_ac);      
-      _domainDesc = attributes.getValue(IprXmlUtils.A_desc);      
+      _domainDesc = attributes.getValue(IprXmlUtils.A_desc);
+      if (_domainDesc==null) {
+        _domainDesc = attributes.getValue(IprXmlUtils.A_name);
+      }
       //Create a new Feature
       _feat = CoreSystemConfigurator.getFeatureTableFactory().getFInstance();
       _feat.setKey(IprPrediction.DOMAIN);
       _feat.setStrand(Feature.PLUS_STRAND);
-      _loc = new FeatureLocation();
       if(IprXmlUtils._verbose_) {
         System.out.println("\""+attributes.getValue(IprXmlUtils.A_ac)+"\",");
       }
@@ -109,7 +111,9 @@ public class ProteinInterproScanDataHandler extends DefaultHandler {
     }
     // domain location: now, we should have all information
     // to save new domain prediction
-    //else if(qName.equalsIgnoreCase(IprXmlUtils.E_hmmer3_location) || qName.equalsIgnoreCase(IprXmlUtils.E_profilescan_location)) {
+    else if (qName.equalsIgnoreCase(IprXmlUtils.E_locations)) {
+      _loc = new FeatureLocation();
+    }
     else if(qName.endsWith(IprXmlUtils.E_location_suffix)) {
       IprXmlUtils.handleLocation(_feat, _loc, attributes);
     }
@@ -127,7 +131,8 @@ public class ProteinInterproScanDataHandler extends DefaultHandler {
       _loc = null;
       _domainId = _domainDesc = _domainType = null;
     }
-    else if(qName.equalsIgnoreCase(IprXmlUtils.E_hmmer3_location) || qName.equalsIgnoreCase(IprXmlUtils.E_profilescan_location)) {
+    else if(qName.equalsIgnoreCase(IprXmlUtils.E_locations)) {
+      _loc.setElements(_loc.getAscentSortedElements());
       _feat.setFeatureLocation(_loc);
       if (_domainType!=null) {
         _feat.addQualifier(AnnotationDataModelConstants.FEATURE_QUALIFIER_XREF, 
@@ -135,7 +140,7 @@ public class ProteinInterproScanDataHandler extends DefaultHandler {
             "; " +
             _domainId +
             "; " +
-            _domainDesc);
+            (_domainDesc!=null?_domainDesc:""));
         _ft.addFeature(_feat);
       }
       _feat = null;

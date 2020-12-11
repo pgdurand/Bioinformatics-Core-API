@@ -52,8 +52,13 @@ public class IprXmlUtils {
   public static final HashMap<String, String> 
     ACCEPTED_DOMAINS = 
       new HashMap<String, String>() {{ 
+        //Stad Core API managed classifications
         put("PFAM", AnnotationDataModelConstants.ANNOTATION_CATEGORY.PFM.getEncoding()); 
-        put("PROSITE_PROFILES", AnnotationDataModelConstants.ANNOTATION_CATEGORY.PS.getEncoding()); 
+        put("PROSITE_PROFILES", AnnotationDataModelConstants.ANNOTATION_CATEGORY.PS.getEncoding());
+        //Added: classifications providing IPR and GO data
+        put("PRINTS", "PRINTS"); 
+        put("TIGRFAM", "TIGRFAM"); 
+        put("SUPERFAMILY", "SUPERFAMILY"); 
         }};
         
   //Interproscan data model elements handled by this SAX parser
@@ -70,6 +75,7 @@ public class IprXmlUtils {
   public static final String E_go_xref                    = "go-xref";
   public static final String E_hmmer3_location            = "hmmer3-location";
   public static final String E_profilescan_location       = "profilescan-location";
+  public static final String E_locations                  = "locations";
   public static final String E_location_suffix            = "-location";
 
   //Interproscan data model attributes handled by this SAX parser

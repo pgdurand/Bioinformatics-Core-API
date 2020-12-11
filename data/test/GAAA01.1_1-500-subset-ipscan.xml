@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<nucleotide-sequence-matches xmlns="http://www.ebi.ac.uk/interpro/resources/schemas/interproscan5" interproscan-version="5.28-67.0">
+    <nucleotide-sequence>
+        <sequence md5="5d717f8fb4b1dd3f44276f7e534c0402">tttttttttttttttttttacatccccactggtttattttatttaaaaacaaaaagaaaaacccttcacagactgatctgtagaacatttttattctagaaactgatttcacaaatatttttaaatttgatgcccagggtggagcaggctagctctgcatgatctaaggcatctattagcagtctgtgttttcaccaccttagactgaatacaactcatgtcttttcatatttatctcaacacttacacaaaataattttacaaactggataagtttgtattgaagatgtatggtcaaagaacattctgcttcaccctttaacagcaaattctcagctgctttttagaattttgcttcaaggtctcgcagctgaactatgtagagtggaataagttaaacgtgcaaaagcatagaataaaaattctaaagatagctttctgtacatctagctcaaactgggaaacatttaacatatggcatgtattagcttataaagaaatagaaatgaaccatcaaattacttaaaatgcacctcacattttactcccaaccattacgtttcagaaactatatatagaatactgcaaaaacacagtatatgaaaatgaatgttgacttttccgctcgggaaagttctcgtctggcctgcactcccaagctttaggctgttatcccatctctcttgtttgcatggtcaacaaataaatagtttactgtgactcttccttcttgtctccactgccagcattttccctctcagacgccatctttttgtatgccatttcaaacaatttaagggatgcttgctgtaggctggatgctgcctgtttgatgttctccccagtttctgtatccttgcgagccaaaagctctcgcattttagcaatttcctcttttaatttattgcactcctcagcaggcaactggtccttaaattcttccatcttagactcagcgtcgtggacaattccctcagccatattaacagcctcaactcgttcctttcttcttctgtcttcctctgcatacttctcagcattcttaatcatgttttcaatgtcatccttactcagaccaccagaagactggattacaatctgctgttctcttcctgtgcctttatcttttgcagaaacattaacaataccattggcgtcaatatcaaatgtcacttcaatttgaggaactccacgtggggctgggggtattccaaccagggtaaactggccaagaagtttgttgtcagatgccatttctctttctccttgatgcactttaatttcaacttgggtctgtccatcagcagctgtagaaaacacctggctcttcttggtcgggatagtagtattcctgttgatgagttttgtaaaaaccccaccgagggtctcaatacccagagacagtggagtgacatcaagaagcagaacatctgtaacatctccagctagcacaccaccctgtatagcagcacctatagctacagcttcatccggattaactgctttactggggtttctgccaaagagatcttgaacagtttgctgaacctttggcattctggtcatgcctccgaccaggataacctcaccaacatcactcttgctaacctcagcatcttgcagggctttctgacaaggtgtaactgttctcctgatgaggtcagctacaatgccttcaaactgagaccgtgtgatcttcatatttaagtgttttggtccagaagcatccatggttaagtagggcaggttaatgtcagtctgcagggatgatgaaagctcgcattttgctttttcagctgcctctctcaccctctgaagtgccatcatatctttggtcaaatcaattccagactccctcttaaactccttgacaagatactgcaacaaggcctgatcaaagtcctcaccacccaggaaagtatccccattagtagatttcacctcaaatactcccttctggatttctaaaatggagatatcaaatgttccgccacccagatcatagactgcaataattttgtcactggatttgtcgagtccataggccaatgcagcagcagtaggttcattgattactcgaagaacattcaatccagcaatctgtccagcatcctttgtagcctgtctctgagaatcattaaagtatgctgggactgtgatgacagcattctttataggatgaccaatatagttttctgcagtttctttcattttcataaggacaaatgcaccaatctggcttggagagtacatctttccatgtgcctctacccaggcatcaccatttgatgcacggatgattttaaaaggaacatttttgaggtctttctgtacttcagcatcttcaaaacggcgtccaatcaaacgcttggtagcatacaaagtattttttgggttagttactgcctgtcttttagctggcatgccaaccaatcgctcaccatcagtagagaaagccaccacagatggagtagttctggcaccttcagaattttctaataccttggcttgtttcccctccataactgcaacacaggagttagttgtccctagatcaataccaataacggtacccttaatcgcttctgaagcataatcccgcctggacaccactctgagaacatcttgcccaagaccactaaagcagcccttcttagcgaggatagaaatgttcctggaggagccggcctgtcggtgaaacagagcccgggaagcagttctggccgcgttcagcatggcgcgtctggcgggggggggtaggctctcggcggacagtaaccttggtaatccgggctagcgcg</sequence>
+        <xref id="GAAA01000070.1" name="GAAA01000070.1 TSA: Latimeria chalumnae comp1028_c0_seq1, mRNA sequence"/>
+        <orf end="2793" start="715" strand="ANTISENSE">
+            <protein>
+                <sequence md5="a400f9d828a86005ae6d22e3c031ffc2">PGLPRLLSAESLPPPARRAMLNAARTASRALFHRQAGSSRNISILAKKGCFSGLGQDVLRVVSRRDYASEAIKGTVIGIDLGTTNSCVAVMEGKQAKVLENSEGARTTPSVVAFSTDGERLVGMPAKRQAVTNPKNTLYATKRLIGRRFEDAEVQKDLKNVPFKIIRASNGDAWVEAHGKMYSPSQIGAFVLMKMKETAENYIGHPIKNAVITVPAYFNDSQRQATKDAGQIAGLNVLRVINEPTAAALAYGLDKSSDKIIAVYDLGGGTFDISILEIQKGVFEVKSTNGDTFLGGEDFDQALLQYLVKEFKRESGIDLTKDMMALQRVREAAEKAKCELSSSLQTDINLPYLTMDASGPKHLNMKITRSQFEGIVADLIRRTVTPCQKALQDAEVSKSDVGEVILVGGMTRMPKVQQTVQDLFGRNPSKAVNPDEAVAIGAAIQGGVLAGDVTDVLLLDVTPLSLGIETLGGVFTKLINRNTTIPTKKSQVFSTAADGQTQVEIKVHQGEREMASDNKLLGQFTLVGIPPAPRGVPQIEVTFDIDANGIVNVSAKDKGTGREQQIVIQSSGGLSKDDIENMIKNAEKYAEEDRRRKERVEAVNMAEGIVHDAESKMEEFKDQLPAEECNKLKEEIAKMRELLARKDTETGENIKQAASSLQQASLKLFEMAYKKMASERENAGSGDKKEESQ</sequence>
+                <xref id="GAAA01000070.1_55" name="GAAA01000070.1_55 [2793 - 715] (REVERSE SENSE) TSA: Latimeria chalumnae comp1028_c0_seq1, mRNA sequence"/>
+                <matches>
+                    <fingerprints-match evalue="1.0E-81" graphscan="IIIIIIIII">
+                        <signature ac="PR00301" desc="70kDa heat shock protein signature" name="HEATSHOCK70">
+                            <entry ac="IPR013126" desc="Heat shock protein 70 family" name="Hsp_70_fam" type="FAMILY">
+<pathway-xref db="Reactome" id="R-HSA-3371453" name="Regulation of HSF1-mediated heat shock response"/>
+                            </entry>
+                            <signature-library-release library="PRINTS" version="42.0"/>
+                        </signature>
+                        <model-ac>PR00301</model-ac>
+                        <locations>
+                            <fingerprints-location motifNumber="7" pvalue="6.43E-14" score="71.83" start="432" end="452"/>
+                            <fingerprints-location motifNumber="2" pvalue="2.39E-7" score="70.53" start="103" end="115"/>
+                            <fingerprints-location motifNumber="8" pvalue="8.88E-15" score="83.56" start="455" end="474"/>
+                            <fingerprints-location motifNumber="1" pvalue="3.36E-9" score="80.45" start="75" end="88"/>
+                            <fingerprints-location motifNumber="4" pvalue="5.22E-15" score="93.9" start="210" end="230"/>
+                            <fingerprints-location motifNumber="6" pvalue="1.74E-10" score="64.91" start="401" end="417"/>
+                            <fingerprints-location motifNumber="9" pvalue="1.28E-11" score="83.03" start="536" end="552"/>
+                            <fingerprints-location motifNumber="3" pvalue="1.89E-4" score="68.38" start="126" end="134"/>
+                            <fingerprints-location motifNumber="5" pvalue="1.74E-6" score="69.7" start="269" end="279"/>
+                        </locations>
+                    </fingerprints-match>
+                    <hmmer3-match evalue="1.3E-165" score="552.4">
+                        <signature ac="G3DSA:3.90.640.10">
+                            <signature-library-release library="GENE3D" version="4.2.0"/>
+                        </signature>
+                        <model-ac>4kboA04</model-ac>
+                        <locations>
+                            <hmmer3-location env-end="444" env-start="77" score="551.6" evalue="2.4E-165" hmm-start="1" hmm-end="366" hmm-length="88" hmm-bounds="INCOMPLETE" start="295" end="382"/>
+                        </locations>
+                    </hmmer3-match>
+                    <hmmer3-match evalue="1.3E-165" score="552.4">
+                        <signature ac="G3DSA:3.30.420.40">
+                            <signature-library-release library="GENE3D" version="4.2.0"/>
+                        </signature>
+                        <model-ac>4kboA01</model-ac>
+                        <locations>
+                            <hmmer3-location env-end="444" env-start="77" score="551.6" evalue="2.4E-165" hmm-start="1" hmm-end="366" hmm-length="154" hmm-bounds="C_TERMINAL_COMPLETE" start="430" end="444"/>
+                            <hmmer3-location env-end="444" env-start="77" score="551.6" evalue="2.4E-165" hmm-start="1" hmm-end="366" hmm-length="154" hmm-bounds="INCOMPLETE" start="191" end="255"/>
+                            <hmmer3-location env-end="444" env-start="77" score="551.6" evalue="2.4E-165" hmm-start="1" hmm-end="366" hmm-length="154" hmm-bounds="N_TERMINAL_COMPLETE" start="77" end="138"/>
+                        </locations>
+                    </hmmer3-match>
+                    <hmmer3-match evalue="2.6E-60" score="203.9">
+                        <signature ac="G3DSA:2.60.34.10">
+                            <entry ac="IPR029047" desc="Heat shock protein 70kD, peptide-binding domain superfamily" name="HSP70_peptide-bd_sf" type="HOMOLOGOUS_SUPERFAMILY">
+<pathway-xref db="Reactome" id="R-HSA-3371453" name="Regulation of HSF1-mediated heat shock response"/>
+                            </entry>
+                            <signature-library-release library="GENE3D" version="4.2.0"/>
+                        </signature>
+                        <model-ac>4f01B01</model-ac>
+                        <locations>
+                            <hmmer3-location env-end="573" env-start="445" score="202.7" evalue="6.0E-60" hmm-start="21" hmm-end="138" hmm-length="140" hmm-bounds="COMPLETE" start="445" end="573"/>
+                        </locations>
+                    </hmmer3-match>
+                    <hmmer3-match evalue="1.3E-165" score="552.4">
+                        <signature ac="G3DSA:3.30.420.40">
+                            <signature-library-release library="GENE3D" version="4.2.0"/>
+                        </signature>
+                        <model-ac>4kboA03</model-ac>
+                        <locations>
+                            <hmmer3-location env-end="444" env-start="77" score="551.6" evalue="2.4E-165" hmm-start="1" hmm-end="366" hmm-length="86" hmm-bounds="INCOMPLETE" start="383" end="429"/>
+                            <hmmer3-location env-end="444" env-start="77" score="551.6" evalue="2.4E-165" hmm-start="1" hmm-end="366" hmm-length="86" hmm-bounds="INCOMPLETE" start="256" end="294"/>
+                        </locations>
+                    </hmmer3-match>
+                    <hmmer3-match evalue="3.6E-29" score="103.1">
+                        <signature ac="G3DSA:1.20.1270.10">
+                            <entry ac="IPR029048" desc="Heat shock protein 70kD, C-terminal domain superfamily" name="HSP70_C_sf" type="HOMOLOGOUS_SUPERFAMILY">
+<pathway-xref db="Reactome" id="R-HSA-3371453" name="Regulation of HSF1-mediated heat shock response"/>
+                            </entry>
+                            <signature-library-release library="GENE3D" version="4.2.0"/>
+                        </signature>
+                        <model-ac>4f01B02</model-ac>
+                        <locations>
+                            <hmmer3-location env-end="677" env-start="574" score="101.8" evalue="9.2E-29" hmm-start="1" hmm-end="99" hmm-length="101" hmm-bounds="COMPLETE" start="574" end="677"/>
+                        </locations>
+                    </hmmer3-match>
+                    <hmmer3-match evalue="3.5E-287" score="951.6">
+                        <signature ac="TIGR02350" desc="prok_dnaK: chaperone protein DnaK" name="TIGR02350">
+                            <entry ac="IPR012725" desc="Chaperone DnaK" name="Chaperone_DnaK" type="FAMILY">
+<go-xref category="BIOLOGICAL_PROCESS" db="GO" id="GO:0006457" name="protein folding"/>
+<go-xref category="MOLECULAR_FUNCTION" db="GO" id="GO:0005524" name="ATP binding"/>
+<go-xref category="MOLECULAR_FUNCTION" db="GO" id="GO:0051082" name="unfolded protein binding"/>
+<pathway-xref db="Reactome" id="R-HSA-8949613" name="Cristae formation"/>
+<pathway-xref db="Reactome" id="R-HSA-3371453" name="Regulation of HSF1-mediated heat shock response"/>
+<pathway-xref db="Reactome" id="R-HSA-1268020" name="Mitochondrial protein import"/>
+<pathway-xref db="Reactome" id="R-HSA-8950505" name="Gene and protein expression by JAK-STAT signaling after Interleukin-12 stimulation"/>
+                            </entry>
+                            <signature-library-release library="TIGRFAM" version="15.0"/>
+                        </signature>
+                        <model-ac>TIGR02350</model-ac>
+                        <locations>
+                            <hmmer3-location env-end="674" env-start="75" score="951.3" evalue="4.2E-287" hmm-start="2" hmm-end="595" hmm-length="596" hmm-bounds="INCOMPLETE" start="76" end="673"/>
+                        </locations>
+                    </hmmer3-match>
+                    <hmmer3-match evalue="6.9E-271" score="899.6">
+                        <signature ac="PF00012" desc="Hsp70 protein" name="HSP70">
+                            <entry ac="IPR013126" desc="Heat shock protein 70 family" name="Hsp_70_fam" type="FAMILY">
+<pathway-xref db="Reactome" id="R-HSA-3371453" name="Regulation of HSF1-mediated heat shock response"/>
+                            </entry>
+                            <signature-library-release library="PFAM" version="31.0"/>
+                        </signature>
+                        <model-ac>PF00012</model-ac>
+                        <locations>
+                            <hmmer3-location env-end="674" env-start="76" score="899.4" evalue="8.1E-271" hmm-start="1" hmm-end="598" hmm-length="599" hmm-bounds="N_TERMINAL_COMPLETE" start="76" end="673"/>
+                        </locations>
+                    </hmmer3-match>
+                    <hmmer3-match evalue="1.3E-165" score="552.4">
+                        <signature ac="G3DSA:3.30.30.30">
+                            <signature-library-release library="GENE3D" version="4.2.0"/>
+                        </signature>
+                        <model-ac>4kboA02</model-ac>
+                        <locations>
+                            <hmmer3-location env-end="444" env-start="77" score="551.6" evalue="2.4E-165" hmm-start="1" hmm-end="366" hmm-length="52" hmm-bounds="INCOMPLETE" start="139" end="190"/>
+                        </locations>
+                    </hmmer3-match>
+                    <rpsblast-match>
+                        <signature ac="cd11733" desc="HSPA9-like_NBD" name="HSPA9-like_NBD">
+                            <signature-library-release library="CDD" version="3.16"/>
+                        </signature>
+                        <model-ac>cd11733</model-ac>
+                        <locations>
+                            <rpsblast-location evalue="0.0" score="829.328" start="73" end="449">
+<sites>
+    <rpsblast-site description="nucleotide binding site" numLocations="17">
+        <site-locations>
+            <site-location residue="N" start="85" end="85"/>
+            <site-location residue="G" start="268" end="268"/>
+            <site-location residue="G" start="82" end="82"/>
+            <site-location residue="G" start="267" end="267"/>
+            <site-location residue="K" start="337" end="337"/>
+            <site-location residue="M" start="410" end="410"/>
+            <site-location residue="T" start="83" end="83"/>
+            <site-location residue="T" start="270" end="270"/>
+            <site-location residue="E" start="334" end="334"/>
+            <site-location residue="G" start="409" end="409"/>
+            <site-location residue="T" start="84" end="84"/>
+            <site-location residue="K" start="142" end="142"/>
+            <site-location residue="G" start="296" end="296"/>
+            <site-location residue="G" start="408" end="408"/>
+            <site-location residue="R" start="412" end="412"/>
+            <site-location residue="S" start="341" end="341"/>
+            <site-location residue="E" start="243" end="243"/>
+        </site-locations>
+    </rpsblast-site>
+    <rpsblast-site description="NEF interaction site" numLocations="19">
+        <site-locations>
+            <site-location residue="R" start="128" end="128"/>
+            <site-location residue="G" start="204" end="204"/>
+            <site-location residue="Y" start="202" end="202"/>
+            <site-location residue="E" start="103" end="103"/>
+            <site-location residue="N" start="201" end="201"/>
+            <site-location residue="I" start="203" end="203"/>
+            <site-location residue="Q" start="327" end="327"/>
+            <site-location residue="E" start="331" end="331"/>
+            <site-location residue="P" start="351" end="351"/>
+            <site-location residue="L" start="121" end="121"/>
+            <site-location residue="P" start="125" end="125"/>
+            <site-location residue="R" start="328" end="328"/>
+            <site-location residue="N" start="349" end="349"/>
+            <site-location residue="Q" start="129" end="129"/>
+            <site-location residue="E" start="100" end="100"/>
+            <site-location residue="T" start="132" end="132"/>
+            <site-location residue="Y" start="352" end="352"/>
+            <site-location residue="M" start="324" end="324"/>
+            <site-location residue="V" start="131" end="131"/>
+        </site-locations>
+    </rpsblast-site>
+    <rpsblast-site description="SBD interface" numLocations="11">
+        <site-locations>
+            <site-location residue="Q" start="224" end="224"/>
+            <site-location residue="N" start="242" end="242"/>
+            <site-location residue="D" start="220" end="220"/>
+            <site-location residue="E" start="284" end="284"/>
+            <site-location residue="K" start="286" end="286"/>
+            <site-location residue="R" start="223" end="223"/>
+            <site-location residue="R" start="239" end="239"/>
+            <site-location residue="V" start="285" end="285"/>
+            <site-location residue="S" start="221" end="221"/>
+            <site-location residue="F" start="283" end="283"/>
+            <site-location residue="V" start="240" end="240"/>
+        </site-locations>
+    </rpsblast-site>
+</sites>
+                            </rpsblast-location>
+                        </locations>
+                    </rpsblast-match>
+                    <superfamilyhmmer3-match evalue="1.17E-65">
+                        <signature ac="SSF53067" name="Actin-like ATPase domain">
+                            <signature-library-release library="SUPERFAMILY" version="1.75"/>
+                        </signature>
+                        <model-ac>0046347</model-ac>
+                        <locations>
+                            <superfamilyhmmer3-location hmm-length="183" start="76" end="256"/>
+                        </locations>
+                    </superfamilyhmmer3-match>
+                    <superfamilyhmmer3-match evalue="7.41E-67">
+                        <signature ac="SSF53067" name="Actin-like ATPase domain">
+                            <signature-library-release library="SUPERFAMILY" version="1.75"/>
+                        </signature>
+                        <model-ac>0046348</model-ac>
+                        <locations>
+                            <superfamilyhmmer3-location hmm-length="198" start="258" end="449"/>
+                        </locations>
+                    </superfamilyhmmer3-match>
+                    <superfamilyhmmer3-match evalue="1.96E-63">
+                        <signature ac="SSF100920" name="Heat shock protein 70kD (HSP70), peptide-binding domain">
+                            <entry ac="IPR029047" desc="Heat shock protein 70kD, peptide-binding domain superfamily" name="HSP70_peptide-bd_sf" type="HOMOLOGOUS_SUPERFAMILY">
+<pathway-xref db="Reactome" id="R-HSA-3371453" name="Regulation of HSF1-mediated heat shock response"/>
+                            </entry>
+                            <signature-library-release library="SUPERFAMILY" version="1.75"/>
+                        </signature>
+                        <model-ac>0036037</model-ac>
+                        <locations>
+                            <superfamilyhmmer3-location hmm-length="159" start="451" end="607"/>
+                        </locations>
+                    </superfamilyhmmer3-match>
+                </matches>
+            </protein>
+        </orf>
+    </nucleotide-sequence>
+</nucleotide-sequence-matches>
+        
