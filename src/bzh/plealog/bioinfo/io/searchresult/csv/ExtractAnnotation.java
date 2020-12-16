@@ -524,10 +524,7 @@ public class ExtractAnnotation {
    * @param bestHitOnly collect data for best hit only or all
    * @param firstHspOnly collect data for first hsp only or all
    * 
-   * @return hit counts for a set of classification data. Keys correspond to string
-   * representation of AnnotationDataModelConstants.ANNOTATION_CATEGORY.XXX.getType()
-   * expect for GO type for which we specify more precisely ontology sub-type using
-   * SJTermSummary().getViewType().
+   * @return hit counts visitor.
    * */  
   private static HitsByClassificationVisitor scanHitsByClassification(SROutput sro, boolean bestHitOnly, boolean firstHspOnly) {
     List<SRHit> hits = new ArrayList<>();
@@ -561,6 +558,30 @@ public class ExtractAnnotation {
     }
     return visitor;
   }
+  
+  /**
+   * Collect all classification types and for each of them count queries containing such 
+   * classification data. 
+   * 
+   * @param sro BLAST result
+   * 
+   * @return query counts visitor.
+   * */  
+  private static HitsByClassificationVisitor scanQueriesByClassification(SROutput sro) {
+    SRClassification            classif = CoreSystemConfigurator.getSRFactory().creationBClassification();
+    HitsByClassificationVisitor visitor;
+    
+    //scan iterations (they contain Query FeatureTables)
+    int size = sro.countIteration();
+    visitor = new HitsByClassificationVisitor(size);
+    for (int i = 0; i < size; i++) {
+      SRIteration sri = sro.getIteration(i);
+      visitor.setCurrentHit(i);
+      prepareClassificationdata(classif, sri.getIterationQueryFeatureTable(), visitor);
+    }
+    return visitor;
+  }
+
   /**
    * Collect all classification types and for each of them count hits containing such 
    * classification data. 
@@ -576,6 +597,21 @@ public class ExtractAnnotation {
    * */  
   public static Map<String, Integer> countHitsByClassification(SROutput sro, boolean bestHitOnly, boolean firstHspOnly) {
     return scanHitsByClassification(sro, bestHitOnly, firstHspOnly).getClassificationByHits();
+  }
+
+  /**
+   * Collect all classification types and for each of them count queries containing such 
+   * classification data. 
+   * 
+   * @param sro BLAST result
+   * 
+   * @return query counts for a set of classification data. Keys correspond to string
+   * representation of AnnotationDataModelConstants.ANNOTATION_CATEGORY.XXX.getType()
+   * expect for GO type for which we specify more precisely ontology sub-type using
+   * SJTermSummary().getViewType().
+   * */  
+  public static Map<String, Integer> countQueriesByClassification(SROutput sro) {
+    return scanQueriesByClassification(sro).getClassificationByHits();
   }
 
   /**
@@ -626,18 +662,37 @@ public class ExtractAnnotation {
    * expect for GO type for which we specify more precisely ontology sub-type using
    * SJTermSummary().getViewType().
    * 
-   * Values are BitSet in th order of hits in SROutput. When bit is set, then hit contains
+   * Values are BitSet in the order of hits in SROutput. When bit is set, then hit contains
    * a particular classification data.
    * */ 
   public static Map<String, BitSet> getHitsByClassification(SROutput sro) {
     return scanHitsByClassification(sro, true, false).getHitsClassifications();
   }
 
+  /**
+   * Return queries containing classification data. Valid when importing Interproscan data
+   * for instance.
+   * 
+   * @param sro BLAST result
+   * 
+   * @return queries containing classification data. 
+   * 
+   * Keys correspond to string representation of AnnotationDataModelConstants.ANNOTATION_CATEGORY.XXX.getType()
+   * expect for GO type for which we specify more precisely ontology sub-type using
+   * SJTermSummary().getViewType().
+   * 
+   * Values are BitSet in the order of queries in SROutput. When bit is set, then query contains
+   * a particular classification data.
+   * */ 
+  public static Map<String, BitSet> getQueriesByClassification(SROutput sro) {
+    return scanQueriesByClassification(sro).getHitsClassifications();
+  }
   
   private static class HitsByClassificationVisitor implements ExtractAnnotationVisitor {
     private Hashtable<String, BitSet> hitCountsByClassification;
     private int nbHits;
     private int currentHit;
+    
     private HitsByClassificationVisitor(int nbHits) {
       hitCountsByClassification = new Hashtable<>();
       this.nbHits = nbHits;
