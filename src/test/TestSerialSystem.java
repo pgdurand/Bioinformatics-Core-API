@@ -295,6 +295,7 @@ public class TestSerialSystem {
 		
 		//check everything is ok
 		assertNotNull(newBO);
+		assertTrue(bo.getIteration(0).countHit()==19);
 		// check content
 		checkContent(newBO);
 	}

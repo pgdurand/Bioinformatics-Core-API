@@ -1,4 +1,4 @@
-/* Copyright (C) 2006-2016 Patrick G. Durand
+/* Copyright (C) 2006-2021 Patrick G. Durand
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published by
@@ -16,17 +16,18 @@
  */
 package bzh.plealog.bioinfo.io.searchresult.srnative;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 
 import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.binary.BinaryStreamDriver;
 import com.thoughtworks.xstream.io.xml.DomDriver;
+import com.thoughtworks.xstream.security.NoTypePermission;
+import com.thoughtworks.xstream.security.NullPermission;
+import com.thoughtworks.xstream.security.PrimitiveTypePermission;
 
 import bzh.plealog.bioinfo.api.data.feature.FPosition;
 import bzh.plealog.bioinfo.api.data.feature.FRange;
@@ -56,129 +57,122 @@ import bzh.plealog.bioinfo.util.ZipUtil;
  * @author Patrick G. Durand
  */
 public class BlastSerializer {
-	private static XStream streamer;
+  //XML: old system
+  private static XStream streamerX = null;
+  //Binary: new system, more suitable for large data set
+  private static XStream streamerB = null;
 
-	static {
-		streamer = new XStream(new DomDriver("ISO-8859-1"));
-		streamer.alias("BOutput", ISROutput.class);
-		streamer.alias("BIteration", ISRIteration.class);
-		streamer.alias("BParamaters", ISRParameters.class);
-		streamer.alias("BRequestInfo", ISRRequestInfo.class);
-		streamer.alias("BStatistics", ISRStatistics.class);
-		streamer.alias("BHit", ISRHit.class);
-		streamer.alias("BHsp", ISRHsp.class);
-		streamer.alias("BHspScore", ISRHspScore.class);
-		streamer.alias("BHspSequence", ISRHspSequence.class);
-		streamer.alias("FeatureTable", IFeatureTable.class);
-		streamer.alias("Feature", IFeature.class);
-		streamer.alias("Qualifier", IQualifier.class);
-		streamer.alias("SequenceInfo", IBankSequenceInfo.class);
-		streamer.alias("FeatureLocation", FeatureLocation.class);
-		streamer.alias("FRange", FRange.class);
-		streamer.alias("FPosition", FPosition.class);
+	private static void initSR(XStream streamer) {
+	  //setup security (new feature in recent XStream API)
+	  streamer.addPermission(NoTypePermission.NONE);
+	  streamer.addPermission(NullPermission.NULL);
+	  streamer.addPermission(PrimitiveTypePermission.PRIMITIVES);
+	  streamer.allowTypesByWildcard(new String[] {
+	      "bzh.plealog.bioinfo.**","java.lang.**","java.util.**"
+	  });
+	  //setup aliases
+	  streamer.alias("BOutput", ISROutput.class);
+    streamer.alias("BIteration", ISRIteration.class);
+    streamer.alias("BParamaters", ISRParameters.class);
+    streamer.alias("BRequestInfo", ISRRequestInfo.class);
+    streamer.alias("BStatistics", ISRStatistics.class);
+    streamer.alias("BHit", ISRHit.class);
+    streamer.alias("BHsp", ISRHsp.class);
+    streamer.alias("BHspScore", ISRHspScore.class);
+    streamer.alias("BHspSequence", ISRHspSequence.class);
+    streamer.alias("FeatureTable", IFeatureTable.class);
+    streamer.alias("Feature", IFeature.class);
+    streamer.alias("Qualifier", IQualifier.class);
+    streamer.alias("SequenceInfo", IBankSequenceInfo.class);
+    streamer.alias("FeatureLocation", FeatureLocation.class);
+    streamer.alias("FRange", FRange.class);
+    streamer.alias("FPosition", FPosition.class);
     streamer.alias("BClassification", ISRClassification.class);
     streamer.alias("BCTerm", ISRCTerm.class);
 	}
-
 	private static final String ERR_1 = "Unable to save BOutput in: ";
 	private static final String ERR_2 = "Unable to load BOutput from: ";
 
-	public static void toXML(SROutput bo, OutputStream os){
-		streamer.toXML(bo, os);
+	private static XStream getSX() {
+	  if (streamerX!=null)
+	    return streamerX;
+	  streamerX = new XStream(new DomDriver("ISO-8859-1"));
+    initSR(streamerX);
+    return streamerX;
 	}
-	public static SROutput fromXML(InputStream is){
-		return (SROutput) streamer.fromXML(is);
-	}
+  private static XStream getSB() {
+    if (streamerB!=null)
+      return streamerB;
+    streamerB = new XStream(new BinaryStreamDriver());
+    initSR(streamerB);
+
+    return streamerB;
+  }
 	public static void save(SROutput bo, File f) throws BlastSerializerException{
-		FileOutputStream      fos = null;
-		ByteArrayOutputStream baos;
 		String          path;
 
-		path = f.getAbsolutePath();
-		File f2 = new File(path);
-		try {
-			baos= new ByteArrayOutputStream();
-			streamer.toXML(bo,baos);
-			baos.flush();
-			baos.close();
-			fos = new FileOutputStream(f2);
-			ZipUtil.createFromMemory(fos, baos.toByteArray());
+		//Step 1: generate XML on disk in a tmp file
+    path = f.getAbsolutePath()+".tmp";
+		try(BufferedOutputStream bos = 
+		    new BufferedOutputStream(new FileOutputStream(path))){
+		  getSB().toXML(bo, bos);
+      bos.flush();
+		} catch (Throwable e) {
+      throw new BlastSerializerException(ERR_1+f.getAbsolutePath()+": "+e);
+    }
+		//Step 2: compress using ZIP
+		try(FileOutputStream fos = new FileOutputStream(f.getAbsolutePath())){
+		  ZipUtil.create(fos, path);
 		} catch (Throwable e) {
 			throw new BlastSerializerException(ERR_1+f.getAbsolutePath()+": "+e);
 		}
-		finally{
-			if (fos!=null)
-				try {
-					fos.close();
-				} catch (IOException e) {}
-		}
-	}
-
-	public static byte[] convertToByteArray(SROutput bo) throws BlastSerializerException{
-		ByteArrayOutputStream baos;
-		byte[] data=null; 
-		try {
-			baos= new ByteArrayOutputStream();
-			streamer.toXML((SROutput)bo,baos);
-			baos.flush();
-			baos.close();
-			data=baos.toByteArray();
-		} catch (Throwable e) {
-			throw new BlastSerializerException(ERR_1+": "+e);
-		}
-		return data;
-	}
-
-	public static SROutput convertFromByteArray(byte[] data) throws BlastSerializerException{
-		SROutput bo = null;
-		try {
-			bo = (SROutput) streamer.fromXML(new ByteArrayInputStream(data));
-			if (bo!=null)
-				bo.initialize();
-		} catch (Throwable e) {
-			throw new BlastSerializerException(ERR_1+": "+e);
-		}
-		return (SROutput)bo;
+		//delete tmp file
+		new File(path).delete();
 	}
 
 	public static SROutput load(File f)throws BlastSerializerException{
-		SROutput         bo = null;
-		FileInputStream fis = null;
-
+		SROutput bo = null;
+		File xFile = f;
+		File uzFile = null;
 		//try to read XML zipped file
-		try{
-			fis=new FileInputStream(f);  
-			byte[] data = ZipUtil.extractInMemory(fis);
-			bo = (SROutput) streamer.fromXML(new ByteArrayInputStream(data));
-			if (bo!=null)
-				bo.initialize();
+		if(ZipUtil.isZippedFile(f.getAbsolutePath())) {
+		  try(FileInputStream fis = new FileInputStream(f)){
+		    uzFile = ZipUtil.extract(fis, f.getParent());
+		    xFile = uzFile;
+      } catch (Throwable e) {
+        throw new BlastSerializerException(ERR_2+f.getAbsolutePath()+": "+e);
+      }
 		}
-		catch(Throwable ex){
-			bo=null;
-		}
-		finally{
-			if (fis!=null)
-				try {
-					fis.close();
-				} catch (IOException e) {}
-		}
-		if (bo!=null)
-			return bo;
-		//read plain XML
-		try {
-			fis=new FileInputStream(f);	
-			bo = (SROutput) streamer.fromXML(fis);
-			if (bo!=null)
-				bo.initialize();
-		} catch (Throwable e) {
-			throw new BlastSerializerException(ERR_2+f.getAbsolutePath()+": "+e);
-		}
-		finally{
-			if (fis!=null)
-				try {
-					fis.close();
-				} catch (IOException e) {}
-		}
-		return bo;
+    //read binary XML first (new system)
+	  try(BufferedInputStream bis = 
+	      new BufferedInputStream(new FileInputStream(xFile))){
+      bo = (SROutput) getSB().fromXML(bis);
+    } catch (Throwable e) {
+      bo = null;
+    }
+	  if (bo!=null) {
+	    bo.initialize();
+	    if (uzFile!=null) {
+        uzFile.delete();
+      }
+	    return bo;
+	  }
+    //read plain XML (old system; backward compatibility)
+    try(BufferedInputStream bis = 
+        new BufferedInputStream(new FileInputStream(xFile))){
+      bo = (SROutput) getSX().fromXML(bis);
+      if (bo!=null) {
+        bo.initialize();
+      }
+    }
+    catch (Throwable e) {
+      throw new BlastSerializerException(ERR_2+f.getAbsolutePath()+": "+e);
+    }
+    finally {
+      if (uzFile!=null) {
+        uzFile.delete();
+      }
+    }
+    return bo;
 	}
 }

@@ -1,4 +1,4 @@
-/* Copyright (C) 2006-2016 Patrick G. Durand
+/* Copyright (C) 2006-2021 Patrick G. Durand
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published by
@@ -268,4 +268,13 @@ public class ZipUtil {
       bos.close();
   }
 
+  public static boolean isZippedFile(String filePath) {
+    boolean isZipped = false;
+    try(FileInputStream fis = new FileInputStream(filePath)){
+      isZipped = new ZipInputStream(fis).getNextEntry() != null;
+    } catch (Throwable e) {
+      isZipped = false;
+    }
+    return isZipped;
+  }
 }
