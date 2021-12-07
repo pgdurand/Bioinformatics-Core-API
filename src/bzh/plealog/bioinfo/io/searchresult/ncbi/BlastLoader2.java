@@ -150,7 +150,8 @@ public class BlastLoader2 implements SRLoader {
     score.setScore(hsp.getHspScore());
     score.setEvalue(hsp.getHspEvalue());
     score.setIdentity(hsp.getHspIdentity());
-    score.setPositive(hsp.getHspPositive());
+    if (hsp.getHspPositive()!=null)
+      score.setPositive(hsp.getHspPositive());
     score.setGaps(hsp.getHspGaps());
     score.setAlignLen(hsp.getHspAlignLen());
     if (hsp.getHspDensity()!=null)
