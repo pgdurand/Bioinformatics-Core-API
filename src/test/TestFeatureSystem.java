@@ -60,6 +60,8 @@ import bzh.plealog.bioinfo.io.gff.iprscan.IprPredictions;
 import bzh.plealog.bioinfo.io.searchresult.SerializerSystemFactory;
 import bzh.plealog.bioinfo.io.searchresult.csv.ExtractAnnotation;
 import bzh.plealog.bioinfo.io.searchresult.txt.TxtExportSROutput;
+import bzh.plealog.bioinfo.io.tsv.eggnog.EggNogObject;
+import bzh.plealog.bioinfo.io.tsv.eggnog.EggNogTsvReader;
 import bzh.plealog.bioinfo.io.xml.iprscan.IprXmlReader;
 import bzh.plealog.bioinfo.tools.ImportIprScanPredictions;
 
@@ -68,6 +70,7 @@ public class TestFeatureSystem {
   private static File     blastFile2;
   private static File     blastFile3;
   private static File     blastFile4;
+  private static File     eggnogFile;
   private static File     iprscanFile;
   private static File     iprscanProtFileXml;
   private static File     iprscanNuclFileXml;
@@ -90,6 +93,8 @@ public class TestFeatureSystem {
 		// sample NCBI legacy Blast result
 		blastFile = new File("data/test/hits_with_full_annot.zml");
 		blastFile2 = new File("data/test/hits_with_bco.zml");
+    //eggnog-mapper data file
+    eggnogFile = new File("data/test/eggnog-mapper-sample.tsv");
 		//iprscan prot data file
 		iprscanFile = new File("data/test/ipr-uniprot-sequences.fasta.gff3");
     //iprscan prot data file
@@ -983,4 +988,47 @@ public class TestFeatureSystem {
     }
     
   }
+  
+  @Test
+  public void testEggNogReader_1() {
+    EggNogTsvReader gr = new EggNogTsvReader();
+    Map<String, List<EggNogObject>> gffMap = gr.processFileToMap(eggnogFile.getAbsolutePath());
+    assertNotNull(gffMap);
+    assertEquals(4, gffMap.size());
+    assertTrue(gffMap.containsKey("prot_Ecto-sp6_F_contig18.5203.1"));
+    assertTrue(gffMap.containsKey("prot_Ecto-sp6_F_contig18.5280.1"));
+    
+    ArrayList<String> types = new ArrayList<>();
+    gffMap.forEach((k,v) -> types.addAll(v.stream().map(EggNogObject::getQuery_name).collect(Collectors.toList())));
+    List<String> typesRef = Arrays.asList("prot_Ecto-sp6_F_contig18.5203.1","prot_Ecto-sp6_F_contig18.5280.1");
+    assertTrue(types.containsAll(typesRef));
+  }
+
+  @Test
+  public void testEggNogReader_2() {
+    EggNogTsvReader gr = new EggNogTsvReader();
+    Map<String, FeatureTable> ftMap = gr.readFile(eggnogFile.getAbsolutePath());
+    assertNotNull(ftMap);
+    assertEquals(4, ftMap.size());
+    assertTrue(ftMap.containsKey("prot_Ecto-sp6_F_contig18.5203.1"));
+    assertTrue(ftMap.containsKey("prot_Ecto-sp6_F_contig18.5280.1"));
+    
+    FeatureTable ft = ftMap.get("prot_Ecto-sp6_F_contig18.5203.1");
+    assertEquals(ft.features(),1);
+    assertEquals(ft.enumFeatures().nextElement().qualifiers(),11);
+
+    ft = ftMap.get("prot_Ecto-sp6_F_contig18.5280.1");
+    assertEquals(ft.features(),1);
+    assertEquals(ft.enumFeatures().nextElement().qualifiers(),9);
+
+    ft = ftMap.get("prot_Ecto-sp6_F_contig34.10231.1");
+    assertEquals(ft.features(),1);
+    assertEquals(ft.enumFeatures().nextElement().qualifiers(),55);
+
+    ft = ftMap.get("prot_Ecto-sp6_F_contig136.3266.1");
+    assertEquals(ft.features(),1);
+    assertEquals(ft.enumFeatures().nextElement().qualifiers(),248);
+
+  }
+
 }
