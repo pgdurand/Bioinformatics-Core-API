@@ -28,6 +28,7 @@ import bzh.plealog.bioinfo.api.data.searchresult.SRIteration;
 import bzh.plealog.bioinfo.api.data.searchresult.SROutput;
 import bzh.plealog.bioinfo.api.data.searchresult.SRRequestInfo;
 import bzh.plealog.bioinfo.io.searchresult.txt.TxtExportSROutput;
+import bzh.plealog.bioinfo.util.CoreUtil;
 
 /**
  * This class is responsible for saving Table data in an OutputStream using the
@@ -46,6 +47,13 @@ public class CSVExportSROutput {
   private boolean _showColumnHeader;
   private boolean _showQueryId;
   private boolean _showQueryLength;
+  //The following has been added to handle results from Diamond where qID is Query_xxx and
+  //original query ID from FASTA file is provided in query description (qName). When the 
+  //following flag is true, qName first token is used for qID.
+  private boolean _useDescAsQueryId;
+  //Only when _useDescAsQueryId is true, if the following is also true, qID is formated
+  // as: lcl|A|B where A is qID read from results and B if first token from qName.
+  private boolean _formatLocalId;
   private int[] _colIds;
   private CSVExportSROutputHandler _exportHandler;
   
@@ -58,6 +66,8 @@ public class CSVExportSROutput {
     _showColumnHeader = true;
     _showQueryId = true;
     _showQueryLength = false;
+    _useDescAsQueryId = false;
+    _formatLocalId = false;
     _colIds = TxtExportSROutput.getDefaultColumnIDs();
     _exportHandler = null;
   }
@@ -128,6 +138,13 @@ public class CSVExportSROutput {
   public void showQueryLength(boolean showQLength) {
     _showQueryLength = showQLength;
   }
+  public void useDescAsQueryId(boolean useDescAsQueryId) {
+    _useDescAsQueryId = useDescAsQueryId;
+  }
+  public void formatLocalId(boolean formatLocalId) {
+    _formatLocalId = formatLocalId;
+  }
+  
   public void ssetColumnIds(int[] colIds) {
     this._colIds = colIds;
   }
@@ -161,6 +178,19 @@ public class CSVExportSROutput {
   private boolean isQueryBioClassifColsId(int colid) {
     return colid >= TxtExportSROutput.QUERY_BIO_CLASSIF &&
         colid <= TxtExportSROutput.QUERY_BIO_CLASSIF_PFM;     
+  }
+  private String reformatIdName(String qId, String qName) {
+    if (_useDescAsQueryId && qName != null && ! qName.equals("?")) {
+      String qNameTokens[] = CoreUtil.tokenize(qName, " ");
+      if (qNameTokens.length > 0)
+        if (_formatLocalId) {
+          qId = String.format("lcl|%s|%s", qId, qNameTokens[0]);
+        }
+        else {
+          qId = qNameTokens[0]; 
+        }
+    }
+    return qId;
   }
   public void export(Writer writer, SROutput output) throws Exception {
     if (writer == null || output == null)
@@ -212,12 +242,14 @@ public class CSVExportSROutput {
       qLength = "?";
     else
       qLength = obj.toString();
+    qId = reformatIdName(qId, qName);
     if (!output.isEmpty()) {
       size = output.countIteration();
       for (i = 0; i < size; i++) {// loop on iterations
         iteration = output.getIteration(i);
         qId = iteration.getIterationQueryID();
         qName = iteration.getIterationQueryDesc();
+        qId = reformatIdName(qId, qName);
         qLength = String.valueOf(iteration.getIterationQueryLength());
         size2 = iteration.countHit();
         if (size2==0) {
